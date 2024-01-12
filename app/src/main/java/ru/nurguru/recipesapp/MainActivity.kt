@@ -14,7 +14,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction().add(R.id.mainContainer,CategoriesListFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.mainContainer, CategoriesListFragment())
+            .commit()
 
+
+        binding.navBtnFavorite.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.mainContainer, FavoritesFragment()).addToBackStack(null).commit()
+        }
+
+        binding.navBtnCategories.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.mainContainer, CategoriesListFragment()).addToBackStack(null).commit()
+        }
     }
 }
