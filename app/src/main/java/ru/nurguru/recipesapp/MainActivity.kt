@@ -2,6 +2,7 @@ package ru.nurguru.recipesapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.commit
 import ru.nurguru.recipesapp.databinding.ActivityMainBinding
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction().add(R.id.mainContainer,CategoriesListFragment()).commit()
+        supportFragmentManager.commit { add(R.id.mainContainer, CategoriesListFragment()) }
 
     }
 }

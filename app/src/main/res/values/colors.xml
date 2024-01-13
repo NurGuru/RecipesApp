@@ -2,6 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="redFavorite_color">#E13E3E</color>
-    <color name="blueCategory_color">#525DC0</color>
+    <color name="redFavoriteColor">#E13E3E</color>
+    <color name="blueCategoryColor">#525DC0</color>
+    <color name="mainBackgroundColor">#F4FAFF</color>
+
 </resources>

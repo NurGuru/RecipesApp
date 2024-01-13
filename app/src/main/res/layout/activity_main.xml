@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/mainBackgroundColor"
     tools:context=".MainActivity">
 
 
@@ -13,7 +13,7 @@
         android:name="ru.nurguru.recipesapp.CategoriesListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,8 +25,7 @@
         android:layout_marginHorizontal="@dimen/main_margin"
         android:layout_marginBottom="@dimen/main_margin_half"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             style="@style/StyleNavButton"
@@ -34,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="2"
-            android:backgroundTint="@color/blueCategory_color"
+            android:backgroundTint="@color/blueCategoryColor"
             android:text="@string/title_categories" />
 
         <Button
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="2"
-            android:backgroundTint="@color/redFavorite_color"
+            android:backgroundTint="@color/redFavoriteColor"
             android:text="@string/title_favorite"
             app:icon="@drawable/ic_heart_empty"
             app:iconGravity="textEnd" />
