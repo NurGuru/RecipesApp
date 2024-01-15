@@ -2,7 +2,9 @@ package ru.nurguru.recipesapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ru.nurguru.recipesapp.databinding.ActivityMainBinding
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
+ import ru.nurguru.recipesapp.databinding.ActivityMainBinding
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 
 
@@ -14,18 +16,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction().add(R.id.mainContainer, CategoriesListFragment())
-            .commit()
-
-
-        binding.navBtnFavorite.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.mainContainer, FavoritesFragment()).addToBackStack(null).commit()
-        }
-
-        binding.navBtnCategories.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.mainContainer, CategoriesListFragment()).addToBackStack(null).commit()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<CategoriesListFragment>(R.id.mainContainer)
         }
     }
 }
