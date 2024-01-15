@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
- import ru.nurguru.recipesapp.databinding.ActivityMainBinding
+import androidx.fragment.app.replace
+import ru.nurguru.recipesapp.databinding.ActivityMainBinding
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 
 
@@ -19,6 +20,22 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             add<CategoriesListFragment>(R.id.mainContainer)
+        }
+
+        binding.navBtnFavorite.setOnClickListener {
+            supportFragmentManager.commit {
+                replace<FavoritesFragment>(R.id.mainContainer)
+                setReorderingAllowed(true)
+                addToBackStack("null")
+            }
+        }
+
+        binding.navBtnCategories.setOnClickListener {
+            supportFragmentManager.commit {
+                replace<CategoriesListFragment>(R.id.mainContainer)
+                setReorderingAllowed(true)
+                addToBackStack("null")
+            }
         }
     }
 }
