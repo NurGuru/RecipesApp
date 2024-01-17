@@ -1,6 +1,6 @@
 package ru.nurguru.recipesapp.models
 
-data class Categories(
+data class Category(
     val id: Int,
     val tittle: String,
     val description: String,
