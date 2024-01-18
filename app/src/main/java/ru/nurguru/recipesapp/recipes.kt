@@ -42,7 +42,6 @@ object STUB {
         ),
     )
 
-    fun getCategories() {
-        categoriesList
-    }
+    fun getCategories() = categoriesList
+    //так?))
 }
