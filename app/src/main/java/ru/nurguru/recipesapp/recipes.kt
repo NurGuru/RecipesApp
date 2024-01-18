@@ -42,7 +42,7 @@ object STUB {
         ),
     )
 
-    fun getCategories(): List<Category> {
-        return categoriesList
+    fun getCategories() {
+        categoriesList
     }
 }
