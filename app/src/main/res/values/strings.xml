@@ -2,4 +2,6 @@
     <string name="app_name">RecipesApp</string>
     <string name="title_categories">категории</string>
     <string name="title_favorite">избранное</string>
+    <string name="dessertsTitle">Десерты</string>
+    <string name="dessertsDescription">Самые вкусные рецепты десертов специально для вас</string>
 </resources>

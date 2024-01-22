@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="8dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/main_margin_half"
+    android:layout_marginVertical="@dimen/main_margin"
     android:clickable="true"
-    android:layout_marginHorizontal="@dimen/main_margin_half">
+    app:cardCornerRadius="8dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategories"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="6"
-        tools:listitem="@layout/item_category"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        android:layout_marginHorizontal="@dimen/main_margin_half"
-        android:layout_marginVertical="@dimen/main_margin"
-        >
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dessert"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dessertsTitle"
+            android:fontFamily="@font/montserratalternates_regular"
+            android:textSize="14sp"
+            android:textFontWeight="600"
+            android:layout_margin="@dimen/main_margin_half"
+            android:textAllCaps="true"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dessertsDescription"
+            android:layout_marginStart="@dimen/main_margin_half"
+            android:scrollHorizontally="false"
+            />
+
+
+
+
+
+    </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
