@@ -13,4 +13,23 @@
         <item name="android:paddingHorizontal">20dp</item>
         <item name="cornerRadius">8dp</item>
     </style>
+    
+    <style name="StyleCategoriesCardTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserratalternates_semibold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/categoryTitleColor</item>
+    </style>
+    <style name="StyleCategoriesCardDescription" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="StyleTitle20" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/montserratalternates_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/categoryTitleColor</item>
+    </style>
 </resources>

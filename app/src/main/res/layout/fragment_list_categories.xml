@@ -18,7 +18,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/bcg_categories" />
 
             <TextView
@@ -28,15 +28,12 @@
                 android:layout_marginStart="@dimen/main_margin"
                 android:layout_marginBottom="@dimen/main_margin"
                 android:background="@drawable/shape_rounded_title"
-                android:fontFamily="@font/montserratalternates_regular"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/title_categories"
-                android:textAllCaps="true"
-                android:textFontWeight="600"
-                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/StyleTitle20"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
