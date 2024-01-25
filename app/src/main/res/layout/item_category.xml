@@ -14,32 +14,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/dessert" />
+            android:src="@drawable/dessert"
+            android:contentDescription="@string/content_description_categories_cards"/>
 
         <TextView
             style="@style/StyleCategoriesCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/main_margin_half"
-            android:text="Desserts"
-            tools:ignore="HardcodedText" />
-
+            tools:text="Desserts" />
 
         <TextView
             style="@style/StyleCategoriesCardDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_margin_half"
-            android:text="Самые вкусные рецепты десертов специально для вас"
-            tools:ignore="HardcodedText" />
-
-
+            tools:text="Самые вкусные рецепты десертов специально для вас" />
     </LinearLayout>
-
-
 </androidx.cardview.widget.CardView>
