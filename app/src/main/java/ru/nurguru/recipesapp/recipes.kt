@@ -43,5 +43,4 @@ object STUB {
     )
 
     fun getCategories() = categoriesList
-    //так?))
 }
