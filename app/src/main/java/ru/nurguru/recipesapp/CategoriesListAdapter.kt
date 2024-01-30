@@ -39,7 +39,8 @@ class CategoriesListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.tvCategoryName.text = dataSet[position].toString()
+        viewHolder.tvCategoryName.text = dataSet[position].title
+        viewHolder.tvCategoryDescription.text = dataSet[position].description
 
         try {
             val inputStream: InputStream? =
@@ -48,6 +49,8 @@ class CategoriesListAdapter(
             viewHolder.ivCategoryImage.setImageDrawable(drawable)
         } catch (e: IOException) {
             Log.e("error", "Ошибка при загрузке изображения", e)
+            viewHolder.ivCategoryImage.contentDescription =
+                "Изображение для категории ${dataSet[position].title}"
         }
     }
 
