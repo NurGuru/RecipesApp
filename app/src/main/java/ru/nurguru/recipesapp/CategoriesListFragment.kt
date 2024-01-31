@@ -31,7 +31,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private fun initRecycler() {
         binding.rvCategories.adapter = CategoriesListAdapter(
             dataSet = STUB.getCategories(),
-            fragment = CategoriesListFragment()
+            this
         )
     }
 }

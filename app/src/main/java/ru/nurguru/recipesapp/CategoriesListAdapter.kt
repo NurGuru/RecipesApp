@@ -50,7 +50,7 @@ class CategoriesListAdapter(
         } catch (e: IOException) {
             Log.e("error", "Ошибка при загрузке изображения", e)
             viewHolder.ivCategoryImage.contentDescription =
-                "Изображение для категории ${dataSet[position].title}"
+                "${R.string.content_description_categories_cards} ${dataSet[position].title}"
         }
     }
 
