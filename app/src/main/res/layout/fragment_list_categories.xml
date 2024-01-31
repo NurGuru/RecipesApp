@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/main_margin_half"
-            android:layout_marginVertical="@dimen/main_margin"
+            android:layout_marginVertical="@dimen/main_margin_half"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:itemCount="6"
