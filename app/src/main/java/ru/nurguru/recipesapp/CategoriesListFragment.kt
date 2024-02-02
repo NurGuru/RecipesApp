@@ -21,4 +21,17 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         _binding = FragmentListCategoriesBinding.inflate(inflater)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+        binding.rvCategories.adapter = CategoriesListAdapter(
+            dataSet = STUB.getCategories(),
+            this
+        )
+    }
 }

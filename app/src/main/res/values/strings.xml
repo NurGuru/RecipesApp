@@ -2,6 +2,6 @@
     <string name="app_name">RecipesApp</string>
     <string name="title_categories">категории</string>
     <string name="title_favorite">избранное</string>
-    <string name="content_description_categories_cards">categories screen cards image</string>
+    <string name="content_description_categories_cards">"Изображение для категории</string>
     <string name="content_description_categories_main_screen">categories screen main image</string>
 </resources>
