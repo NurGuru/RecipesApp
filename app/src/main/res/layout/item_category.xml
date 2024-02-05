@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/main_margin_half"
-    android:layout_marginVertical="@dimen/main_margin_half"
+    android:layout_marginTop="@dimen/main_margin"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp">
 
     <LinearLayout
