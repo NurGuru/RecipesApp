@@ -10,7 +10,6 @@ import androidx.fragment.app.replace
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
-    private lateinit var categoriesAdapter: CategoriesListAdapter
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding
         get() = _binding
@@ -30,11 +29,9 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     }
 
     private fun initRecycler() {
-        binding.rvCategories.adapter = CategoriesListAdapter(
-            dataSet = STUB.getCategories(), this
-        )
-        categoriesAdapter = CategoriesListAdapter(dataSet = STUB.getCategories(), this)
-        //я понимаю что шляпа вышла, но я уже два дня торможу поэтому пришлю что есть
+        val categoriesAdapter = CategoriesListAdapter(dataSet = STUB.getCategories(), this)
+        binding.rvCategories.adapter = categoriesAdapter
+
         categoriesAdapter.setOnItemClickListener(object :
             CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick() {
@@ -43,10 +40,12 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         })
     }
 
-    private fun openRecipesByCategoryId() = childFragmentManager.commit {
-        replace<RecipesListFragment>(R.id.mainContainer)
-        setReorderingAllowed(true)
-        addToBackStack(null)
+    private fun openRecipesByCategoryId() {
+        parentFragmentManager.commit {
+            replace<RecipesListFragment>(R.id.mainContainer)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
     }
 }
 

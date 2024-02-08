@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="StyleTitle14" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/montserratalternates_semibold</item>
@@ -13,7 +14,7 @@
         <item name="android:paddingHorizontal">20dp</item>
         <item name="cornerRadius">8dp</item>
     </style>
-    
+
     <style name="StyleCategoriesCardTitle" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/montserratalternates_semibold</item>
@@ -32,5 +33,9 @@
         <item name="android:fontFamily">@font/montserratalternates_semibold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/categoryTitleColor</item>
+    </style>
+
+    <style name="ClickEffect">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 </resources>
