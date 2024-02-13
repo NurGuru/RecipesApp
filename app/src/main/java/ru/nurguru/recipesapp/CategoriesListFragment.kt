@@ -44,9 +44,13 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private fun openRecipesByCategoryId(categoryId: Int) {
         val categoryName = STUB.getCategories()[categoryId].title
         val categoryImageUrl = STUB.getCategories()[categoryId].imageUrl
-        val bundle = bundleOf("ARG_CATEGORY_ID" to categoryId)
-        bundleOf("ARG_CATEGORY_NAME" to categoryName)
-        bundleOf("ARG_CATEGORY_IMAGE_URL" to categoryImageUrl)
+        val bundle =
+            bundleOf(
+                "ARG_CATEGORY_ID" to categoryId,
+                "ARG_CATEGORY_NAME" to categoryName,
+                "ARG_CATEGORY_IMAGE_URL" to categoryImageUrl,
+            )// как же долго я пытался понять почему не работает этот бандл блин))
+
 
         parentFragmentManager.commit {
             replace<RecipesListFragment>(R.id.mainContainer, args = bundle)

@@ -31,5 +31,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         categoryId = requireArguments().getInt("ARG_CATEGORY_ID")
         categoryName = requireArguments().getString("ARG_CATEGORY_NAME")
         categoryImageUrl = requireArguments().getString("ARG_CATEGORY_IMAGE_URL")
+
+        binding.recept.text = categoryName// просто чтоб проверить добавил, вроде теперь пашет все)
     }
 }
