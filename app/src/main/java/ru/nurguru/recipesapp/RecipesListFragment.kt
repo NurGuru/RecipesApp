@@ -1,11 +1,13 @@
 package ru.nurguru.recipesapp
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
+import java.io.InputStream
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
@@ -32,6 +34,12 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         categoryName = requireArguments().getString("ARG_CATEGORY_NAME")
         categoryImageUrl = requireArguments().getString("ARG_CATEGORY_IMAGE_URL")
 
-        binding.recept.text = categoryName// просто чтоб проверить добавил, вроде теперь пашет все)
+        binding.titleRecipes.text = categoryName
+
+        val inputStream: InputStream? =
+            this.context?.assets?.open(STUB.getCategories()[categoryId!!].imageUrl)//не уверен что тут именно это надо было с делать, поэтому пока использовал " !! "
+        val drawable = Drawable.createFromStream(inputStream, null)
+        binding.burgerRecipesMainImage.setImageDrawable(drawable)
+
     }
 }

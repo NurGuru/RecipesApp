@@ -24,6 +24,7 @@
 
             <TextView
                 android:id="@+id/titleСategories"
+                style="@style/StyleTitle20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/main_margin"
@@ -33,8 +34,7 @@
                 android:padding="10dp"
                 android:text="@string/title_categories"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/StyleTitle20"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
