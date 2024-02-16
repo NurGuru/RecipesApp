@@ -9,6 +9,9 @@ import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
+    private var categoryId: Int? = null
+    private var categoryName: String? = null
+    private var categoryImageUrl: String? = null
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
@@ -17,8 +20,23 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentListRecipesBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initBundleData()
+
+        binding.recept.text = categoryName// просто чтоб проверить добавил, вроде теперь пашет все)
+    }
+
+    private fun initBundleData() {
+        arguments.let {
+            categoryId = requireArguments().getInt(Constants.ARG_CATEGORY_ID)
+            categoryName = requireArguments().getString(Constants.ARG_CATEGORY_NAME)
+            categoryImageUrl = requireArguments().getString(Constants.ARG_CATEGORY_IMAGE_URL)
+        }
     }
 }
