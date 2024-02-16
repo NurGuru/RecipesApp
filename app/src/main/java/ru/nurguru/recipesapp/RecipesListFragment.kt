@@ -40,6 +40,5 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             this.context?.assets?.open(STUB.getCategories()[categoryId!!].imageUrl)//не уверен что тут именно это надо было с делать, поэтому пока использовал " !! "
         val drawable = Drawable.createFromStream(inputStream, null)
         binding.burgerRecipesMainImage.setImageDrawable(drawable)
-
     }
 }

@@ -7,19 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.databinding.ItemCategoryBinding
-import ru.nurguru.recipesapp.models.Category
+import ru.nurguru.recipesapp.databinding.ItemRecipeBinding
+import ru.nurguru.recipesapp.models.Recipe
 import java.io.IOException
 import java.io.InputStream
 
-class CategoriesListAdapter(
-    private val dataSet: List<Category>,
-    private val fragment: CategoriesListFragment
-) : RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
+class RecipesListAdapter(
+    private val dataSet: List<Recipe>,
+    private val fragment: RecipesListFragment
+
+) : RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(categoryId: Int)
+        fun onItemClick(recipeId: Int)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -27,24 +29,27 @@ class CategoriesListAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = ItemCategoryBinding.bind(view)
-        val cvCategoryItem = binding.cvCategoryItem
-        val tvCategoryName = binding.tvCategoryName
-        val tvCategoryDescription = binding.tvCategoryDescription
-        val ivCategoryImage = binding.ivCategoryImage
+
+        private val binding = ItemRecipeBinding.bind(view)
+        val cvRecipeItem = binding.cvRecipeItem
+        val tvRecipeName = binding.tvRecipeName
+        val ivRecipeImage = binding.ivRecipeImage
+
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_category, viewGroup, false)
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_category, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.tvCategoryName.text = dataSet[position].title
-        viewHolder.tvCategoryDescription.text = dataSet[position].description
-
-        viewHolder.cvCategoryItem.setOnClickListener {
+        viewHolder.tvRecipeName.text = dataSet[position].title
+        viewHolder.cvRecipeItem.setOnClickListener {
             itemClickListener?.onItemClick(dataSet[position].id)
 
         }
@@ -52,17 +57,13 @@ class CategoriesListAdapter(
             val inputStream: InputStream? =
                 fragment.context?.assets?.open(dataSet[position].imageUrl)
             val drawable = Drawable.createFromStream(inputStream, null)
-            viewHolder.ivCategoryImage.setImageDrawable(drawable)
+            viewHolder.ivRecipeImage.setImageDrawable(drawable)
         } catch (e: IOException) {
             Log.e("error", "Ошибка при загрузке изображения", e)
-            viewHolder.ivCategoryImage.contentDescription =
-                "${R.string.content_description_categories_cards} ${dataSet[position].title}"
+            viewHolder.ivRecipeImage.contentDescription =
+                "${R.string.content_description_recipes_cards} ${dataSet[position].title}"
         }
-
-
     }
 
-
     override fun getItemCount() = dataSet.size
-
 }
