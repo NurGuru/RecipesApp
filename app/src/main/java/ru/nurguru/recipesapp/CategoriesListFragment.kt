@@ -30,7 +30,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     }
 
     private fun initRecycler() {
-        val categoriesAdapter = CategoriesListAdapter(dataSet = STUB.getCategories(), this)
+        val categoriesAdapter = CategoriesListAdapter(dataSet = STUB.getCategories())
         binding.rvCategories.adapter = categoriesAdapter
 
         categoriesAdapter.setOnItemClickListener(object :
@@ -42,8 +42,9 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        val categoryName = STUB.getCategories()[categoryId].title
-        val categoryImageUrl = STUB.getCategories()[categoryId].imageUrl
+        val category = STUB.getCategories().find { it.id==categoryId }
+        val categoryName = category?.title
+        val categoryImageUrl = category?.imageUrl
         val bundle =
             bundleOf(
                 "ARG_CATEGORY_ID" to categoryId,
