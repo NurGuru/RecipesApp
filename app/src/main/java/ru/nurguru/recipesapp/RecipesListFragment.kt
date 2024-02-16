@@ -27,11 +27,16 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        categoryId = requireArguments().getInt("ARG_CATEGORY_ID")
-        categoryName = requireArguments().getString("ARG_CATEGORY_NAME")
-        categoryImageUrl = requireArguments().getString("ARG_CATEGORY_IMAGE_URL")
+        initBundleData()
 
         binding.recept.text = categoryName// просто чтоб проверить добавил, вроде теперь пашет все)
+    }
+
+    private fun initBundleData() {
+        arguments.let {
+            categoryId = requireArguments().getInt(Constants.ARG_CATEGORY_ID)
+            categoryName = requireArguments().getString(Constants.ARG_CATEGORY_NAME)
+            categoryImageUrl = requireArguments().getString(Constants.ARG_CATEGORY_IMAGE_URL)
+        }
     }
 }
