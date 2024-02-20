@@ -30,7 +30,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBundleData()
-        binding.textView.text = recipe.toString()
+        binding.textView.text = recipe?.title
     }
 
     private fun initBundleData() {
