@@ -39,20 +39,22 @@ class RecipesListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.tvRecipeName.text = dataSet[position].title
-        viewHolder.cvRecipeItem.setOnClickListener {
-            itemClickListener?.onItemClick(dataSet[position].id)
+        with(viewHolder) {
+            tvRecipeName.text = dataSet[position].title
+            cvRecipeItem.setOnClickListener {
+                itemClickListener?.onItemClick(dataSet[position].id)
 
-        }
-        try {
-            val inputStream: InputStream? =
-                viewHolder.itemView.context.assets?.open(dataSet[position].imageUrl)
-            val drawable = Drawable.createFromStream(inputStream, null)
-            viewHolder.ivRecipeImage.setImageDrawable(drawable)
-        } catch (e: IOException) {
-            Log.e("error", "Ошибка при загрузке изображения", e)
-            viewHolder.ivRecipeImage.contentDescription =
-                "${R.string.content_description_recipes_cards} ${dataSet[position].title}"
+            }
+            try {
+                val inputStream: InputStream? =
+                    itemView.context.assets?.open(dataSet[position].imageUrl)
+                val drawable = Drawable.createFromStream(inputStream, null)
+                ivRecipeImage.setImageDrawable(drawable)
+            } catch (e: IOException) {
+                Log.e("error", "Ошибка при загрузке изображения", e)
+                ivRecipeImage.contentDescription =
+                    "${R.string.content_description_recipes_cards} ${dataSet[position].title}"
+            }
         }
     }
 
