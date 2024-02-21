@@ -43,8 +43,5 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 recipe = requireArguments().getParcelable(Constants.ARG_RECIPE)
             }
         }
-
-
-
     }
 }
