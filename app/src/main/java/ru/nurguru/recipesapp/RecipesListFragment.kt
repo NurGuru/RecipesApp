@@ -34,19 +34,13 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         super.onViewCreated(view, savedInstanceState)
         initBundleData()
         initRecycler()
-
-        binding.recept.text = categoryName
-
-        val inputStream: InputStream? =
-            categoryImageUrl?.let { view.context.assets?.open(it) }
-        val drawable = Drawable.createFromStream(inputStream, null)
-        binding.recipeImage.setImageDrawable(drawable)
+        initUI()
     }
 
     private fun initRecycler() {
         val recipesAdapter = RecipesListAdapter(
             dataSet = STUB.getRecipesByCategoryId(
-                categoryId = requireArguments().getInt(Constants.ARG_CATEGORY_ID)// кажись тут намудрил, но вроде все работает))
+                categoryId = requireArguments().getInt(Constants.ARG_CATEGORY_ID)
             )
         )
         binding.rvRecipes.adapter = recipesAdapter
@@ -77,5 +71,13 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             categoryName = requireArguments().getString(Constants.ARG_CATEGORY_NAME)
             categoryImageUrl = requireArguments().getString(Constants.ARG_CATEGORY_IMAGE_URL)
         }
+    }
+
+    private fun initUI(){
+        binding.tvRecipeTitle.text = categoryName
+        val inputStream: InputStream? =
+            categoryImageUrl?.let { view?.context?.assets?.open(it) }
+        val drawable = Drawable.createFromStream(inputStream, null)
+        binding.recipeImage.setImageDrawable(drawable)
     }
 }
