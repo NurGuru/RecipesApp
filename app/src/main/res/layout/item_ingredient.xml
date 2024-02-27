@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvIngredientItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvIngredientsDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="творог"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:id="@+id/tvIngredientsQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="350г"
+            android:layout_gravity="end"/>
+
+        <TextView
+            android:id="@+id/tvIngredientsUnitOfMeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="шт"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -30,7 +30,18 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBundleData()
-        binding.textView.text = recipe?.title
+        initMethodsRecycler()
+        initIngredientsRecycler()
+        binding.tvRecipeSubTitle.text = recipe?.title
+    }
+
+    private fun initIngredientsRecycler() {
+        val ingredientAdapter = IngredientsAdapter( recipe!!.ingredients)
+        binding.rvIngredients.adapter = ingredientAdapter
+    }
+    private fun initMethodsRecycler() {
+        val methodAdapter = MethodAdapter(listOf(recipe) as List<Recipe>)
+        binding.rvMethod.adapter = methodAdapter
     }
 
     private fun initBundleData() {
