@@ -16,7 +16,7 @@
             android:layout_height="@dimen/recipe_list_main_image_height">
 
             <ImageView
-                android:id="@+id/recipeImage"
+                android:id="@+id/ivRecipeMainImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_recipes_screen"

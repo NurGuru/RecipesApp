@@ -8,28 +8,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="@dimen/middle_margin"
+        android:layout_marginVertical="@dimen/middle_margin">
 
         <TextView
             android:id="@+id/tvIngredientsDescription"
+            style="@style/StyleIngredientsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             tools:text="творог"
-            android:layout_gravity="start"/>
+            android:paddingBottom="4dp"/>
 
         <TextView
             android:id="@+id/tvIngredientsQuantity"
+            style="@style/StyleIngredientsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="350г"
-            android:layout_gravity="end"/>
+            android:layout_gravity="end"
+            tools:text="350" />
 
         <TextView
             android:id="@+id/tvIngredientsUnitOfMeasure"
+            style="@style/StyleIngredientsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="шт"
-            android:layout_gravity="end"/>
+            android:layout_gravity="end"
+            tools:text="шт" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

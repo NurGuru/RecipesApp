@@ -16,7 +16,7 @@
             android:layout_height="@dimen/recipe_list_main_image_height">
 
             <ImageView
-                android:id="@+id/recipeItemImage"
+                android:id="@+id/ivRecipeItemImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_recipe_item_image"
@@ -44,15 +44,21 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_margin"
+            android:layout_marginTop="@dimen/main_margin"
+            app:cardCornerRadius="@dimen/corner_radius"
+            >
 
             <TextView
                 android:id="@+id/tvIngredients"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                style="@style/StyleTitle20"
+                android:text="@string/title_ingredients"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="Ингредиенты" />
+                app:layout_constraintTop_toTopOf="parent"
+               android:paddingBottom="@dimen/main_margin"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvIngredients"
@@ -62,8 +68,8 @@
                 android:layout_marginHorizontal="@dimen/main_margin_half"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tvIngredients"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_ingredient">
+                tools:itemCount="5" tools:listitem="@layout/item_ingredient">
+
             </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -71,16 +77,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_margin"
+            >
 
             <TextView
                 android:id="@+id/tvMethod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/title_method"
+                style="@style/StyleTitle20"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="способ приготовления"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMethod"

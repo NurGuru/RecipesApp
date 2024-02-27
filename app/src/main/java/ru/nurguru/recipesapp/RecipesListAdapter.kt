@@ -29,7 +29,7 @@ class RecipesListAdapter(
         private val binding = ItemRecipeBinding.bind(view)
         val cvRecipeItem = binding.cvRecipeItem
         val tvRecipeName = binding.tvRecipeName
-        val ivRecipeImage = binding.ivRecipeImage
+        val ivRecipeImage = binding.ivRecipeItemImage
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
