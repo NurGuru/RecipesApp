@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 import ru.nurguru.recipesapp.models.Recipe
 import java.io.InputStream
@@ -41,7 +44,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         val ingredientAdapter = recipe?.let { IngredientsAdapter( it.ingredients) }
         binding.rvIngredients.adapter = ingredientAdapter
 
-        val methodAdapter = MethodAdapter(listOf(recipe))
+        val methodAdapter = recipe?.let { MethodAdapter(it.method) }
         binding.rvMethod.adapter = methodAdapter
     }
 
@@ -60,6 +63,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 recipe = requireArguments().getParcelable(Constants.ARG_RECIPE)
             }
         }
+
+        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources,R.drawable.devider, null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.rvIngredients.addItemDecoration(dividerItemDecoration)
+        binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
 
     private fun initUI(){

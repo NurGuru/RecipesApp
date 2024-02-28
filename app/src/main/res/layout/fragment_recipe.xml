@@ -47,18 +47,17 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_margin"
             android:layout_marginTop="@dimen/main_margin"
-            app:cardCornerRadius="@dimen/corner_radius"
-            >
+            app:cardCornerRadius="@dimen/corner_radius">
 
             <TextView
                 android:id="@+id/tvIngredients"
+                style="@style/StyleTitle20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/StyleTitle20"
+                android:paddingBottom="@dimen/main_margin"
                 android:text="@string/title_ingredients"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-               android:paddingBottom="@dimen/main_margin"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvIngredients"
@@ -68,7 +67,8 @@
                 android:layout_marginHorizontal="@dimen/main_margin_half"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tvIngredients"
-                tools:itemCount="5" tools:listitem="@layout/item_ingredient">
+                tools:itemCount="5"
+                tools:listitem="@layout/item_ingredient">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -78,15 +78,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/main_margin"
-            >
+            android:layout_margin="@dimen/main_margin">
 
             <TextView
                 android:id="@+id/tvMethod"
+                style="@style/StyleTitle20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/main_margin"
                 android:text="@string/title_method"
-                style="@style/StyleTitle20"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

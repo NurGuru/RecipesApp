@@ -9,7 +9,7 @@ import ru.nurguru.recipesapp.models.Recipe
 
 class MethodAdapter(
 
-    private val dataSet: List<Recipe?>,
+    private val dataSet: List<String>,
 ) : RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -24,7 +24,7 @@ class MethodAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.tvMethod.text = dataSet[position]?.method.toString()
+        viewHolder.tvMethod.text = dataSet[position]
     }
 
     override fun getItemCount() = dataSet.size
