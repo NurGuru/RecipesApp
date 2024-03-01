@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.databinding.ItemMethodBinding
-import ru.nurguru.recipesapp.models.Recipe
 
 class MethodAdapter(
 
@@ -24,7 +23,8 @@ class MethodAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.tvMethod.text = dataSet[position]
+
+        viewHolder.tvMethod.text = "${position+1}." + dataSet[position]
     }
 
     override fun getItemCount() = dataSet.size

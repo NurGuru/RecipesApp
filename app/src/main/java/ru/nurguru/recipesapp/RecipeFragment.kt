@@ -63,13 +63,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 recipe = requireArguments().getParcelable(Constants.ARG_RECIPE)
             }
         }
-
-        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources,R.drawable.devider, null)?.let {
-            dividerItemDecoration.setDrawable(it)
-        }
-        binding.rvIngredients.addItemDecoration(dividerItemDecoration)
-        binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
 
     private fun initUI(){
@@ -79,5 +72,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             ivRecipeItemImage?.let { view?.context?.assets?.open(it) }
         val drawable = Drawable.createFromStream(inputStream, null)
         binding.ivRecipeItemImage.setImageDrawable(drawable)
+
+        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources,R.drawable.devider, null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+
+        binding.rvIngredients.addItemDecoration(dividerItemDecoration)
+        binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
 }
