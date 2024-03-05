@@ -11,8 +11,7 @@ class IngredientsAdapter(
     private val dataSet: List<Ingredient>,
 
     ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-
-    private var quantity = 1
+    private var quantity: Int = 1
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemIngredientBinding.bind(view)
@@ -28,12 +27,18 @@ class IngredientsAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        val count = (dataSet[position].quantity)
+        if ((count.toDouble() * quantity) % 1.0 != 0.0) {
+            viewHolder.tvIngredientsQuantity.text =
+                "${count.toDouble() * quantity}"
+        } else  {
+            viewHolder.tvIngredientsQuantity.text =
+                "${(count.toDouble() * quantity).toInt() }"
+        }
+
         viewHolder.tvIngredientsDescription.text = dataSet[position].description
-//        viewHolder.tvIngredientsQuantity.text = dataSet[position].quantity
         viewHolder.tvIngredientsUnitOfMeasure.text = dataSet[position].unitOfMeasure
 
-        viewHolder.tvIngredientsDescription.text =
-            "${(dataSet[position].quantity.toDouble() * quantity)}"
     }
 
 
@@ -42,7 +47,7 @@ class IngredientsAdapter(
 
     fun updateIngredients(progress: Int) {
         quantity = progress
-        notifyItemChanged(quantity)
+        notifyDataSetChanged()
     }
 
 }
