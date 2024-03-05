@@ -24,7 +24,7 @@ class MethodAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        viewHolder.tvMethod.text = "${position+1}." + dataSet[position]
+        viewHolder.tvMethod.text = "%d.%s".format(position+1, dataSet[position])
     }
 
     override fun getItemCount() = dataSet.size
