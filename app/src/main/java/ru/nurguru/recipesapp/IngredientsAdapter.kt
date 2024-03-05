@@ -9,10 +9,13 @@ import ru.nurguru.recipesapp.models.Ingredient
 
 class IngredientsAdapter(
     private val dataSet: List<Ingredient>,
-) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+
+    ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+
+    private var quantity = 1
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-private val binding = ItemIngredientBinding.bind(view)
+        private val binding = ItemIngredientBinding.bind(view)
         val tvIngredientsUnitOfMeasure = binding.tvIngredientsUnitOfMeasure
         val tvIngredientsDescription = binding.tvIngredientsDescription
         val tvIngredientsQuantity = binding.tvIngredientsQuantity
@@ -25,11 +28,21 @@ private val binding = ItemIngredientBinding.bind(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-       viewHolder.tvIngredientsDescription.text = dataSet[position].description
-       viewHolder.tvIngredientsQuantity.text = dataSet[position].quantity
-       viewHolder.tvIngredientsUnitOfMeasure.text = dataSet[position].unitOfMeasure
+        viewHolder.tvIngredientsDescription.text = dataSet[position].description
+//        viewHolder.tvIngredientsQuantity.text = dataSet[position].quantity
+        viewHolder.tvIngredientsUnitOfMeasure.text = dataSet[position].unitOfMeasure
+
+        viewHolder.tvIngredientsDescription.text =
+            "${(dataSet[position].quantity.toDouble() * quantity)}"
     }
 
+
     override fun getItemCount() = dataSet.size
+
+
+    fun updateIngredients(progress: Int) {
+        quantity = progress
+        notifyItemChanged(quantity)
+    }
 
 }
