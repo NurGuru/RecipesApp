@@ -9,7 +9,6 @@
 
     <style name="StilePortionsCount">
         <item name="android:textSize">@dimen/tittle_portions_text_size</item>
-        <item name="android:textColor">@color/portions</item>
         <item name="fontFamily">@font/montserrat_semibold</item>
 
     </style>
