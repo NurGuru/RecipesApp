@@ -79,6 +79,7 @@
                 tools:text="3" />
 
             <SeekBar
+                style="@style/StyleSeekBar"
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
