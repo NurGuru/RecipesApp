@@ -64,9 +64,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private fun initBundleData() {
 
-        arguments.let {
-            ivRecipeItemImage = requireArguments().getString(Constants.ARG_RECIPE_IMAGE_URL)
-        }
 
         if (Build.VERSION.SDK_INT >= 33) {
             arguments.let {
@@ -81,6 +78,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private fun initUI() {
         binding.tvRecipeSubTitle.text = recipe?.title
+
+        val recipe = recipe?.id?.let { STUB.getRecipeById(recipeId = it) }
+        ivRecipeItemImage = recipe?.imageUrl
 
         val inputStream: InputStream? =
             ivRecipeItemImage?.let { view?.context?.assets?.open(it) }

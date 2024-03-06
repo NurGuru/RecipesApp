@@ -18,7 +18,7 @@
         <item name="android:textSize">@dimen/tittle_text_size</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/cardDescription</item>
+        <item name="android:textColor">@color/cardDescriptionColor</item>
     </style>
 
     <style name="StyleMethodsText" parent="StyleIngredientsText">
@@ -42,7 +42,7 @@
     <style name="StyleCategoriesCardDescription" parent="TextAppearance.AppCompat">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/montserrat_medium</item>
-        <item name="android:textColor">@color/cardDescription</item>
+        <item name="android:textColor">@color/cardDescriptionColor</item>
     </style>
 
     <style name="StyleTitle20" parent="TextAppearance.AppCompat">
