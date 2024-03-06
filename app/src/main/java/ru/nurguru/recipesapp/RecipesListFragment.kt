@@ -56,10 +56,8 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private fun openRecipeByRecipeId(recipeId: Int) {
 
         val recipe = STUB.getRecipeById(recipeId)
-        val recipeImageUrl = recipe?.imageUrl
         val bundle = bundleOf(
             Constants.ARG_RECIPE to recipe,
-            Constants.ARG_RECIPE_IMAGE_URL to recipeImageUrl
         )
 
         parentFragmentManager.commit {
