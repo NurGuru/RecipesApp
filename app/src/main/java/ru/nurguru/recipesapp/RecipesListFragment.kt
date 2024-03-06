@@ -56,7 +56,9 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private fun openRecipeByRecipeId(recipeId: Int) {
 
         val recipe = STUB.getRecipeById(recipeId)
-        val bundle = bundleOf(Constants.ARG_RECIPE to recipe)
+        val bundle = bundleOf(
+            Constants.ARG_RECIPE to recipe,
+        )
 
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)
@@ -73,11 +75,11 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         }
     }
 
-    private fun initUI(){
+    private fun initUI() {
         binding.tvRecipeTitle.text = categoryName
         val inputStream: InputStream? =
             categoryImageUrl?.let { view?.context?.assets?.open(it) }
         val drawable = Drawable.createFromStream(inputStream, null)
-        binding.recipeImage.setImageDrawable(drawable)
+        binding.ivRecipeMainImage.setImageDrawable(drawable)
     }
 }
