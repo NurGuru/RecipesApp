@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -41,11 +42,25 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     }
 
     private fun initRecycler() {
-        val ingredientAdapter = recipe?.let { IngredientsAdapter( it.ingredients) }
+        val ingredientAdapter = recipe?.let { IngredientsAdapter(it.ingredients) }
         binding.rvIngredients.adapter = ingredientAdapter
 
         val methodAdapter = recipe?.let { MethodAdapter(it.method) }
         binding.rvMethod.adapter = methodAdapter
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                ingredientAdapter?.updateIngredients(progress)
+                binding.portionsCount.text = progress.toString()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
     }
 
     private fun initBundleData() {
@@ -62,7 +77,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
     }
 
-    private fun initUI(){
+    private fun initUI() {
         binding.tvRecipeSubTitle.text = recipe?.title
 
         val recipe = recipe?.id?.let { STUB.getRecipeById(recipeId = it) }
@@ -74,7 +89,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         binding.ivRecipeItemImage.setImageDrawable(drawable)
 
         val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources,R.drawable.devider, null)?.let {
+        ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
             dividerItemDecoration.setDrawable(it)
         }
 

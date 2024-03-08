@@ -54,10 +54,43 @@
                 style="@style/StyleTitle20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/main_margin"
+                android:paddingBottom="@dimen/middle_margin_half"
                 android:text="@string/title_ingredients"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/portions"
+                style="@style/StilePortionsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/middle_margin_half"
+                android:text="@string/title_portions"
+                android:paddingEnd="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvIngredients" />
+
+            <TextView
+                android:id="@+id/portionsCount"
+                style="@style/StilePortionsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/portions"
+                app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
+                android:text="1" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/main_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/portions"
+                android:max="5"
+                android:min="1">
+
+            </SeekBar>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvIngredients"
@@ -67,7 +100,7 @@
                 android:background="@drawable/shape_rounded_item"
                 android:paddingHorizontal="@dimen/middle_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/tvIngredients"
+                app:layout_constraintTop_toBottomOf="@id/seekBar"
                 tools:itemCount="5"
                 tools:listitem="@layout/item_ingredient">
 
