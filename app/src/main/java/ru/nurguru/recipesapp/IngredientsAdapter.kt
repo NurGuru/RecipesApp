@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.databinding.ItemIngredientBinding
 import ru.nurguru.recipesapp.models.Ingredient
+import java.math.BigDecimal
 
 class IngredientsAdapter(
     private val dataSet: List<Ingredient>,
-
     ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+
     private var quantity: Int = 1
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -18,6 +19,7 @@ class IngredientsAdapter(
         val tvIngredientsUnitOfMeasure = binding.tvIngredientsUnitOfMeasure
         val tvIngredientsDescription = binding.tvIngredientsDescription
         val tvIngredientsQuantity = binding.tvIngredientsQuantity
+
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -27,13 +29,12 @@ class IngredientsAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val count = (dataSet[position].quantity)
-        if ((count.toDouble() * quantity) % 1.0 != 0.0) {
-            viewHolder.tvIngredientsQuantity.text =
-                "${count.toDouble() * quantity}"
-        } else  {
-            viewHolder.tvIngredientsQuantity.text =
-                "${(count.toDouble() * quantity).toInt() }"
+        val count = BigDecimal(dataSet[position].quantity)
+        val result = count.multiply(BigDecimal(quantity))
+        if (result.remainder(BigDecimal.ONE) != BigDecimal.ZERO) {
+            viewHolder.tvIngredientsQuantity.text = "$result"
+        } else {
+            viewHolder.tvIngredientsQuantity.text = result.toInt().toString()
         }
 
         viewHolder.tvIngredientsDescription.text = dataSet[position].description

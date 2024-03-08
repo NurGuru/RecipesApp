@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/middle_margin_half"
                 android:text="@string/title_portions"
+                android:paddingEnd="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvIngredients" />
 
@@ -75,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/portions"
-                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
                 tools:text="3" />
 
             <SeekBar
