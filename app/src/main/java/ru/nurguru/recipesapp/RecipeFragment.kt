@@ -51,6 +51,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 ingredientAdapter?.updateIngredients(progress)
+                binding.portionsCount.text = progress.toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

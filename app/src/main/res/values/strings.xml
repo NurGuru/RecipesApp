@@ -4,7 +4,7 @@
     <string name="title_favorite">избранное</string>
     <string name="title_ingredients">ингредиенты</string>
     <string name="title_method">способ приготовления</string>
-    <string name="title_portions">Порции: </string>
+    <string name="title_portions">Порции:</string>
     <string name="content_description_categories_cards">"Изображение для категории</string>
     <string name="content_description_recipes_cards">"Изображение для рецептов</string>
     <string name="content_description_categories_main_screen">categories screen main image</string>
