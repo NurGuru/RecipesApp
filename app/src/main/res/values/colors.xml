@@ -8,5 +8,7 @@
     <color name="categoryTitleColor">#5F3678</color>
     <color name="cardDescriptionColor">#666666</color>
     <color name="dividerColor">#F5F5F5</color>
+    <color name="thumbColor">#525DC0</color>
+    <color name="seekBarProgressColor">#A1A9F9</color>
 
 </resources>
