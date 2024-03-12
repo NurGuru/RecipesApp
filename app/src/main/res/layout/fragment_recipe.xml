@@ -15,6 +15,20 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recipe_list_main_image_height">
 
+            <ImageButton
+                android:id="@+id/ivFavoritesIcon"
+                style="@style/ClickEffect"
+                android:layout_width="35dp"
+                android:layout_height="29.99dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="18.5dp"
+                android:background="#00000000"
+                android:contentDescription="@string/content_description_favorites_item_image"
+                android:translationZ="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_heart" />
+
             <ImageView
                 android:id="@+id/ivRecipeItemImage"
                 android:layout_width="match_parent"
@@ -64,9 +78,9 @@
                 style="@style/StilePortionsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="4dp"
                 android:paddingBottom="@dimen/middle_margin_half"
                 android:text="@string/title_portions"
-                android:paddingEnd="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvIngredients" />
 
@@ -75,9 +89,9 @@
                 style="@style/StilePortionsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="1"
                 app:layout_constraintStart_toEndOf="@+id/portions"
-                app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
-                android:text="1" />
+                app:layout_constraintTop_toBottomOf="@+id/tvIngredients" />
 
             <SeekBar
                 android:id="@+id/seekBar"
