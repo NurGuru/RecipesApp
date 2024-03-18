@@ -93,6 +93,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             dividerItemDecoration.setDrawable(it)
         }
 
+        binding.ivFavoritesIcon.setOnClickListener{
+            binding.ivFavoritesIcon.setImageResource(R.drawable.ic_heart)
+        }
+
+        binding.ivFavoritesIcon.setImageResource(R.drawable.ic_heart_empty)
         binding.rvIngredients.addItemDecoration(dividerItemDecoration)
         binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
