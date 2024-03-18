@@ -17,14 +17,16 @@
 
             <ImageButton
                 android:id="@+id/ivFavoritesIcon"
-                style="@style/ClickEffect"
-                android:layout_width="35dp"
-                android:layout_height="29.99dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginEnd="18.5dp"
+                style="@style/StyleClickEffect"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/main_margin"
+                android:layout_marginEnd="@dimen/main_margin"
                 android:background="#00000000"
                 android:contentDescription="@string/content_description_favorites_item_image"
                 android:translationZ="10dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_heart" />
