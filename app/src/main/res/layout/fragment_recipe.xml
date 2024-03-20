@@ -16,7 +16,7 @@
             android:layout_height="@dimen/recipe_list_main_image_height">
 
             <ImageButton
-                android:id="@+id/ivFavoritesIcon"
+                android:id="@+id/ibFavoritesIcon"
                 style="@style/StyleClickEffect"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

@@ -1,5 +1,6 @@
 package ru.nurguru.recipesapp
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -64,8 +65,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     }
 
     private fun initBundleData() {
-
-
         if (Build.VERSION.SDK_INT >= 33) {
             arguments.let {
                 recipe = requireArguments().getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
@@ -78,9 +77,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     }
 
     private fun initUI() {
-        binding.tvRecipeSubTitle.text = recipe?.title
 
-        val recipe = recipe?.id?.let { STUB.getRecipeById(recipeId = it) }
         ivRecipeItemImage = recipe?.imageUrl
 
         val inputStream: InputStream? =
@@ -93,12 +90,52 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             dividerItemDecoration.setDrawable(it)
         }
 
-        binding.ivFavoritesIcon.setOnClickListener{
-            binding.ivFavoritesIcon.setImageResource(R.drawable.ic_heart)
+        with(binding) {
+            tvRecipeSubTitle.text = recipe?.title
+            rvIngredients.addItemDecoration(dividerItemDecoration)
+            rvMethod.addItemDecoration(dividerItemDecoration)
         }
 
-        binding.ivFavoritesIcon.setImageResource(R.drawable.ic_heart_empty)
-        binding.rvIngredients.addItemDecoration(dividerItemDecoration)
-        binding.rvMethod.addItemDecoration(dividerItemDecoration)
+        val favoritesIdStringSet = getFavorites()
+
+        if ("${recipe?.id}" in favoritesIdStringSet) recipe?.isInFavorites = true
+
+        with(binding.ibFavoritesIcon) {
+            setImageResource(
+                if (recipe != null && recipe?.isInFavorites == true) R.drawable.ic_heart
+                else R.drawable.ic_heart_empty,
+            )
+
+            setOnClickListener {
+                if (recipe != null && recipe?.isInFavorites == true) {
+                    favoritesIdStringSet.remove("${recipe?.id}")
+                    setImageResource(R.drawable.ic_heart_empty)
+                    recipe?.isInFavorites = false
+                } else {
+                    favoritesIdStringSet.add("${recipe?.id}")
+                    setImageResource(R.drawable.ic_heart)
+                    recipe?.isInFavorites = true
+                }
+
+                saveFavorites(favoritesIdStringSet)
+            }
+        }
+    }
+
+    private fun saveFavorites(recipeIds: Set<String>) {
+        val sharedPrefs =
+            activity?.getSharedPreferences(Constants.FAVORITES_PREFERENCES, Context.MODE_PRIVATE)
+        sharedPrefs?.edit()?.putStringSet(Constants.FAVORITES_KEY, recipeIds)?.apply()
+    }
+
+    private fun getFavorites(): MutableSet<String> {
+        val sharedPrefs = requireActivity().getSharedPreferences(
+            Constants.FAVORITES_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
+        val setOfFavoritesId =
+            sharedPrefs?.getStringSet(Constants.FAVORITES_KEY, setOf()) ?: setOf()
+
+        return HashSet(setOfFavoritesId)
     }
 }
