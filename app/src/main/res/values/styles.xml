@@ -59,4 +59,10 @@
         <item name="android:thumb">@drawable/shape_seekbar_thumb</item>
         <item name="android:progressDrawable">@drawable/shape_seekbar_progress</item>
     </style>
+
+    <style name="StyleTitle16" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/favorites_tittle_text_size</item>
+        <item name="android:textColor">@color/cardDescriptionColor</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
 </resources>
