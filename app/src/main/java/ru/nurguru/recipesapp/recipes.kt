@@ -276,4 +276,7 @@ object STUB {
             emptyList()
         }
     }
+
+    fun getRecipesByIds(idsSet: Set<Int>, categoryId: Int = 0) =
+        getRecipesByCategoryId(categoryId).filter { it.id in idsSet }.sortedBy { it.id }
 }
