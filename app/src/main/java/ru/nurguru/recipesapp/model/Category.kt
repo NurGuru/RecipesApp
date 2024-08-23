@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp.models
+package ru.nurguru.recipesapp.model
 
 data class Category(
     val id: Int,
