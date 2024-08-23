@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp
+package ru.nurguru.recipesapp.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import ru.nurguru.recipesapp.R
+import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {

@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp.models
+package ru.nurguru.recipesapp.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

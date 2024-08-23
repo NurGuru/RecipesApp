@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp
+package ru.nurguru.recipesapp.ui
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -12,8 +12,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
-import ru.nurguru.recipesapp.models.Recipe
+import ru.nurguru.recipesapp.model.Recipe
 import java.io.InputStream
 
 

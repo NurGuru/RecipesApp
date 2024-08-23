@@ -1,10 +1,11 @@
-package ru.nurguru.recipesapp
+package ru.nurguru.recipesapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

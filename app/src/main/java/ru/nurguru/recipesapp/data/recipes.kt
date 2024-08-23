@@ -1,8 +1,8 @@
-package ru.nurguru.recipesapp
+package ru.nurguru.recipesapp.data
 
-import ru.nurguru.recipesapp.models.Category
-import ru.nurguru.recipesapp.models.Ingredient
-import ru.nurguru.recipesapp.models.Recipe
+import ru.nurguru.recipesapp.model.Category
+import ru.nurguru.recipesapp.model.Ingredient
+import ru.nurguru.recipesapp.model.Recipe
 
 object STUB {
     private val categoriesList = listOf<Category>(
