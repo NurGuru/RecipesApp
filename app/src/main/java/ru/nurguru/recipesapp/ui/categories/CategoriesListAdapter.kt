@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp.ui
+package ru.nurguru.recipesapp.ui.categories
 
 import android.graphics.drawable.Drawable
 import android.util.Log
