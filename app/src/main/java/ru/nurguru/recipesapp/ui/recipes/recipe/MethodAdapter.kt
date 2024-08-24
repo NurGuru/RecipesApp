@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp.ui
+package ru.nurguru.recipesapp.ui.recipes.recipe
 
 import android.view.LayoutInflater
 import android.view.View
