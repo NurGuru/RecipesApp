@@ -4,16 +4,21 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.Constants
+import ru.nurguru.recipesapp.data.Constants.TAG_RECIPE_VIEW_MODEL
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 import ru.nurguru.recipesapp.model.Recipe
 import java.io.InputStream
@@ -27,6 +32,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
+    private val viewModel: RecipeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +48,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         initBundleData()
         initRecycler()
         initUI()
+        setLiveDataObserver()
+    }
+
+    private fun setLiveDataObserver(){
+        viewModel.recipeUiState.observe(viewLifecycleOwner) {
+            Log.i(TAG_RECIPE_VIEW_MODEL, "${it.isInFavorites}")
+        }
     }
 
     private fun initRecycler() {
