@@ -13,4 +13,5 @@
     <string name="content_description_favorites_item_image">favorite item image</string>
     <string name="content_description_favorites_main_image">favorite main image</string>
     <string name="favorites_stub" translatable="false">Вы еще не добавили ни одного рецепта в избранное</string>
+    <string name="asset_error">asset error</string>
 </resources>

@@ -11,8 +11,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE
-import ru.nurguru.recipesapp.data.Constants.FAVORITES_KEY
-import ru.nurguru.recipesapp.data.Constants.FAVORITES_PREFERENCES
+import ru.nurguru.recipesapp.data.Constants.SHARED_FAVORITES_IDS_FILE_NAME
+import ru.nurguru.recipesapp.data.Constants.SHARED_FAVORITES_IDS_KEY
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
 import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
@@ -80,10 +80,10 @@ class FavoritesFragment : Fragment() {
 
     private fun getFavoritesIds(): Set<Int> {
         val sharedPrefs = activity?.getSharedPreferences(
-            FAVORITES_PREFERENCES, Context.MODE_PRIVATE
+            SHARED_FAVORITES_IDS_FILE_NAME, Context.MODE_PRIVATE
         )
         val setOfFavoritesIds =
-            sharedPrefs?.getStringSet(FAVORITES_KEY, setOf()) ?: setOf()
+            sharedPrefs?.getStringSet(SHARED_FAVORITES_IDS_KEY, setOf()) ?: setOf()
 
         return setOfFavoritesIds.map { it.toInt() }.toSet()
     }
