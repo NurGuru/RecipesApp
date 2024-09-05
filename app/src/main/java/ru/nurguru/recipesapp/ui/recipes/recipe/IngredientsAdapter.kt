@@ -11,9 +11,8 @@ import java.math.BigDecimal
 
 class IngredientsAdapter(
     private val dataSet: List<Ingredient>,
-    ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-
     private var quantity: Int = 1
+    ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemIngredientBinding.bind(view)

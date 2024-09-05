@@ -49,6 +49,10 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         }
     }
 
+    fun updateNumOfPortions(newNumOfPortions: Int) {
+        mutableRecipeUiState.value?.recipe?.numberOfPortions = newNumOfPortions
+    }
+
     fun onFavoritesClicked() {
         recipeUiState.value?.let {
             if (it.recipe != null && it.isInFavorites) {
