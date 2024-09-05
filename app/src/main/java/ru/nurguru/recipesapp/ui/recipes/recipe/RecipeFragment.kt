@@ -27,6 +27,9 @@ class RecipeFragment : Fragment() {
     private var recipeId: Int? = null
     private val viewModel: RecipeViewModel by activityViewModels()
 
+    private val ingredientsAdapter: IngredientsAdapter = IngredientsAdapter(listOf(), 1)
+    private val methodAdapter: MethodAdapter = MethodAdapter(listOf())
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -88,35 +91,36 @@ class RecipeFragment : Fragment() {
             ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
                 dividerItemDecoration.setDrawable(it)
             }
-            val ingredientAdapter = IngredientsAdapter(
-                recipeState.recipe?.ingredients ?: listOf(),
-                recipeState.recipe?.numberOfPortions ?: 1
-            )
-            binding.rvIngredients.adapter = ingredientAdapter
 
-            val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())
-            binding.rvMethod.adapter = methodAdapter
+            ingredientsAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
+            ingredientsAdapter.quantity = recipeState.recipe?.numberOfPortions ?: 1
+
+            methodAdapter.dataSet = recipeState.recipe?.method ?: listOf()
 
             binding.seekBar.setOnSeekBarChangeListener(
-                object : SeekBar.OnSeekBarChangeListener {
-                    override fun onProgressChanged(
-                        seekBar: SeekBar?, progress: Int, fromUser: Boolean
-                    ) {
-                        ingredientAdapter.updateIngredients(progress)
-                        recipeState.recipe?.numberOfPortions = progress
-                        viewModel.updateNumOfPortions(progress)
-                        binding.portionsCount.text = "${recipeState.recipe?.numberOfPortions ?: 1}"
-                    }
-
-                    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-                    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+                PortionSeekBarListener { progress ->
+                    ingredientsAdapter.updateIngredients(progress)
+                    viewModel.updateNumOfPortions(progress)
+                    binding.portionsCount.text = "${recipeState.recipe?.numberOfPortions ?: 1}"
 
                 }
             )
+            binding.rvIngredients.adapter = ingredientsAdapter
+            binding.rvMethod.adapter = methodAdapter
+
             binding.rvIngredients.addItemDecoration(dividerItemDecoration)
             binding.rvMethod.addItemDecoration(dividerItemDecoration)
-
         }
+    }
+
+    class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
+        SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            onChangeIngredients(progress)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     }
 }

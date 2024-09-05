@@ -8,7 +8,7 @@ import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ItemMethodBinding
 
 class MethodAdapter(
-    private val dataSet: List<String>,
+    var dataSet: List<String>,
 ) : RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
