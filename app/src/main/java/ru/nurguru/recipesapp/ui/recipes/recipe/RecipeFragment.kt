@@ -52,10 +52,7 @@ class RecipeFragment : Fragment() {
 
         viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
 
-            val inputStream =
-                context?.assets?.open(recipeState.recipe?.imageUrl ?: "burger.png")
-            val drawable = Drawable.createFromStream(inputStream, null)
-            binding.ivRecipeItemImage.setImageDrawable(drawable)
+            binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
 
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
