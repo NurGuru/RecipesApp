@@ -22,6 +22,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var _binding: FragmentRecipeBinding? = null
     private var recipe: Recipe? = null
     private var ivRecipeItemImage: String? = null
+    private var isInFavorites: Boolean = false
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
@@ -98,23 +99,23 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
         val favoritesIdStringSet = getFavorites()
 
-        if ("${recipe?.id}" in favoritesIdStringSet) recipe?.isInFavorites = true
+        if ("${recipe?.id}" in favoritesIdStringSet) isInFavorites = true
 
         with(binding.ibFavoritesIcon) {
             setImageResource(
-                if (recipe != null && recipe?.isInFavorites == true) R.drawable.ic_heart
+                if (recipe != null && isInFavorites == true) R.drawable.ic_heart
                 else R.drawable.ic_heart_empty,
             )
 
             setOnClickListener {
-                if (recipe != null && recipe?.isInFavorites == true) {
+                if (recipe != null && isInFavorites == true) {
                     favoritesIdStringSet.remove("${recipe?.id}")
                     setImageResource(R.drawable.ic_heart_empty)
-                    recipe?.isInFavorites = false
+                    isInFavorites = false
                 } else {
                     favoritesIdStringSet.add("${recipe?.id}")
                     setImageResource(R.drawable.ic_heart)
-                    recipe?.isInFavorites = true
+                   isInFavorites = true
                 }
 
                 saveFavorites(favoritesIdStringSet)

@@ -18,8 +18,8 @@
             <ImageButton
                 android:id="@+id/ibFavoritesIcon"
                 style="@style/StyleClickEffect"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/favorites_heart_image_height"
+                android:layout_height="@dimen/favorites_heart_image_height"
                 android:layout_marginTop="@dimen/main_margin"
                 android:layout_marginEnd="@dimen/main_margin"
                 android:background="#00000000"
