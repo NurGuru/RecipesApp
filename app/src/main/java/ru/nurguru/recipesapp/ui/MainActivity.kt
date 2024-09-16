@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ActivityMainBinding
 import ru.nurguru.recipesapp.ui.categories.CategoriesListFragment
@@ -21,26 +23,13 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add<CategoriesListFragment>(R.id.mainContainer)
-            addToBackStack(null)
-        }
 
         binding.navBtnFavorite.setOnClickListener {
-            supportFragmentManager.commit {
-                replace<FavoritesFragment>(R.id.mainContainer)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
+            findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment2)
         }
 
         binding.navBtnCategories.setOnClickListener {
-            supportFragmentManager.commit {
-                replace<CategoriesListFragment>(R.id.mainContainer)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
+            findNavController(R.id.navHostFragment).navigate((R.id.categoriesListFragment))
         }
     }
 }

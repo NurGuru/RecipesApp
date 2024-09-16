@@ -1,6 +1,5 @@
 package ru.nurguru.recipesapp.ui.recipes.favorites
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE
-import ru.nurguru.recipesapp.data.Constants.SHARED_FAVORITES_IDS_FILE_NAME
-import ru.nurguru.recipesapp.data.Constants.SHARED_FAVORITES_IDS_KEY
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
 import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
@@ -72,11 +70,6 @@ class FavoritesFragment : Fragment() {
     private fun openRecipeByRecipeId(recipeId: Int) {
         val recipe = STUB.getRecipeById(recipeId)
         val bundle = bundleOf(ARG_RECIPE to recipe)
-
-        parentFragmentManager.commit {
-            setReorderingAllowed(true)
-            addToBackStack("RecipeFragment")
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
-        }
+        findNavController().navigate(R.id.recipeFragment, bundle)
     }
 }

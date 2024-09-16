@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 import ru.nurguru.recipesapp.data.Constants
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListFragment
@@ -54,12 +54,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
     private fun openRecipesByCategoryId(categoryId: Int) {
         val bundle = bundleOf(Constants.ARG_CATEGORY_ID to categoryId)
-
-        parentFragmentManager.commit {
-            replace<RecipesListFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+findNavController().navigate(R.id.recipesListFragment,bundle)
     }
 }
 
