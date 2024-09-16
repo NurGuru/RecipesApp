@@ -13,7 +13,7 @@ import java.io.IOException
 import java.io.InputStream
 
 class RecipesListAdapter(
-    private val dataSet: List<Recipe>
+     var dataSet: List<Recipe>
 ) : RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null
