@@ -6,4 +6,6 @@ object Constants {
     const val ARG_CATEGORY_IMAGE_URL ="arg_category_image_url"
     const val ARG_RECIPE_IMAGE_URL ="arg_recipe_image_url"
     const val ARG_RECIPE ="arg_recipe"
+    const val FAVORITES_PREFERENCES = "favorites_pref"
+    const val FAVORITES_KEY = "favorites"
 }
