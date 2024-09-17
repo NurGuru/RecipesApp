@@ -11,5 +11,4 @@ data class Recipe(
     val ingredients: List<Ingredient>,
     val method: List<String>,
     val imageUrl: String,
-    var isInFavorites: Boolean = false
 ):Parcelable
