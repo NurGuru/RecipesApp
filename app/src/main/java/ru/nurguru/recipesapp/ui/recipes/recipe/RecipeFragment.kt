@@ -24,14 +24,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var _binding: FragmentRecipeBinding? = null
     private var recipe: Recipe? = null
     private var ivRecipeItemImage: String? = null
+    private var isInFavorites: Boolean = false
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeBinding.inflate(inflater)
         return binding.root
@@ -82,8 +81,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
         ivRecipeItemImage = recipe?.imageUrl
 
-        val inputStream: InputStream? =
-            ivRecipeItemImage?.let { view?.context?.assets?.open(it) }
+        val inputStream: InputStream? = ivRecipeItemImage?.let { view?.context?.assets?.open(it) }
         val drawable = Drawable.createFromStream(inputStream, null)
         binding.ivRecipeItemImage.setImageDrawable(drawable)
 
@@ -100,40 +98,42 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
         val favoritesIdStringSet = getFavorites()
 
-        if ("${recipe?.id}" in favoritesIdStringSet) recipe?.isInFavorites = true
+        recipe?.let { recipe ->
+            if (recipe.id.toString() in favoritesIdStringSet) isInFavorites = true
 
-        with(binding.ibFavoritesIcon) {
-            setImageResource(
-                if (recipe != null && recipe?.isInFavorites == true) R.drawable.ic_heart
-                else R.drawable.ic_heart_empty,
-            )
+            with(binding.ibFavoritesIcon) {
+                setImageResource(
+                    if (isInFavorites) R.drawable.ic_heart
+                    else R.drawable.ic_heart_empty,
+                )
 
-            setOnClickListener {
-                if (recipe != null && recipe?.isInFavorites == true) {
-                    favoritesIdStringSet.remove("${recipe?.id}")
-                    setImageResource(R.drawable.ic_heart_empty)
-                    recipe?.isInFavorites = false
-                } else {
-                    favoritesIdStringSet.add("${recipe?.id}")
-                    setImageResource(R.drawable.ic_heart)
-                    recipe?.isInFavorites = true
+                setOnClickListener {
+                    if (isInFavorites) {
+                        favoritesIdStringSet.remove(recipe.id.toString())
+                        setImageResource(R.drawable.ic_heart_empty)
+                        isInFavorites = false
+                    } else {
+                        favoritesIdStringSet.add(recipe.id.toString())
+                        setImageResource(R.drawable.ic_heart)
+                        isInFavorites = true
+                    }
+
+                    saveFavorites(favoritesIdStringSet)
                 }
-
-                saveFavorites(favoritesIdStringSet)
             }
         }
     }
 
     private fun saveFavorites(recipeIds: Set<String>) {
-        val sharedPrefs =
-            activity?.getSharedPreferences(Constants.FAVORITES_PREFERENCES, Context.MODE_PRIVATE)
+        val sharedPrefs = requireActivity().getSharedPreferences(
+            Constants.FAVORITES_PREFERENCES, Context.MODE_PRIVATE
+        )
         sharedPrefs?.edit()?.putStringSet(Constants.FAVORITES_KEY, recipeIds)?.apply()
     }
 
     private fun getFavorites(): MutableSet<String> {
         val sharedPrefs = requireActivity().getSharedPreferences(
-            Constants.FAVORITES_PREFERENCES,
-            Context.MODE_PRIVATE
+            Constants.FAVORITES_PREFERENCES, Context.MODE_PRIVATE
         )
         val setOfFavoritesId =
             sharedPrefs?.getStringSet(Constants.FAVORITES_KEY, setOf()) ?: setOf()
