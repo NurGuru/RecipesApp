@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp
+package ru.nurguru.recipesapp.ui
 
 object Constants {
     const val ARG_CATEGORY_ID ="arg_category_id"

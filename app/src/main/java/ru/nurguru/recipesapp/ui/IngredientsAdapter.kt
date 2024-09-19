@@ -1,11 +1,12 @@
-package ru.nurguru.recipesapp
+package ru.nurguru.recipesapp.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ItemIngredientBinding
-import ru.nurguru.recipesapp.models.Ingredient
+import ru.nurguru.recipesapp.model.Ingredient
 import java.math.BigDecimal
 
 class IngredientsAdapter(

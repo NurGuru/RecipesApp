@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp
+package ru.nurguru.recipesapp.ui
 
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ItemRecipeBinding
-import ru.nurguru.recipesapp.models.Recipe
+import ru.nurguru.recipesapp.model.Recipe
 import java.io.IOException
 import java.io.InputStream
 
