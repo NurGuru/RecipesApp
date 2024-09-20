@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp.ui
+package ru.nurguru.recipesapp.ui.recipes.recipesList
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.fragment.app.replace
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
+import ru.nurguru.recipesapp.model.Constants
+import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
 import java.io.InputStream
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {

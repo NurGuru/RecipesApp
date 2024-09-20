@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp.ui
+package ru.nurguru.recipesapp.ui.recipes.favorites
 
 import android.content.Context
 import android.os.Bundle
@@ -10,11 +10,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.ui.Constants.ARG_RECIPE
-import ru.nurguru.recipesapp.ui.Constants.FAVORITES_KEY
-import ru.nurguru.recipesapp.ui.Constants.FAVORITES_PREFERENCES
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE
+import ru.nurguru.recipesapp.model.Constants.FAVORITES_KEY
+import ru.nurguru.recipesapp.model.Constants.FAVORITES_PREFERENCES
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
+import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
+import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null

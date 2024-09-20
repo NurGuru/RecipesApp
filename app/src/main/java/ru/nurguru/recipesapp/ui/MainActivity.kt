@@ -7,6 +7,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ActivityMainBinding
+import ru.nurguru.recipesapp.ui.categories.CategoriesListFragment
+import ru.nurguru.recipesapp.ui.recipes.favorites.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
