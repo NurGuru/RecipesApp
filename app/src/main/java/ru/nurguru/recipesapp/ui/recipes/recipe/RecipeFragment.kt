@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.Constants
+import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 import ru.nurguru.recipesapp.model.Recipe
 import java.io.InputStream

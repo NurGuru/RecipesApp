@@ -5,7 +5,8 @@ import ru.nurguru.recipesapp.model.Recipe
 
 class RecipeViewModel : ViewModel() {
     data class RecipeUiState(
-        var recipe: Recipe? = null,
-        var numberOfPortions: Int = 1,
+        val recipe: Recipe? = null,
+        val numberOfPortions: Int = 1,
+        val isInFavorites: Boolean = false
     )
 }

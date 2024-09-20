@@ -11,7 +11,7 @@ import androidx.fragment.app.replace
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
-import ru.nurguru.recipesapp.data.Constants
+import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListFragment
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
