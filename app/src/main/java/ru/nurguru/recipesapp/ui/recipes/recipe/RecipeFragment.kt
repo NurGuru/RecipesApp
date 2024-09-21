@@ -51,7 +51,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private fun setLiveDataObserver(){
         viewModel.recipeUiState.observe(viewLifecycleOwner) {
-            Log.i(TAG_RECIPE_VIEW_MODEL, "${it.isInFavorites}")
+            Log.i(TAG_RECIPE_VIEW_MODEL, "$it")
         }
     }
 
