@@ -13,12 +13,10 @@ class RecipeViewModel : ViewModel() {
         val numberOfPortions: Int = 1,
         val isInFavorites: Boolean = false
     )
-    private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
-    val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
-
-
-    init {
+    private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState()).also {
+        state->
         Log.i(TAG_RECIPE_VIEW_MODEL, "RecipeViewModel init block")
-        _recipeUiState.value = RecipeUiState(isInFavorites = true)
+        state.value = RecipeUiState(isInFavorites = true)
     }
+    val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
 }
