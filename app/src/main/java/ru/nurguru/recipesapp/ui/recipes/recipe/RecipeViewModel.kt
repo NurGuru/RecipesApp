@@ -6,8 +6,9 @@ import android.graphics.drawable.Drawable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.nurguru.recipesapp.data.Constants
+import androidx.lifecycle.ViewModel
 import ru.nurguru.recipesapp.data.STUB
+import ru.nurguru.recipesapp.model.Constants.TAG_RECIPE_VIEW_MODEL
 import ru.nurguru.recipesapp.model.Recipe
 
 data class RecipeUiState(
@@ -21,12 +22,12 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     private val favoritesIdStringSet = getFavorites()
 
-    private var mutableRecipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
-    val recipeUiState: LiveData<RecipeUiState> = mutableRecipeUiState
+    private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
+    val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
 
     fun loadRecipe(recipeId: Int?) {
         // TODO: load from network
-        mutableRecipeUiState.value?.let {
+        _recipeUiState.value?.let {
             if (recipeId != null) {
                 it.recipe = STUB.getRecipeById(recipeId = recipeId)
                 it.isInFavorites = "$recipeId" in favoritesIdStringSet

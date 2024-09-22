@@ -17,6 +17,7 @@ import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 
+
 class RecipeFragment : Fragment() {
 
     private var _binding: FragmentRecipeBinding? = null
