@@ -13,6 +13,7 @@ import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
 import ru.nurguru.recipesapp.model.Constants
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
 import java.io.InputStream
 

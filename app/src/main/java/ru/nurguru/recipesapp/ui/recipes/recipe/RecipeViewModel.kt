@@ -2,13 +2,12 @@ package ru.nurguru.recipesapp.ui.recipes.recipe
 
 import android.app.Application
 import android.content.Context
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import ru.nurguru.recipesapp.data.STUB
-import ru.nurguru.recipesapp.model.Constants.TAG_RECIPE_VIEW_MODEL
+import ru.nurguru.recipesapp.model.Constants
+
 import ru.nurguru.recipesapp.model.Recipe
 
 data class RecipeUiState(
