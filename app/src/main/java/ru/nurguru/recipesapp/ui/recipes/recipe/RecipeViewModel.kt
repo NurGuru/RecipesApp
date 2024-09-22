@@ -16,7 +16,7 @@ class RecipeViewModel : ViewModel() {
     private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState()).also {
         state->
         Log.i(TAG_RECIPE_VIEW_MODEL, "RecipeViewModel init block")
-        state.value = RecipeUiState(isInFavorites = true)
+        state.value?.copy(isInFavorites = true)
     }
     val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
 }
