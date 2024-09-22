@@ -10,11 +10,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE
-import ru.nurguru.recipesapp.data.Constants.SHARED_FAVORITES_IDS_FILE_NAME
-import ru.nurguru.recipesapp.data.Constants.SHARED_FAVORITES_IDS_KEY
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE
+import ru.nurguru.recipesapp.model.Constants.SHARED_FAVORITES_IDS_FILE_NAME
+import ru.nurguru.recipesapp.model.Constants.SHARED_FAVORITES_IDS_KEY
 import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 

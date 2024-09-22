@@ -2,7 +2,6 @@ package ru.nurguru.recipesapp.ui.recipes.recipe
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE_ID
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 
