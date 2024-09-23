@@ -10,16 +10,21 @@ import ru.nurguru.recipesapp.model.Constants
 
 import ru.nurguru.recipesapp.model.Recipe
 
-data class RecipeUiState(
-    var recipe: Recipe? = null,
-    var numberOfPortions: Int = 1,
-    var isInFavorites: Boolean = false,
 
-)
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
 
-    private val favoritesIdStringSet = getFavorites()
+    data class RecipeUiState(
+        var recipe: Recipe? = null,
+        var numberOfPortions: Int = 1,
+        var isInFavorites: Boolean = false,
+    )
+
+    private val sharedPrefs by lazy {
+        application.getSharedPreferences(
+            Constants.SHARED_FAVORITES_IDS_FILE_NAME, Context.MODE_PRIVATE
+        )
+    }
 
     private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
     val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
@@ -29,13 +34,14 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         _recipeUiState.value?.let {
             if (recipeId != null) {
                 it.recipe = STUB.getRecipeById(recipeId = recipeId)
-                it.isInFavorites = "$recipeId" in favoritesIdStringSet
+                it.isInFavorites = "$recipeId" in getFavorites()
             }
         }
     }
 
     fun onFavoritesClicked() {
         recipeUiState.value?.let {
+            val favoritesIdStringSet = getFavorites()
             if (it.recipe != null && it.isInFavorites) {
                 favoritesIdStringSet.remove("${it.recipe?.id}")
                 it.isInFavorites = false
@@ -49,9 +55,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     }
 
     private fun getFavorites(): MutableSet<String> {
-        val sharedPrefs = application.getSharedPreferences(
-            Constants.SHARED_FAVORITES_IDS_FILE_NAME, Context.MODE_PRIVATE
-        )
         val setOfFavoritesId =
             sharedPrefs?.getStringSet(Constants.SHARED_FAVORITES_IDS_KEY, setOf()) ?: setOf()
 
@@ -59,9 +62,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     }
 
     private fun saveFavorites(recipeIds: Set<String>) {
-        val sharedPrefs = application.getSharedPreferences(
-            Constants.SHARED_FAVORITES_IDS_FILE_NAME, Context.MODE_PRIVATE
-        )
         sharedPrefs?.edit()
             ?.putStringSet(Constants.SHARED_FAVORITES_IDS_KEY, recipeIds)
             ?.apply()

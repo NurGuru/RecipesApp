@@ -59,7 +59,7 @@ class RecipeFragment : Fragment() {
 
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
-                portionsCount.text = "${recipeState.recipe?.numberOfPortions ?: 1}"
+                portionsCount.text = "${recipeState.numberOfPortions}"
             }
 
 
