@@ -11,7 +11,6 @@ import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.model.Recipe
 
 
-
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
 
     data class RecipeUiState(
@@ -31,22 +30,21 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     fun loadRecipe(recipeId: Int?) {
         // TODO: load from network
-        _recipeUiState.value?.let {
-            if (recipeId != null) {
-                it.recipe = STUB.getRecipeById(recipeId = recipeId)
-                it.isInFavorites = "$recipeId" in getFavorites()
-            }
-        }
+        _recipeUiState.value = _recipeUiState.value?.copy(
+            recipe = recipeId?.let { STUB.getRecipeById(recipeId = it) },
+            isInFavorites = recipeId.toString() in getFavorites()
+        )
     }
 
     fun onFavoritesClicked() {
-        recipeUiState.value?.let {
+
+        _recipeUiState.value?.let {
             val favoritesIdStringSet = getFavorites()
             if (it.recipe != null && it.isInFavorites) {
-                favoritesIdStringSet.remove("${it.recipe?.id}")
+                favoritesIdStringSet.remove(it.recipe?.id.toString())
                 it.isInFavorites = false
             } else {
-                favoritesIdStringSet.add("${it.recipe?.id}")
+                favoritesIdStringSet.add(it.recipe?.id.toString())
                 it.isInFavorites = true
             }
 
