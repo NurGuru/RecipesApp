@@ -15,7 +15,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     data class RecipeUiState(
         val recipe: Recipe? = null,
-        var numberOfPortions: Int = 1,
+        val numberOfPortions: Int = 1,
         var isInFavorites: Boolean = false,
     )
 

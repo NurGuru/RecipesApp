@@ -16,7 +16,6 @@ import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 
-
 class RecipeFragment : Fragment() {
 
     private var _binding: FragmentRecipeBinding? = null
@@ -38,7 +37,6 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initBundleData()
         initUI()
-        initRecycler()
     }
 
     private fun initBundleData() {
@@ -59,7 +57,7 @@ class RecipeFragment : Fragment() {
 
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
-                portionsCount.text = "${recipeState.numberOfPortions}"
+//                portionsCount.text = "${recipeState.numberOfPortions}"
             }
 
 
@@ -87,21 +85,11 @@ class RecipeFragment : Fragment() {
                     }
                 }
             }
-        }
-    }
 
-    private fun initRecycler() {
-
-        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
-            dividerItemDecoration.setDrawable(it)
-        }
-
-        viewModel.recipeUiState.value?.let {
-            val ingredientAdapter = IngredientsAdapter(it.recipe?.ingredients ?: listOf())
+            val ingredientAdapter = IngredientsAdapter(recipeState.recipe?.ingredients ?: listOf())
             binding.rvIngredients.adapter = ingredientAdapter
 
-            val methodAdapter = MethodAdapter(it.recipe?.method ?: listOf())
+            val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())
             binding.rvMethod.adapter = methodAdapter
 
             binding.seekBar.setOnSeekBarChangeListener(
@@ -111,17 +99,18 @@ class RecipeFragment : Fragment() {
                     ) {
                         ingredientAdapter.updateIngredients(progress)
                         binding.portionsCount.text = progress.toString()
-                        it.numberOfPortions = progress
                     }
 
                     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
                     override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-
                 }
             )
-            binding.rvIngredients.addItemDecoration(dividerItemDecoration)
-            binding.rvMethod.addItemDecoration(dividerItemDecoration)
         }
+        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.rvIngredients.addItemDecoration(dividerItemDecoration)
+        binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
 }
