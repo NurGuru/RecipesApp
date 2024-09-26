@@ -14,7 +14,7 @@ import ru.nurguru.recipesapp.model.Recipe
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
 
     data class RecipeUiState(
-        var recipe: Recipe? = null,
+        val recipe: Recipe? = null,
         var numberOfPortions: Int = 1,
         var isInFavorites: Boolean = false,
     )
