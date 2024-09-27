@@ -16,7 +16,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     data class RecipeUiState(
         val recipe: Recipe? = null,
         val numberOfPortions: Int = 1,
-        var isInFavorites: Boolean = false,
+        val isInFavorites: Boolean = false,
     )
 
     private val sharedPrefs by lazy {
@@ -41,13 +41,12 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         _recipeUiState.value?.let {
             val favoritesIdStringSet = getFavorites()
             if (it.recipe != null && it.isInFavorites) {
-                favoritesIdStringSet.remove(it.recipe?.id.toString())
-                it.isInFavorites = false
+                favoritesIdStringSet.remove(it.recipe.id.toString())
+                _recipeUiState.value = it.copy(isInFavorites = false)
             } else {
                 favoritesIdStringSet.add(it.recipe?.id.toString())
-                it.isInFavorites = true
+                _recipeUiState.value = it.copy(isInFavorites = true)
             }
-
             saveFavorites(favoritesIdStringSet)
         }
     }

@@ -60,7 +60,6 @@ class RecipeFragment : Fragment() {
 //                portionsCount.text = "${recipeState.numberOfPortions}"
             }
 
-
             with(binding.ibFavoritesIcon) {
                 setImageDrawable(
                     ResourcesCompat.getDrawable(
@@ -71,19 +70,6 @@ class RecipeFragment : Fragment() {
                         null
                     )
                 )
-
-                setOnClickListener {
-                    viewModel.onFavoritesClicked()
-                    if (recipeState.isInFavorites) {
-                        setImageDrawable(
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_heart, null)
-                        )
-                    } else {
-                        setImageDrawable(
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_heart_empty, null)
-                        )
-                    }
-                }
             }
 
             val ingredientAdapter = IngredientsAdapter(recipeState.recipe?.ingredients ?: listOf())
@@ -106,6 +92,11 @@ class RecipeFragment : Fragment() {
                 }
             )
         }
+
+        binding.ibFavoritesIcon.setOnClickListener {
+                viewModel.onFavoritesClicked()
+            }
+
         val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
         ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
             dividerItemDecoration.setDrawable(it)
