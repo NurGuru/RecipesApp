@@ -2,7 +2,6 @@ package ru.nurguru.recipesapp.ui.recipes.recipe
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE_ID
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 
@@ -38,7 +37,6 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initBundleData()
         initUI()
-        initRecycler()
     }
 
     private fun initBundleData() {
@@ -56,9 +54,8 @@ class RecipeFragment : Fragment() {
 
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
-                portionsCount.text = "${recipeState.recipe?.numberOfPortions ?: 1}"
+//                portionsCount.text = "${recipeState.numberOfPortions}"
             }
-
 
             with(binding.ibFavoritesIcon) {
                 setImageDrawable(
@@ -70,35 +67,12 @@ class RecipeFragment : Fragment() {
                         null
                     )
                 )
-
-                setOnClickListener {
-                    viewModel.onFavoritesClicked()
-                    if (recipeState.isInFavorites) {
-                        setImageDrawable(
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_heart, null)
-                        )
-                    } else {
-                        setImageDrawable(
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_heart_empty, null)
-                        )
-                    }
-                }
             }
-        }
-    }
 
-    private fun initRecycler() {
-
-        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
-            dividerItemDecoration.setDrawable(it)
-        }
-
-        viewModel.recipeUiState.value?.let {
-            val ingredientAdapter = IngredientsAdapter(it.recipe?.ingredients ?: listOf())
+            val ingredientAdapter = IngredientsAdapter(recipeState.recipe?.ingredients ?: listOf())
             binding.rvIngredients.adapter = ingredientAdapter
 
-            val methodAdapter = MethodAdapter(it.recipe?.method ?: listOf())
+            val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())
             binding.rvMethod.adapter = methodAdapter
 
             binding.seekBar.setOnSeekBarChangeListener(
@@ -108,17 +82,23 @@ class RecipeFragment : Fragment() {
                     ) {
                         ingredientAdapter.updateIngredients(progress)
                         binding.portionsCount.text = progress.toString()
-                        it.numberOfPortions = progress
                     }
 
                     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
                     override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-
                 }
             )
-            binding.rvIngredients.addItemDecoration(dividerItemDecoration)
-            binding.rvMethod.addItemDecoration(dividerItemDecoration)
         }
+
+        binding.ibFavoritesIcon.setOnClickListener {
+                viewModel.onFavoritesClicked()
+            }
+
+        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.rvIngredients.addItemDecoration(dividerItemDecoration)
+        binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
 }
