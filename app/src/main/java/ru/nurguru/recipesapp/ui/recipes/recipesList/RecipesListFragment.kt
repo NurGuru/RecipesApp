@@ -13,6 +13,7 @@ import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
 import ru.nurguru.recipesapp.model.Constants
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
 import java.io.InputStream
 
@@ -58,11 +59,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-
-        val recipe = STUB.getRecipeById(recipeId)
-        val bundle = bundleOf(
-            Constants.ARG_RECIPE to recipe,
-        )
+        val bundle = bundleOf(ARG_RECIPE_ID to recipeId)
 
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)
