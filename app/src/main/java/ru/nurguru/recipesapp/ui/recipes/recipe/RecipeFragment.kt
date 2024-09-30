@@ -1,6 +1,5 @@
 package ru.nurguru.recipesapp.ui.recipes.recipe
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,14 +49,11 @@ class RecipeFragment : Fragment() {
 
         viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
 
-            val inputStream =
-                context?.assets?.open(recipeState.recipe?.imageUrl ?: "burger.png")
-            val drawable = Drawable.createFromStream(inputStream, null)
-            binding.ivRecipeItemImage.setImageDrawable(drawable)
+            binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
 
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
-//                portionsCount.text = "${recipeState.numberOfPortions}"
+                portionsCount.text = recipeState.numberOfPortions.toString()
             }
 
             with(binding.ibFavoritesIcon) {
@@ -83,8 +79,9 @@ class RecipeFragment : Fragment() {
                     override fun onProgressChanged(
                         seekBar: SeekBar?, progress: Int, fromUser: Boolean
                     ) {
+                        viewModel.changePortionsCount(progress)
                         ingredientAdapter.updateIngredients(progress)
-                        binding.portionsCount.text = progress.toString()
+
                     }
 
                     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
