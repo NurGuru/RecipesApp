@@ -45,7 +45,6 @@ class IngredientsAdapter(
     override fun getItemCount() = dataSet.size
 
     fun updateIngredients(progress: Int) {
-        quantity = progress
         notifyDataSetChanged()
     }
 

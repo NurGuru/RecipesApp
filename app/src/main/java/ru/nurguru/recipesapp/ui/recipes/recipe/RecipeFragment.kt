@@ -70,7 +70,9 @@ class RecipeFragment : Fragment() {
             }
 
             ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
-            binding.rvIngredients.adapter = ingredientAdapter
+            ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+            ingredientAdapter.quantity =recipeState.numberOfPortions
+                binding.rvIngredients.adapter = ingredientAdapter
 
             val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())
             binding.rvMethod.adapter = methodAdapter
@@ -81,7 +83,6 @@ class RecipeFragment : Fragment() {
                 override fun onProgressChanged(
                     seekBar: SeekBar?, progress: Int, fromUser: Boolean
                 ) {
-                    ingredientAdapter.updateIngredients(progress)
                     viewModel.changePortionsCount(progress)
                 }
 
