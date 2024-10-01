@@ -70,8 +70,8 @@ class RecipeFragment : Fragment() {
             }
 
             ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
-            ingredientAdapter.updateIngredients()
-            ingredientAdapter.quantity =recipeState.numberOfPortions
+            ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+
                 binding.rvIngredients.adapter = ingredientAdapter
 
             val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())

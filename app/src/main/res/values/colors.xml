@@ -10,5 +10,6 @@
     <color name="dividerColor">#F5F5F5</color>
     <color name="thumbColor">#525DC0</color>
     <color name="seekBarProgressColor">#A1A9F9</color>
+    <color name="transparentBackgraound">#00000000</color>
 
 </resources>
