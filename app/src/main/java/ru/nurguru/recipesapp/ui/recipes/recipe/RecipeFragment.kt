@@ -24,7 +24,7 @@ class RecipeFragment : Fragment() {
 
     private var recipeId: Int? = null
     private val viewModel: RecipeViewModel by activityViewModels()
-    private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf(), 1)
+    private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -70,7 +70,7 @@ class RecipeFragment : Fragment() {
             }
 
             ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
-            ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+            ingredientAdapter.updateIngredients()
             ingredientAdapter.quantity =recipeState.numberOfPortions
                 binding.rvIngredients.adapter = ingredientAdapter
 
