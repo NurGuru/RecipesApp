@@ -11,8 +11,8 @@ import java.math.BigDecimal
 
 class IngredientsAdapter(
     var dataSet: List<Ingredient>,
-    var quantity: Int = 1
-    ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+    private var quantity: Int = 1
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemIngredientBinding.bind(view)
@@ -48,5 +48,4 @@ class IngredientsAdapter(
         quantity = progress
         notifyDataSetChanged()
     }
-
 }
