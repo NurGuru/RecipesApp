@@ -82,7 +82,6 @@ class RecipeFragment : Fragment() {
 
         binding.seekBar.setOnSeekBarChangeListener(
             PortionSeekBarListener { progress ->
-                ingredientAdapter.updateIngredients(progress)
                 viewModel.changePortionsCount(progress)
             }
         )
@@ -98,15 +97,15 @@ class RecipeFragment : Fragment() {
         binding.rvIngredients.addItemDecoration(dividerItemDecoration)
         binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
-}
 
-class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
-    SeekBar.OnSeekBarChangeListener {
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        onChangeIngredients(progress)
+    class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
+        SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            onChangeIngredients(progress)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     }
-
-    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 }
