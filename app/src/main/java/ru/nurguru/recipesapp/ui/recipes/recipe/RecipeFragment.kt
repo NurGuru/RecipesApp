@@ -57,7 +57,7 @@ class RecipeFragment : Fragment() {
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
                 portionsCount.text = recipeState.numberOfPortions.toString()
-                seekBar.progress = recipeState.recipe?.numberOfPortions ?: 1
+                seekBar.progress = recipeState.numberOfPortions
             }
 
             with(binding.ibFavoritesIcon) {
@@ -76,39 +76,37 @@ class RecipeFragment : Fragment() {
             ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
             binding.rvIngredients.adapter = ingredientAdapter
 
-            val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())
-            binding.rvMethod.adapter = methodAdapter
             methodAdapter.dataSet = recipeState.recipe?.method ?: listOf()
+            binding.rvMethod.adapter = methodAdapter
         }
 
-            binding.seekBar.setOnSeekBarChangeListener(
-                PortionSeekBarListener { progress ->
-                    ingredientAdapter.updateIngredients(progress)
-                    viewModel.updateNumOfPortions(progress)
-
+        binding.seekBar.setOnSeekBarChangeListener(
+            PortionSeekBarListener { progress ->
+                ingredientAdapter.updateIngredients(progress)
+                viewModel.changePortionsCount(progress)
+            }
+        )
         binding.ibFavoritesIcon.setOnClickListener {
             viewModel.onFavoritesClicked()
         }
 
-        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
+        val dividerItemDecoration =
+            DividerItemDecoration(this.context, RecyclerView.VERTICAL)
         ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
             dividerItemDecoration.setDrawable(it)
         }
         binding.rvIngredients.addItemDecoration(dividerItemDecoration)
         binding.rvMethod.addItemDecoration(dividerItemDecoration)
-                }
-            )
-        }
+    }
+}
+
+class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
+    SeekBar.OnSeekBarChangeListener {
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        onChangeIngredients(progress)
     }
 
-    class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
-        SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            onChangeIngredients(progress)
-        }
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    }
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 }
