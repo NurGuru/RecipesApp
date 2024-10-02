@@ -10,9 +10,8 @@ import ru.nurguru.recipesapp.model.Ingredient
 import java.math.BigDecimal
 
 class IngredientsAdapter(
-    private val dataSet: List<Ingredient>,
-    ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-
+    var dataSet: List<Ingredient>,
+) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
     private var quantity: Int = 1
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -49,5 +48,4 @@ class IngredientsAdapter(
         quantity = progress
         notifyDataSetChanged()
     }
-
 }

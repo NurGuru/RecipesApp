@@ -11,4 +11,6 @@
     <dimen name="recipe_list_main_image_height">224dp</dimen>
     <dimen name="favorites_stub_margin_top">202dp</dimen>
     <dimen name="favorites_heart_image_height">40dp</dimen>
+    <dimen name="recipe_subtitle_padding">10dp</dimen>
+
 </resources>

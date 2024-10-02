@@ -24,6 +24,7 @@ class RecipeFragment : Fragment() {
 
     private var recipeId: Int? = null
     private val viewModel: RecipeViewModel by activityViewModels()
+    private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -68,27 +69,27 @@ class RecipeFragment : Fragment() {
                 )
             }
 
-            val ingredientAdapter = IngredientsAdapter(recipeState.recipe?.ingredients ?: listOf())
-            binding.rvIngredients.adapter = ingredientAdapter
+            ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
+            ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+
+                binding.rvIngredients.adapter = ingredientAdapter
 
             val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())
             binding.rvMethod.adapter = methodAdapter
-
-            binding.seekBar.setOnSeekBarChangeListener(
-                object : SeekBar.OnSeekBarChangeListener {
-                    override fun onProgressChanged(
-                        seekBar: SeekBar?, progress: Int, fromUser: Boolean
-                    ) {
-                        viewModel.changePortionsCount(progress)
-                        ingredientAdapter.updateIngredients(progress)
-
-                    }
-
-                    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-                }
-            )
         }
+
+        binding.seekBar.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?, progress: Int, fromUser: Boolean
+                ) {
+                    viewModel.changePortionsCount(progress)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            }
+        )
 
         binding.ibFavoritesIcon.setOnClickListener {
                 viewModel.onFavoritesClicked()
