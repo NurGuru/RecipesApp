@@ -13,6 +13,5 @@
     <string name="content_description_favorites_item_image">Favorite item image</string>
     <string name="content_description_favorites_main_image">Favorite main image</string>
     <string name="favorites_stub">You did not add any recipe yet</string>
-    <string name="asset_error">asset error</string>
     <string name="portions_count_default_value">1</string>
 </resources>

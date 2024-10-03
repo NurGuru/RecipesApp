@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.ui.categories.CategoriesListAdapter
@@ -20,7 +20,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
-    private val viewModel: CategoriesListViewModel by activityViewModels()
+    private val viewModel: CategoriesListViewModel by viewModels()
     private val categoriesListAdapter = CategoriesListAdapter(listOf())
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -39,16 +39,16 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         viewModel.loadCategories()
         viewModel.categoriesUiState.observe(viewLifecycleOwner) { categoriesState ->
             categoriesListAdapter.dataSet = categoriesState.categoriesList
-            categoriesListAdapter.setOnItemClickListener(
-                object : CategoriesListAdapter.OnItemClickListener {
-                    override fun onItemClick(categoryId: Int) {
-                        openRecipesByCategoryId(categoryId)
-                    }
-                }
-            )
-            binding.rvCategories.adapter = categoriesListAdapter
-
         }
+
+        categoriesListAdapter.setOnItemClickListener(
+            object : CategoriesListAdapter.OnItemClickListener {
+                override fun onItemClick(categoryId: Int) {
+                    openRecipesByCategoryId(categoryId)
+                }
+            }
+        )
+        binding.rvCategories.adapter = categoriesListAdapter
     }
 
 

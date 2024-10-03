@@ -10,11 +10,12 @@ import ru.nurguru.recipesapp.model.Constants.SHARED_FAVORITES_IDS_KEY
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.model.Recipe
 
-data class FavoritesUiState(
-    val recipeList: List<Recipe> = listOf()
-)
 
 class FavoritesViewModel(private val application: Application) : AndroidViewModel(application) {
+
+    data class FavoritesUiState(
+        val recipeList: List<Recipe> = listOf()
+    )
 
     private var _favoritesUiState: MutableLiveData<FavoritesUiState> =
         MutableLiveData(FavoritesUiState())

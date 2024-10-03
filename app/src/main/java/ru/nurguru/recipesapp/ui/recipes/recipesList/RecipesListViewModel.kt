@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.model.Category
+import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.model.Recipe
 
 data class RecipeListUiState(
@@ -32,7 +33,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
 
         try {
             val inputStream = application.assets?.open(
-                _recipeListUiState.value?.category?.imageUrl ?: "burger.png"
+                _recipeListUiState.value?.category?.imageUrl ?: Constants.DEFAULT_IMAGE
             )
             _recipeListUiState.value = _recipeListUiState.value?.copy(
                 recipeListImage = Drawable.createFromStream(
@@ -42,7 +43,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
             )
         } catch (e: Exception) {
             Log.e(
-                application.getString((R.string.asset_error)),
+                " asset error",
                 "${e.printStackTrace()}"
             )
         }

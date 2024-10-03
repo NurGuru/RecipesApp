@@ -40,8 +40,8 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun initBundleData() {
-        arguments.let {
-            categoryId = requireArguments().getInt(Constants.ARG_CATEGORY_ID)
+        arguments?.let {
+            categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
         }
         viewModel.loadRecipesList(categoryId)
     }
@@ -50,13 +50,12 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         viewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
             binding.tvRecipeTitle.text = recipeListState.category?.title
             binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
-            initRecycler(recipeListState)
+            recipeListAdapter.dataSet = recipeListState.recipeList
         }
+        initRecycler()
     }
 
-    private fun initRecycler(recipeListState:RecipeListUiState) {
-        recipeListAdapter.dataSet = recipeListState.recipeList
-
+    private fun initRecycler() {
         recipeListAdapter.setOnItemClickListener(
             object : RecipesListAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int) {
