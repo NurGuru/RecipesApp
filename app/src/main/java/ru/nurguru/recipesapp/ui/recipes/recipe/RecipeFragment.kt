@@ -24,7 +24,9 @@ class RecipeFragment : Fragment() {
 
     private var recipeId: Int? = null
     private val viewModel: RecipeViewModel by activityViewModels()
+
     private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf())
+    private val methodAdapter: MethodAdapter = MethodAdapter(listOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -55,6 +57,7 @@ class RecipeFragment : Fragment() {
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
                 portionsCount.text = recipeState.numberOfPortions.toString()
+                seekBar.progress = recipeState.numberOfPortions
             }
 
             with(binding.ibFavoritesIcon) {
@@ -71,35 +74,38 @@ class RecipeFragment : Fragment() {
 
             ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
             ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+            binding.rvIngredients.adapter = ingredientAdapter
 
-                binding.rvIngredients.adapter = ingredientAdapter
-
-            val methodAdapter = MethodAdapter(recipeState.recipe?.method ?: listOf())
+            methodAdapter.dataSet = recipeState.recipe?.method ?: listOf()
             binding.rvMethod.adapter = methodAdapter
         }
 
         binding.seekBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekBar: SeekBar?, progress: Int, fromUser: Boolean
-                ) {
-                    viewModel.changePortionsCount(progress)
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            PortionSeekBarListener { progress ->
+                viewModel.changePortionsCount(progress)
             }
         )
-
         binding.ibFavoritesIcon.setOnClickListener {
-                viewModel.onFavoritesClicked()
-            }
+            viewModel.onFavoritesClicked()
+        }
 
-        val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
+        val dividerItemDecoration =
+            DividerItemDecoration(this.context, RecyclerView.VERTICAL)
         ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
             dividerItemDecoration.setDrawable(it)
         }
         binding.rvIngredients.addItemDecoration(dividerItemDecoration)
         binding.rvMethod.addItemDecoration(dividerItemDecoration)
+    }
+
+    class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
+        SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            onChangeIngredients(progress)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     }
 }
