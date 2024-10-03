@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">RecipesApp</string>
+    <string name="title_categories">категории</string>
+    <string name="title_favorite">избранное</string>
+    <string name="title_ingredients">ингредиенты</string>
+    <string name="title_method">способ приготовления</string>
+    <string name="title_portions">Порции: </string>
+    <string name="content_description_categories_cards">"Изображение для карточки категории</string>
+    <string name="content_description_recipes_cards">"Изображение для карточки рецептов</string>
+    <string name="content_description_categories_main_screen">Главное изображение экрана категорий</string>
+    <string name="content_description_recipes_screen">Изображение кецепта</string>
+    <string name="content_description_recipe_item_image">Изображение значка рецепта</string>
+    <string name="content_description_favorites_item_image">Изображение значка избраного</string>
+    <string name="content_description_favorites_main_image">Главное изображение избранного</string>
+    <string name="favorites_stub">Вы еще не добавили ни одного рецепта в избранное</string>
+    <string name="asset_error">ошибка ресурсов</string>
+    <string name="portions_count_default_value">1</string>
+</resources>
