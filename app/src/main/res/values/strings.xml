@@ -4,7 +4,7 @@
     <string name="title_favorite">favorites</string>
     <string name="title_ingredients">ingredients</string>
     <string name="title_method">cook method</string>
-    <string name="title_portions">Portions count: </string>
+    <string name="title_portions">Portions count:\u0020</string>
     <string name="content_description_categories_cards">Category card image</string>
     <string name="content_description_recipes_cards">Recipe card image</string>
     <string name="content_description_categories_main_screen">Categories screen main image</string>

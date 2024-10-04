@@ -102,6 +102,8 @@
                 android:max="5"
                 android:min="1"
                 android:paddingBottom="@dimen/main_margin"
+                android:paddingStart="@dimen/seek_bar_padding"
+                android:paddingEnd="@dimen/seek_bar_padding"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/portions">
 
