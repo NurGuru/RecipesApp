@@ -29,20 +29,20 @@
         <Button
             android:id="@+id/navBtnCategories"
             style="@style/StyleNavButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:layout_weight="2"
+            android:layout_marginEnd="@dimen/main_buttons_padding"
+            android:layout_weight="1"
             android:backgroundTint="@color/blueCategoryColor"
             android:text="@string/title_categories" />
 
         <Button
             android:id="@+id/navBtnFavorite"
             style="@style/StyleNavButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_weight="2"
+            android:layout_marginStart="@dimen/main_buttons_padding"
+            android:layout_weight="1"
             android:backgroundTint="@color/redFavoriteColor"
             android:text="@string/title_favorite"
             app:icon="@drawable/ic_heart_empty"

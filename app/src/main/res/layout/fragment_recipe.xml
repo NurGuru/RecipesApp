@@ -23,10 +23,10 @@
                 android:layout_marginTop="@dimen/main_margin"
                 android:layout_marginEnd="@dimen/main_margin"
                 android:background="@color/transparentBackgraound"
-                android:contentDescription="@string/content_description_favorites_item_image"
-                android:translationZ="10dp"
                 android:clickable="true"
+                android:contentDescription="@string/content_description_favorites_item_image"
                 android:focusable="true"
+                android:translationZ="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_heart" />
@@ -90,9 +90,9 @@
                 style="@style/StilePortionsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/portions_count_default_value"
                 app:layout_constraintStart_toEndOf="@+id/portions"
-                app:layout_constraintTop_toBottomOf="@+id/tvIngredients" />
+                app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
+                tools:text="1" />
 
             <SeekBar
                 android:id="@+id/seekBar"

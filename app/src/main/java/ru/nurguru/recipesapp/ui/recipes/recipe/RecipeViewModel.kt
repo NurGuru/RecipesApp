@@ -48,7 +48,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             )
         } catch (e: Exception) {
             Log.e(
-                application.getString(R.string.asset_error),
+                "asset_error",
                 "${e.printStackTrace()}"
             )
             _recipeUiState.value = _recipeUiState.value?.copy(recipeImage = null)
