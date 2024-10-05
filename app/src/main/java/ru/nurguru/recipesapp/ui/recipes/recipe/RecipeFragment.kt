@@ -1,8 +1,6 @@
 package ru.nurguru.recipesapp.ui.recipes.recipe
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE_ID
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 
@@ -27,7 +25,7 @@ class RecipeFragment : Fragment() {
     private var recipeId: Int? = null
     private val viewModel: RecipeViewModel by activityViewModels()
 
-    private val ingredientsAdapter: IngredientsAdapter = IngredientsAdapter(listOf(), 1)
+    private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf())
     private val methodAdapter: MethodAdapter = MethodAdapter(listOf())
 
     override fun onCreateView(
@@ -58,8 +56,8 @@ class RecipeFragment : Fragment() {
 
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
-                portionsCount.text = "${recipeState.recipe?.numberOfPortions ?: 1}"
-                seekBar.progress = recipeState.recipe?.numberOfPortions ?: 1
+                portionsCount.text = recipeState.numberOfPortions.toString()
+                seekBar.progress = recipeState.numberOfPortions
             }
 
             with(binding.ibFavoritesIcon) {
@@ -72,45 +70,32 @@ class RecipeFragment : Fragment() {
                         null
                     )
                 )
-
-                setOnClickListener {
-                    viewModel.onFavoritesClicked()
-                    if (recipeState.isInFavorites) {
-                        setImageDrawable(
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_heart, null)
-                        )
-                    } else {
-                        setImageDrawable(
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_heart_empty, null)
-                        )
-                    }
-                }
             }
 
-            val dividerItemDecoration = DividerItemDecoration(this.context, RecyclerView.VERTICAL)
-            ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
-                dividerItemDecoration.setDrawable(it)
-            }
-
-            ingredientsAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
-            ingredientsAdapter.quantity = recipeState.recipe?.numberOfPortions ?: 1
+            ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
+            ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+            binding.rvIngredients.adapter = ingredientAdapter
 
             methodAdapter.dataSet = recipeState.recipe?.method ?: listOf()
-
-            binding.seekBar.setOnSeekBarChangeListener(
-                PortionSeekBarListener { progress ->
-                    ingredientsAdapter.updateIngredients(progress)
-                    viewModel.updateNumOfPortions(progress)
-                    binding.portionsCount.text = "${recipeState.recipe?.numberOfPortions ?: 1}"
-
-                }
-            )
-            binding.rvIngredients.adapter = ingredientsAdapter
             binding.rvMethod.adapter = methodAdapter
-
-            binding.rvIngredients.addItemDecoration(dividerItemDecoration)
-            binding.rvMethod.addItemDecoration(dividerItemDecoration)
         }
+
+        binding.seekBar.setOnSeekBarChangeListener(
+            PortionSeekBarListener { progress ->
+                viewModel.changePortionsCount(progress)
+            }
+        )
+        binding.ibFavoritesIcon.setOnClickListener {
+            viewModel.onFavoritesClicked()
+        }
+
+        val dividerItemDecoration =
+            DividerItemDecoration(this.context, RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.devider, null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.rvIngredients.addItemDecoration(dividerItemDecoration)
+        binding.rvMethod.addItemDecoration(dividerItemDecoration)
     }
 
     class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :

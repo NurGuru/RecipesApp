@@ -18,15 +18,15 @@
             <ImageButton
                 android:id="@+id/ibFavoritesIcon"
                 style="@style/StyleClickEffect"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/favorites_heart_image_height"
+                android:layout_height="@dimen/favorites_heart_image_height"
                 android:layout_marginTop="@dimen/main_margin"
                 android:layout_marginEnd="@dimen/main_margin"
-                android:background="#00000000"
-                android:contentDescription="@string/content_description_favorites_item_image"
-                android:translationZ="10dp"
+                android:background="@color/transparentBackgraound"
                 android:clickable="true"
+                android:contentDescription="@string/content_description_favorites_item_image"
                 android:focusable="true"
+                android:translationZ="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_heart" />
@@ -48,7 +48,7 @@
                 android:layout_marginBottom="@dimen/main_margin"
                 android:background="@drawable/shape_rounded_title"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="@dimen/recipe_subtitle_padding"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,6 @@
                 style="@style/StilePortionsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="4dp"
                 android:paddingBottom="@dimen/middle_margin_half"
                 android:text="@string/title_portions"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,9 +90,9 @@
                 style="@style/StilePortionsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
                 app:layout_constraintStart_toEndOf="@+id/portions"
-                app:layout_constraintTop_toBottomOf="@+id/tvIngredients" />
+                app:layout_constraintTop_toBottomOf="@+id/tvIngredients"
+                tools:text="1" />
 
             <SeekBar
                 android:id="@+id/seekBar"

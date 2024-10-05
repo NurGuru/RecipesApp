@@ -1,4 +1,4 @@
-package ru.nurguru.recipesapp.data
+package ru.nurguru.recipesapp.model
 
 object Constants {
     const val ARG_CATEGORY_ID ="arg_category_id"
@@ -9,5 +9,7 @@ object Constants {
     const val ARG_RECIPE_ID = "ARG_RECIPE_ID"
     const val SHARED_FAVORITES_IDS_KEY = "sharedFavoritesIds"
     const val SHARED_FAVORITES_IDS_FILE_NAME = "com.example.recipesapp.sharedFavoritesIds"
+    const val DEFAULT_IMAGE = "burger.png"
+
 
 }

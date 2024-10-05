@@ -1,17 +1,16 @@
 <resources>
     <string name="app_name">RecipesApp</string>
-    <string name="title_categories">категории</string>
-    <string name="title_favorite">избранное</string>
-    <string name="title_ingredients">ингредиенты</string>
-    <string name="title_method">способ приготовления</string>
-    <string name="title_portions">Порции:</string>
-    <string name="content_description_categories_cards">"Изображение для категории</string>
-    <string name="content_description_recipes_cards">"Изображение для рецептов</string>
-    <string name="content_description_categories_main_screen">categories screen main image</string>
-    <string name="content_description_recipes_screen">recipes screen image</string>
-    <string name="content_description_recipe_item_image">recipe item image</string>
-    <string name="content_description_favorites_item_image">favorite item image</string>
-    <string name="content_description_favorites_main_image">favorite main image</string>
-    <string name="favorites_stub" translatable="false">Вы еще не добавили ни одного рецепта в избранное</string>
-    <string name="asset_error">asset error</string>
+    <string name="title_categories">categories</string>
+    <string name="title_favorite">favorites</string>
+    <string name="title_ingredients">ingredients</string>
+    <string name="title_method">cook method</string>
+    <string name="title_portions">Portions count:\u0020</string>
+    <string name="content_description_categories_cards">Category card image</string>
+    <string name="content_description_recipes_cards">Recipe card image</string>
+    <string name="content_description_categories_main_screen">Categories screen main image</string>
+    <string name="content_description_recipes_screen">Recipe image</string>
+    <string name="content_description_recipe_item_image">Recipe item image</string>
+    <string name="content_description_favorites_item_image">Favorite item image</string>
+    <string name="content_description_favorites_main_image">Favorite main image</string>
+    <string name="favorites_stub">You did not add any recipe yet</string>
 </resources>

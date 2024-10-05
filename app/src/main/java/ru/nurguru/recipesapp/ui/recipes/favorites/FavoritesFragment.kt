@@ -6,20 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
-    private val viewModel: FavoritesViewModel by activityViewModels()
+    private val viewModel: FavoritesViewModel by viewModels()
     private val recipesListAdapter = RecipesListAdapter(listOf())
     private val binding
         get() = _binding ?: throw IllegalArgumentException("FragmentFavoritesBinding is null!")
@@ -27,7 +28,7 @@ class FavoritesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -52,19 +53,21 @@ class FavoritesFragment : Fragment() {
                 binding.rvFavorites.visibility = View.VISIBLE
 
                 recipesListAdapter.dataSet = favoritesState.recipeList
-                recipesListAdapter.setOnItemClickListener(
-                    object : RecipesListAdapter.OnItemClickListener {
-                        override fun onItemClick(recipeId: Int) {
-                            openRecipeByRecipeId(recipeId)
-                        }
-                    }
-                )
-                binding.rvFavorites.adapter = recipesListAdapter
+
             } else {
                 binding.tvFavoritesStub.visibility = View.VISIBLE
                 binding.rvFavorites.visibility = View.GONE
             }
         }
+
+        recipesListAdapter.setOnItemClickListener(
+            object : RecipesListAdapter.OnItemClickListener {
+                override fun onItemClick(recipeId: Int) {
+                    openRecipeByRecipeId(recipeId)
+                }
+            }
+        )
+        binding.rvFavorites.adapter = recipesListAdapter
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {

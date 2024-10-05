@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
-import ru.nurguru.recipesapp.data.Constants
-import ru.nurguru.recipesapp.data.Constants.ARG_RECIPE_ID
+import ru.nurguru.recipesapp.model.Constants
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.ui.recipes.recipe.RecipeFragment
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
     private var categoryId: Int? = null
-    private val viewModel: RecipesListViewModel by activityViewModels()
+    private val viewModel: RecipesListViewModel by viewModels()
     private val recipeListAdapter = RecipesListAdapter(listOf())
     private val binding
         get() = _binding
@@ -41,8 +41,8 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun initBundleData() {
-        arguments.let {
-            categoryId = requireArguments().getInt(Constants.ARG_CATEGORY_ID)
+        arguments?.let {
+            categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
         }
         viewModel.loadRecipesList(categoryId)
     }
@@ -51,13 +51,12 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         viewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
             binding.tvRecipeTitle.text = recipeListState.category?.title
             binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
-            initRecycler(recipeListState)
+            recipeListAdapter.dataSet = recipeListState.recipeList
         }
+        initRecycler()
     }
 
-    private fun initRecycler(recipeListState: RecipeListUiState) {
-        recipeListAdapter.dataSet = recipeListState.recipeList
-
+    private fun initRecycler() {
         recipeListAdapter.setOnItemClickListener(
             object : RecipesListAdapter.OnItemClickListener {
                 override fun onItemClick(recipeId: Int) {
