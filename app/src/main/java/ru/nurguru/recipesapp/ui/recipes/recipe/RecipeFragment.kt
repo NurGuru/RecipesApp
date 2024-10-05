@@ -58,7 +58,6 @@ class RecipeFragment : Fragment() {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
                 portionsCount.text = recipeState.numberOfPortions.toString()
                 seekBar.progress = recipeState.numberOfPortions
-//                seekBar.setPadding(0,0,0,0)
             }
 
             with(binding.ibFavoritesIcon) {
