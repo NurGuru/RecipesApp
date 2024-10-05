@@ -2,15 +2,9 @@ package ru.nurguru.recipesapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import ru.nurguru.recipesapp.CategoriesListFragment
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ActivityMainBinding
-import ru.nurguru.recipesapp.ui.recipes.favorites.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -23,14 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CategoriesListFragment>(R.id.mainContainer)
-                addToBackStack(null)
-            }
-        }
-
 
         binding.navBtnFavorite.setOnClickListener {
             findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment2)

@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_margin"
             android:layout_marginTop="@dimen/main_margin"
-            app:cardCornerRadius="@dimen/corner_radius">
+            app:cardCornerRadius="@dimen/main_space_8">
 
             <TextView
                 android:id="@+id/tvIngredients"
