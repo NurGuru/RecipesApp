@@ -9,9 +9,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
-import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE
+import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
@@ -67,8 +66,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = STUB.getRecipeById(recipeId)
-        val bundle = bundleOf(ARG_RECIPE to recipe)
-        findNavController().navigate(R.id.recipeFragment, bundle)
+        val bundle = bundleOf(ARG_RECIPE_ID to recipeId)
+        findNavController().navigate(R.id.action_favoritesFragment_to_recipeFragment, bundle)
     }
 }

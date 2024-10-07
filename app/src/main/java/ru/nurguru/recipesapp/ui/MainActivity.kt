@@ -2,6 +2,7 @@ package ru.nurguru.recipesapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ActivityMainBinding
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         get() = _binding
             ?: throw IllegalStateException("Binding for ActivityMainBinding must not be null")
 
+    private val navOptions = NavOptions.Builder().setLaunchSingleTop(true).build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,11 +21,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.navBtnFavorite.setOnClickListener {
-            findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment2)
+            findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment,null, navOptions )
         }
 
         binding.navBtnCategories.setOnClickListener {
-            findNavController(R.id.navHostFragment).navigate((R.id.categoriesListFragment))
+            findNavController(R.id.navHostFragment).navigate(R.id.categoriesListFragment,null, navOptions)
         }
     }
 }
