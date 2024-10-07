@@ -28,7 +28,7 @@
         <item name="android:textAppearance">@style/StyleTitle14</item>
         <item name="android:paddingVertical">10dp</item>
         <item name="android:paddingHorizontal">20dp</item>
-        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="cornerRadius">@dimen/main_space_8</item>
     </style>
 
     <style name="StyleCategoriesCardTitle" parent="TextAppearance.AppCompat">

@@ -52,7 +52,7 @@
             android:id="@+id/rvFavorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/main_margin_half"
+            android:layout_marginHorizontal="@dimen/main_space_8"
             app:layoutManager="LinearLayoutManager"
             tools:itemCount="6"
             tools:listitem="@layout/item_recipe" />

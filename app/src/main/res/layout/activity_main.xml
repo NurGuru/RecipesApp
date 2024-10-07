@@ -9,7 +9,10 @@
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/mainContainer"
+        android:id="@+id/navHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/nav_graph"
+        app:defaultNavHost="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -22,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/main_margin"
-        android:layout_marginBottom="@dimen/main_margin_half"
+        android:layout_marginBottom="@dimen/main_space_8"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 

@@ -5,10 +5,10 @@
     android:id="@+id/cvRecipeItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/main_margin_half"
+    android:layout_marginHorizontal="@dimen/main_space_8"
     android:layout_marginTop="@dimen/main_margin"
     android:clickable="true"
-    app:cardCornerRadius="@dimen/corner_radius">
+    app:cardCornerRadius="@dimen/main_space_8">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             style="@style/StyleCategoriesCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/main_margin_half"
+            android:layout_margin="@dimen/main_space_8"
             tools:text="Бургеры" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
