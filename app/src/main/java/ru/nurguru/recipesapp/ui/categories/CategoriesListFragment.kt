@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 import ru.nurguru.recipesapp.model.Constants
+import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListFragmentDirections
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private var _binding: FragmentListCategoriesBinding? = null
@@ -19,6 +20,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
     private val viewModel: CategoriesListViewModel by viewModels()
     private val categoriesListAdapter = CategoriesListAdapter(listOf())
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -48,10 +50,10 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         binding.rvCategories.adapter = categoriesListAdapter
     }
 
-
     private fun openRecipesByCategoryId(categoryId: Int) {
-        val bundle = bundleOf(Constants.ARG_CATEGORY_ID to categoryId)
-findNavController().navigate(R.id.recipesListFragment,bundle)
+        findNavController().navigate(
+            CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(categoryId)
+        )
     }
 }
 
