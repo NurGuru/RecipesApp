@@ -23,9 +23,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListRecipesBinding.inflate(inflater)
         return binding.root
@@ -54,17 +52,18 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun initRecycler() {
-        recipeListAdapter.setOnItemClickListener(
-            object : RecipesListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipeId(recipeId)
-                }
-            })
+        recipeListAdapter.setOnItemClickListener(object : RecipesListAdapter.OnItemClickListener {
+            override fun onItemClick(recipeId: Int) {
+                openRecipeByRecipeId(recipeId)
+            }
+        })
         binding.rvRecipes.adapter = recipeListAdapter
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val bundle = bundleOf(ARG_RECIPE_ID to recipeId)
-        findNavController().navigate(R.id.action_recipesListFragment_to_recipeFragment, bundle)
+
+        findNavController().navigate(
+            RecipesListFragmentDirections.actionRecipesListFragmentToRecipeFragment(recipeId)
+        )
     }
 }

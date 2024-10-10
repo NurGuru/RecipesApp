@@ -8,10 +8,10 @@ import android.widget.SeekBar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 
@@ -22,8 +22,8 @@ class RecipeFragment : Fragment() {
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
 
-    private var recipeId: Int? = null
     private val viewModel: RecipeViewModel by activityViewModels()
+    private val args: RecipeFragmentArgs by navArgs()
 
     private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf())
     private val methodAdapter: MethodAdapter = MethodAdapter(listOf())
@@ -42,10 +42,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initBundleData() {
-        arguments?.let {
-            recipeId = it.getInt(ARG_RECIPE_ID)
-        }
-        viewModel.loadRecipe(recipeId)
+        viewModel.loadRecipe(args.recipeId)
     }
 
     private fun initUI() {
