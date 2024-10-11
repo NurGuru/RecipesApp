@@ -88,7 +88,7 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <argument
-            android:name="categoryId"
-            app:argType="integer" />
+            android:name="category"
+            app:argType="ru.nurguru.recipesapp.model.Category" />
     </fragment>
 </navigation>

@@ -13,7 +13,11 @@ class MainActivity : AppCompatActivity() {
         get() = _binding
             ?: throw IllegalStateException("Binding for ActivityMainBinding must not be null")
 
-    private val navOptions = NavOptions.Builder().setLaunchSingleTop(true).build()
+    private val navOptions = NavOptions.Builder().setLaunchSingleTop(true)
+        .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
+        .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
+        .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
+        .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim).build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,11 +25,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.navBtnFavorite.setOnClickListener {
-            findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment,null, navOptions )
+            findNavController(R.id.navHostFragment).navigate(
+                R.id.favoritesFragment,
+                null,
+                navOptions,
+                )
         }
 
         binding.navBtnCategories.setOnClickListener {
-            findNavController(R.id.navHostFragment).navigate(R.id.categoriesListFragment,null, navOptions)
+            findNavController(R.id.navHostFragment).navigate(
+                R.id.categoriesListFragment,
+                null,
+                navOptions
+            )
         }
     }
 }

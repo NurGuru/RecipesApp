@@ -37,7 +37,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun initBundleData() {
-        viewModel.loadRecipesList(arg.categoryId)
+        viewModel.loadRecipesList(arg.category)
     }
 
     private fun initUI() {

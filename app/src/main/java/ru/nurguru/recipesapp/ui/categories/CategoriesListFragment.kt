@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
+import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListFragmentDirections
@@ -51,9 +52,15 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        findNavController().navigate(
-            CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(categoryId)
-        )
+        try {
+            val category = STUB.getCategories().find { it.id==categoryId }
+                ?: throw IllegalArgumentException("Category with $categoryId doesn't exist!!")
+            findNavController().navigate(
+                CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(category)
+            )
+        }catch (_:Exception){
+
+        }
     }
 }
 
