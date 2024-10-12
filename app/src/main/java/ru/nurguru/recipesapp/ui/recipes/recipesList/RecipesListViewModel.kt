@@ -23,11 +23,11 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
         MutableLiveData(RecipeListUiState())
     var recipeListUiState: LiveData<RecipeListUiState> = _recipeListUiState
 
-    fun loadRecipesList(categoryId: Int?) {
+    fun loadRecipesList(category: Category) {
         _recipeListUiState.value =
             _recipeListUiState.value?.copy(
-                category = STUB.getCategories().find { category -> category.id == categoryId },
-                recipeList = STUB.getRecipesByCategoryId(categoryId ?: 0)
+                category = category,
+                recipeList = STUB.getRecipesByCategoryId(category.id)
             )
 
         try {

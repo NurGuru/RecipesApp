@@ -18,7 +18,7 @@ class CategoriesListAdapter(
     private var itemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(categoryId: Int)
+        fun onItemClick(category: Category)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -38,7 +38,7 @@ class CategoriesListAdapter(
             tvCategoryName.text = dataSet[position].title
             tvCategoryDescription.text = dataSet[position].description
             cvCategoryItem.setOnClickListener {
-                itemClickListener?.onItemClick(dataSet[position].id)
+                itemClickListener?.onItemClick(dataSet[position])
 
             }
             try {
