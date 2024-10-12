@@ -26,7 +26,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     fun loadRecipesList(category: Category) {
         _recipeListUiState.value =
             _recipeListUiState.value?.copy(
-                category = STUB.getCategories().find { it.id == category.id },
+                category = category,
                 recipeList = STUB.getRecipesByCategoryId(category.id)
             )
 

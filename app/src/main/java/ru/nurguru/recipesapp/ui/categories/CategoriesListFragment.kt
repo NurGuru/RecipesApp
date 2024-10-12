@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
+import ru.nurguru.recipesapp.model.Category
 import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListFragmentDirections
 
@@ -43,8 +44,8 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
         categoriesListAdapter.setOnItemClickListener(
             object : CategoriesListAdapter.OnItemClickListener {
-                override fun onItemClick(categoryId: Int) {
-                    openRecipesByCategoryId(categoryId)
+                override fun onItemClick(category: Category) {
+                    openRecipesByCategoryId(category.id)
                 }
             }
         )
@@ -53,7 +54,8 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
     private fun openRecipesByCategoryId(categoryId: Int) {
         try {
-            val category = STUB.getCategories().find { it.id==categoryId }
+            //val category = STUB.getCategories().find { it.id==categoryId }
+            val category = categoriesListAdapter.dataSet.find { it.id== categoryId}
                 ?: throw IllegalArgumentException("Category with $categoryId doesn't exist!!")
             findNavController().navigate(
                 CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(category)
