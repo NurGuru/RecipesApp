@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 
-//@Serializable
+@Serializable
 @Parcelize
 data class Category(
     val id: Int,

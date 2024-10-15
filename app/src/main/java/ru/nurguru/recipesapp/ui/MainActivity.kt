@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.content
 
-            val deserialize = Json.decodeFromString<Category>(
+            val deserialize = Json.decodeFromString<List<Category>>(
                 connection.inputStream.bufferedReader().readText()
             )
 
