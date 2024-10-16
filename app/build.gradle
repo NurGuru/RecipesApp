@@ -1,8 +1,9 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlinx.serialization
+    alias libs.plugins.navigation.safe.args
     id 'kotlin-parcelize'
-    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -38,10 +39,10 @@ android {
 }
 
 dependencies {
+    implementation libs.kotlinx.serialization.json
     implementation libs.androidx.navigation.fragment
     implementation libs.androidx.navigation.ui
     implementation libs.androidx.navigation.fragment.ktx
-
     implementation libs.androidx.core.ktx.v1131
     implementation libs.androidx.core.ktx.v180
     implementation libs.androidx.appcompat
