@@ -15,6 +15,7 @@ serialization = "2.0.21"
 kotlinAndroid = "2.1.0-Beta2"
 libraryAndroid = "8.5.2"
 
+
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
@@ -35,3 +36,4 @@ navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
 library-android = { id = "com.android.library", version.ref = "libraryAndroid" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version = "kotlin" }
