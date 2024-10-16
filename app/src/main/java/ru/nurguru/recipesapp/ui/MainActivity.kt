@@ -9,8 +9,12 @@ import kotlinx.serialization.json.Json
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ActivityMainBinding
 import ru.nurguru.recipesapp.model.Category
+import ru.nurguru.recipesapp.model.Constants.URL_GET_CATEGORIES
+import ru.nurguru.recipesapp.model.Constants.URL_GET_RECIPES_SUFFIX
+import ru.nurguru.recipesapp.model.Recipe
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.Executors
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,22 +34,46 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val thread = Thread {
-            val url = URL("https://recipes.androidsprint.ru/api/category")
-            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-            connection.content
+        var categoriesIds: List<Int> = listOf()
 
-            val deserialize = Json.decodeFromString<List<Category>>(
-                connection.inputStream.bufferedReader().readText()
+        val categoriesThread = Thread {
+            val categoriesUrl = URL(URL_GET_CATEGORIES)
+            val categoriesConnection: HttpURLConnection =
+                categoriesUrl.openConnection() as HttpURLConnection
+            categoriesConnection.connect()
+
+            val deserializedCategoryList = Json.decodeFromString<List<Category>>(
+                categoriesConnection.inputStream.bufferedReader().readText()
             )
 
-            Log.i("!!!", "responseCode: ${connection.responseCode}")
-            Log.i("!!!", "responseMessage: ${connection.responseMessage}")
-            Log.i("!!!", "responseCode: ${connection.inputStream.bufferedReader().readText()}")
-            Log.i("!!!", "responseDeCode: $deserialize")
+            categoriesIds = deserializedCategoryList.map { it.id }
+
+            Log.i("!!!", "responseCode: ${categoriesConnection.responseCode}")
+            Log.i("!!!", "responseMessage: ${categoriesConnection.responseMessage}")
+            Log.i("!!!", "CategoriesList: $deserializedCategoryList")
             Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+
         }
-        thread.start()
+        categoriesThread.start()
+
+        Thread.sleep(1000)
+        val threadPool = Executors.newFixedThreadPool(10)
+
+        categoriesIds.forEach { id ->
+            threadPool.execute {
+                val recipeUrl = URL("$URL_GET_CATEGORIES/$id/$URL_GET_RECIPES_SUFFIX")
+                val recipeConnection: HttpURLConnection =
+                    recipeUrl.openConnection() as HttpURLConnection
+                recipeConnection.connect()
+                val deserializedRecipesList = Json.decodeFromString<List<Recipe>>(
+                    recipeConnection.inputStream.bufferedReader().readText()
+                )
+
+                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                Log.i("!!!", "RecipesList: $deserializedRecipesList")
+            }
+        }
+
 
         binding.navBtnFavorite.setOnClickListener {
             findNavController(R.id.navHostFragment).navigate(
