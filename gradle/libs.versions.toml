@@ -10,6 +10,10 @@ junitVersion = "1.2.1"
 androidGradlePlugin = "8.0.2"
 material = "1.12.0"
 navigationFragmentKtx = "2.8.2"
+safeargs = "2.8.2"
+serialization = "2.0.21"
+kotlinAndroid = "2.1.0-Beta2"
+libraryAndroid = "8.5.2"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -27,3 +31,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "safeargs" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
+library-android = { id = "com.android.library", version.ref = "libraryAndroid" }
