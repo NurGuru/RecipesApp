@@ -5,12 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
-import ru.nurguru.recipesapp.model.Constants.ARG_RECIPE_ID
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
