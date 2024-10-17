@@ -46,32 +46,27 @@ class MainActivity : AppCompatActivity() {
 
             val deserializedCategoryList = Json.decodeFromString<List<Category>>(
                 categoryClient.newCall(categoryRequest)
-                    .execute().body?.string().toString())
+                    .execute().body?.string().toString()
+            )
+            Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
 
             categoriesIds = deserializedCategoryList.map { it.id }
 
+            val recipeLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val recipeClient = OkHttpClient.Builder().addInterceptor(recipeLogging).build()
 
             categoriesIds.forEach { id ->
+                threadPool.execute {
+                    val recipeRequest: Request =
+                        Request.Builder().url("$URL_GET_CATEGORIES/$id/$URL_GET_RECIPES_SUFFIX")
+                            .build()
 
-                val recipeLogging =HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-                val recipeRequest: Request = Request.Builder().url("$URL_GET_CATEGORIES/$id/$URL_GET_RECIPES_SUFFIX").build()
-                val recipeClient = OkHttpClient.Builder().addInterceptor(recipeLogging).build()
-
-                categoryClient.newCall(categoryRequest).execute().use { response ->
-                    Log.i("!!!", "responseCode: ${response.code}")
-                    Log.i("!!!", "responseMessage: ${response.message}")
-                    Log.i("!!!", "Body: ${response.body?.string()}")
-                    Log.i("!!!", "Body2: $deserializedCategoryList")
+                    val deserializedRecipesList = Json.decodeFromString<List<Recipe>>(
+                        recipeClient.newCall(recipeRequest)
+                            .execute().body?.string().toString()
+                    )
                     Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
                 }
-
-                val deserializedRecipesList = Json.decodeFromString<List<Recipe>>(
-                    recipeClient.newCall(recipeRequest)
-                        .execute().body?.string().toString())
-
-                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-                Log.i("!!!", "RecipesList: $deserializedRecipesList")
-
             }
         }
 
