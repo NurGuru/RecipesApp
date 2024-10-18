@@ -30,30 +30,31 @@ class MainActivity : AppCompatActivity() {
         .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
         .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim).build()
 
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val сlient = OkHttpClient.Builder()
         var categoriesIds: List<Int>
         val threadPool = Executors.newFixedThreadPool(10)
 
         threadPool.execute {
-            val categoriesLogging =
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
             val categoryRequest: Request = Request.Builder().url(URL_GET_CATEGORIES).build()
 
             val deserializedCategoryList = Json.decodeFromString<List<Category>>(
-                сlient.addInterceptor(categoriesLogging).build().newCall(categoryRequest)
+                client.newCall(categoryRequest)
                     .execute().body?.string().toString()
             )
             Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
 
             categoriesIds = deserializedCategoryList.map { it.id }
-
-            val recipeLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-
 
             categoriesIds.forEach { id ->
                 threadPool.execute {
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                             .build()
 
                     val deserializedRecipesList = Json.decodeFromString<List<Recipe>>(
-                        сlient.addInterceptor(recipeLogging).build().newCall(recipeRequest)
+                        client.newCall(recipeRequest)
                             .execute().body?.string().toString()
                     )
                     Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
