@@ -35,17 +35,17 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val сlient = OkHttpClient.Builder()
         var categoriesIds: List<Int>
         val threadPool = Executors.newFixedThreadPool(10)
 
         threadPool.execute {
             val categoriesLogging =
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            val categoryClient = OkHttpClient.Builder().addInterceptor(categoriesLogging).build()
             val categoryRequest: Request = Request.Builder().url(URL_GET_CATEGORIES).build()
 
             val deserializedCategoryList = Json.decodeFromString<List<Category>>(
-                categoryClient.newCall(categoryRequest)
+                сlient.addInterceptor(categoriesLogging).build().newCall(categoryRequest)
                     .execute().body?.string().toString()
             )
             Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             categoriesIds = deserializedCategoryList.map { it.id }
 
             val recipeLogging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            val recipeClient = OkHttpClient.Builder().addInterceptor(recipeLogging).build()
+
 
             categoriesIds.forEach { id ->
                 threadPool.execute {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                             .build()
 
                     val deserializedRecipesList = Json.decodeFromString<List<Recipe>>(
-                        recipeClient.newCall(recipeRequest)
+                        сlient.addInterceptor(recipeLogging).build().newCall(recipeRequest)
                             .execute().body?.string().toString()
                     )
                     Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
