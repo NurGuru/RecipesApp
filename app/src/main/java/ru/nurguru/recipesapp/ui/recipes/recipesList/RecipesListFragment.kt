@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
+import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
@@ -39,9 +41,13 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
 
     private fun initUI() {
         viewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
-            binding.tvRecipeTitle.text = recipeListState.category?.title
-            binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
-            recipeListAdapter.dataSet = recipeListState.recipeList
+            if (recipeListState.category == null || recipeListState.recipesList == null) {
+                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
+            } else {
+                binding.tvRecipeTitle.text = recipeListState.category.title
+                binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
+                recipeListAdapter.dataSet = recipeListState.recipesList
+            }
         }
         initRecycler()
     }

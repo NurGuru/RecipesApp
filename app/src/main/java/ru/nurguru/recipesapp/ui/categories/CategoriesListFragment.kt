@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 import ru.nurguru.recipesapp.model.Category
+import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private var _binding: FragmentListCategoriesBinding? = null
@@ -35,7 +37,11 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private fun initUi() {
         viewModel.loadCategories()
         viewModel.categoriesUiState.observe(viewLifecycleOwner) { categoriesState ->
-            categoriesListAdapter.dataSet = categoriesState.categoriesList
+            if (categoriesState.categoriesList == null) {
+                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
+            } else {
+                categoriesListAdapter.dataSet = categoriesState.categoriesList
+            }
         }
 
         categoriesListAdapter.setOnItemClickListener(

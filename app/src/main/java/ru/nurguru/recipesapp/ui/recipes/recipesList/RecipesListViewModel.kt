@@ -6,14 +6,14 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.nurguru.recipesapp.data.STUB
+import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Category
 import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.model.Recipe
 
 data class RecipeListUiState(
     val category: Category? = null,
-    val recipeList: List<Recipe> = listOf(),
+    val recipesList: List<Recipe>? = listOf(),
     val recipeListImage: Drawable? = null
 )
 
@@ -22,12 +22,13 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     private var _recipeListUiState: MutableLiveData<RecipeListUiState> =
         MutableLiveData(RecipeListUiState())
     var recipeListUiState: LiveData<RecipeListUiState> = _recipeListUiState
+    private val recipesRepository = RecipesRepository()
 
     fun loadRecipesList(category: Category) {
         _recipeListUiState.value =
             _recipeListUiState.value?.copy(
                 category = category,
-                recipeList = STUB.getRecipesByCategoryId(category.id)
+                recipesList = recipesRepository.getRecipesByCategoryId(category.id)
             )
 
         try {

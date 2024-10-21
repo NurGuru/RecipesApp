@@ -5,16 +5,16 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Constants.SHARED_FAVORITES_IDS_FILE_NAME
 import ru.nurguru.recipesapp.model.Constants.SHARED_FAVORITES_IDS_KEY
-import ru.nurguru.recipesapp.data.STUB
 import ru.nurguru.recipesapp.model.Recipe
 
 
 class FavoritesViewModel(private val application: Application) : AndroidViewModel(application) {
 
     data class FavoritesUiState(
-        val recipeList: List<Recipe> = listOf()
+        val recipeList: List<Recipe>? = listOf()
     )
 
     private var _favoritesUiState: MutableLiveData<FavoritesUiState> =
@@ -27,9 +27,15 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
         )
     }
 
+    private val recipesRepository = RecipesRepository()
+
     fun loadFavorites() {
         _favoritesUiState.value =
-            _favoritesUiState.value?.copy(recipeList = STUB.getRecipesByIds(getFavoritesIds()))
+            _favoritesUiState.value?.copy(
+                recipeList = recipesRepository.getRecipesByIds(
+                    getFavoritesIds()
+                )
+            )
     }
 
     private fun getFavoritesIds(): Set<Int> {

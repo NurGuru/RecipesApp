@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
+import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
 
 
 class RecipeFragment : Fragment() {
@@ -48,34 +50,38 @@ class RecipeFragment : Fragment() {
     private fun initUI() {
 
         viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
+            if (recipeState.recipe == null) {
+                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
+            } else {
+                binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
 
-            binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
+                with(binding) {
+                    tvRecipeSubTitle.text = recipeState.recipe.title
+                    portionsCount.text = recipeState.numberOfPortions.toString()
+                    seekBar.progress = recipeState.numberOfPortions
+                }
 
-            with(binding) {
-                tvRecipeSubTitle.text = recipeState.recipe?.title
-                portionsCount.text = recipeState.numberOfPortions.toString()
-                seekBar.progress = recipeState.numberOfPortions
-            }
-
-            with(binding.ibFavoritesIcon) {
-                setImageDrawable(
-                    ResourcesCompat.getDrawable(
-                        resources,
-                        if (recipeState.recipe != null && recipeState.isInFavorites) {
-                            R.drawable.ic_heart
-                        } else R.drawable.ic_heart_empty,
-                        null
+                with(binding.ibFavoritesIcon) {
+                    setImageDrawable(
+                        ResourcesCompat.getDrawable(
+                            resources,
+                            if (recipeState.isInFavorites) {
+                                R.drawable.ic_heart
+                            } else R.drawable.ic_heart_empty,
+                            null
+                        )
                     )
-                )
+                }
+
+                ingredientAdapter.dataSet = recipeState.recipe.ingredients
+                ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+                binding.rvIngredients.adapter = ingredientAdapter
+
+                methodAdapter.dataSet = recipeState.recipe.method ?: listOf()
+                binding.rvMethod.adapter = methodAdapter
             }
-
-            ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
-            ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
-            binding.rvIngredients.adapter = ingredientAdapter
-
-            methodAdapter.dataSet = recipeState.recipe?.method ?: listOf()
-            binding.rvMethod.adapter = methodAdapter
         }
+
 
         binding.seekBar.setOnSeekBarChangeListener(
             PortionSeekBarListener { progress ->

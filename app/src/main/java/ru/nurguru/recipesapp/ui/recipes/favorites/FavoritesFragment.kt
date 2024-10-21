@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
+import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
@@ -40,16 +42,21 @@ class FavoritesFragment : Fragment() {
     private fun initUi() {
         viewModel.loadFavorites()
         viewModel.favoritesUiState.observe(viewLifecycleOwner) { favoritesState ->
-            if (favoritesState.recipeList.isNotEmpty()) {
-                binding.tvFavoritesStub.visibility = View.GONE
-                binding.rvFavorites.visibility = View.VISIBLE
-
-                recipesListAdapter.dataSet = favoritesState.recipeList
-
+            if (favoritesState.recipeList == null) {
+                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
             } else {
-                binding.tvFavoritesStub.visibility = View.VISIBLE
-                binding.rvFavorites.visibility = View.GONE
+                if (favoritesState.recipeList.isNotEmpty()) {
+                    binding.tvFavoritesStub.visibility = View.GONE
+                    binding.rvFavorites.visibility = View.VISIBLE
+
+                    recipesListAdapter.dataSet = favoritesState.recipeList
+
+                } else {
+                    binding.tvFavoritesStub.visibility = View.VISIBLE
+                    binding.rvFavorites.visibility = View.GONE
+                }
             }
+
         }
 
         recipesListAdapter.setOnItemClickListener(

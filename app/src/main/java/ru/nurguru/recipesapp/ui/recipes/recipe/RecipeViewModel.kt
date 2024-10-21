@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.nurguru.recipesapp.data.STUB
+import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.model.Recipe
 
@@ -30,10 +30,12 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
     val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
 
+    private val recipesRepository = RecipesRepository()
+
     fun loadRecipe(recipeId: Int?) {
         // TODO: load from network
         _recipeUiState.value = _recipeUiState.value?.copy(
-            recipe = recipeId?.let { STUB.getRecipeById(recipeId = it) },
+            recipe = recipeId?.let { recipesRepository.getRecipeById(recipeId = it) },
             isInFavorites = recipeId.toString() in getFavorites()
         )
         try {
