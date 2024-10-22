@@ -50,7 +50,7 @@ class FavoritesFragment : Fragment() {
                     binding.rvFavorites.visibility = View.VISIBLE
 
                     recipesListAdapter.dataSet = favoritesState.recipeList
-
+                    recipesListAdapter.notifyDataSetChanged()
                 } else {
                     binding.tvFavoritesStub.visibility = View.VISIBLE
                     binding.rvFavorites.visibility = View.GONE

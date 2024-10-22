@@ -41,6 +41,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
                 Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
             } else {
                 categoriesListAdapter.dataSet = categoriesState.categoriesList
+                categoriesListAdapter.notifyDataSetChanged()
             }
         }
 

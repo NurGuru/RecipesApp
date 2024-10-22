@@ -74,9 +74,11 @@ class RecipeFragment : Fragment() {
                 ingredientAdapter.dataSet = recipeState.recipe.ingredients
                 ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
                 binding.rvIngredients.adapter = ingredientAdapter
+                ingredientAdapter.notifyDataSetChanged()
 
                 methodAdapter.dataSet = recipeState.recipe.method ?: listOf()
                 binding.rvMethod.adapter = methodAdapter
+                methodAdapter.notifyDataSetChanged()
             }
         }
 

@@ -46,6 +46,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
                 binding.tvRecipeTitle.text = recipeListState.category.title
                 binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
                 recipeListAdapter.dataSet = recipeListState.recipesList
+                recipeListAdapter.notifyDataSetChanged()
             }
         }
         initRecycler()
@@ -58,6 +59,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             }
         })
         binding.rvRecipes.adapter = recipeListAdapter
+        recipeListAdapter.notifyDataSetChanged()
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
