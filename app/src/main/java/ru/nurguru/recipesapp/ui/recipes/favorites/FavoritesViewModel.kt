@@ -30,13 +30,15 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     private val recipesRepository = RecipesRepository()
 
     fun loadFavorites() {
-        _favoritesUiState.value =
-            _favoritesUiState.value?.copy(
-                recipeList = recipesRepository.getRecipesByIds(
-                    getFavoritesIds()
+        recipesRepository.getRecipesByIds(getFavoritesIds()) { recipeList ->
+            _favoritesUiState.postValue(
+                _favoritesUiState.value?.copy(
+                    recipeList = recipeList
                 )
             )
+        }
     }
+
 
     private fun getFavoritesIds(): Set<Int> {
         val setOfFavoritesIds =

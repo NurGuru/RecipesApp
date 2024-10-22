@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
-import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
@@ -42,7 +41,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private fun initUI() {
         viewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
             if (recipeListState.category == null || recipeListState.recipesList == null) {
-                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
             } else {
                 binding.tvRecipeTitle.text = recipeListState.category.title
                 binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)

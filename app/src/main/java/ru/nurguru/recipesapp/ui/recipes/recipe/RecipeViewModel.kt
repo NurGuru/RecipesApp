@@ -32,19 +32,28 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     private val recipesRepository = RecipesRepository()
 
-    fun loadRecipe(recipeId: Int?) {
+    fun loadRecipe(recipeId: Int) {
         // TODO: load from network
-        _recipeUiState.value = _recipeUiState.value?.copy(
-            recipe = recipeId?.let { recipesRepository.getRecipeById(recipeId = it) },
-            isInFavorites = recipeId.toString() in getFavorites()
-        )
+
+        recipesRepository.getRecipeById(recipeId) { recipe ->
+            _recipeUiState.postValue(
+                _recipeUiState.value?.copy(
+                    recipe = recipe,
+                    isInFavorites = recipeId.toString() in getFavorites(),
+                )
+            )
+        }
+
+
         try {
             val inputStream =
                 application.assets?.open(_recipeUiState.value?.recipe?.imageUrl ?: "burger.png")
-            _recipeUiState.value = _recipeUiState.value?.copy(
-                recipeImage = Drawable.createFromStream(
-                    inputStream,
-                    null
+            _recipeUiState.postValue(
+                _recipeUiState.value?.copy(
+                    recipeImage = Drawable.createFromStream(
+                        inputStream,
+                        null
+                    )
                 )
             )
         } catch (e: Exception) {
@@ -52,7 +61,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                 "asset_error",
                 "${e.printStackTrace()}"
             )
-            _recipeUiState.value = _recipeUiState.value?.copy(recipeImage = null)
+            _recipeUiState.postValue(_recipeUiState.value?.copy(recipeImage = null))
         }
     }
 

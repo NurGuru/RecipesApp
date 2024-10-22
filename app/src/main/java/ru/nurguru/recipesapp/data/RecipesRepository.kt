@@ -11,13 +11,14 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import ru.nurguru.recipesapp.model.Category
 import ru.nurguru.recipesapp.model.Constants.BASE_URL
+import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 import ru.nurguru.recipesapp.model.Recipe
 import java.util.concurrent.Executors
 
 class RecipesRepository {
     private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val client = OkHttpClient.Builder().addInterceptor(logging).build()
-    private val contentType = "application/json".toMediaType()
+    private val contentType = CONTENT_TYPE.toMediaType()
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(Json.asConverterFactory(contentType))
@@ -27,7 +28,7 @@ class RecipesRepository {
 
     private val threadPool = Executors.newFixedThreadPool(10)
 
-    fun getCategories(): List<Category>? {
+    fun getCategories(callback: (List<Category>?) -> Unit) {
         var categories: List<Category>? = null
 
         threadPool.execute {
@@ -36,19 +37,20 @@ class RecipesRepository {
                 val categoriesResponse: Response<List<Category>> = categoriesCall.execute()
 
                 categories = categoriesResponse.body()
+                callback(categories)
 
                 Log.i("!!!", "categories: ${categories.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
 
             } catch (e: Exception) {
                 Log.i("network, getCategories()", "${e.printStackTrace()}")
+                callback(null)
             }
         }
 
-        return categories
     }
 
-    fun getRecipesByCategoryId(categoryId: Int): List<Recipe>? {
+    fun getRecipesByCategoryId(categoryId: Int, callback: (List<Recipe>?) -> Unit): List<Recipe>? {
         var recipes: List<Recipe>? = null
 
         threadPool.execute {
@@ -57,19 +59,22 @@ class RecipesRepository {
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
 
                 recipes = recipesResponse.body()
+                callback(recipes)
 
                 Log.i("!!!", "recipes: ${recipes.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
             } catch (e: Exception) {
                 Log.i("network, getRecipesByCategoryId()", "${e.printStackTrace()}")
+                callback(null)
             }
         }
 
         return recipes
     }
 
-    fun getRecipesByIds(idsSet: Set<Int>, categoryId: Int = 0): List<Recipe>? {
+    fun getRecipesByIds(idsSet: Set<Int>, callback: (List<Recipe>?) -> Unit): List<Recipe>? {
         var recipes: List<Recipe>? = null
+
         threadPool.execute {
             try {
                 val idsString = idsSet.joinToString(separator = ",")
@@ -78,11 +83,13 @@ class RecipesRepository {
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
 
                 recipes = recipesResponse.body()
+                callback(recipes)
 
                 Log.i("!!!", "favoriteRecipes: ${recipes.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
             } catch (e: Exception) {
                 Log.i("network, getRecipesByIds()", "${e.printStackTrace()}")
+                callback(null)
             }
         }
 
@@ -90,20 +97,22 @@ class RecipesRepository {
     }
 
 
-    fun getRecipeById(recipeId: Int): Recipe? {
+    fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit): Recipe? {
         var recipe: Recipe? = null
+
         threadPool.execute {
             try {
                 val recipeCall: Call<Recipe> = service.getRecipeById(recipeId)
                 val recipeResponse: Response<Recipe> = recipeCall.execute()
 
                 recipe = recipeResponse.body()
-
+                callback(recipe)
                 Log.i("!!!", "recipes: ${recipe.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
 
             } catch (e: Exception) {
                 Log.i("network, getRecipeById()", "${e.printStackTrace()}")
+                callback(null)
             }
         }
 

@@ -20,8 +20,15 @@ class CategoriesListViewModel() : ViewModel() {
     private val recipesRepository = RecipesRepository()
 
     fun loadCategories() {
-        _categoriesUiState.value = _categoriesUiState.value?.copy(
-            categoriesList = recipesRepository.getCategories()
-        )
+
+        recipesRepository.getCategories { categoriesList ->
+            _categoriesUiState.postValue(
+                _categoriesUiState.value?.copy(
+                    categoriesList = categoriesList
+                )
+            )
+        }
     }
 }
+
+

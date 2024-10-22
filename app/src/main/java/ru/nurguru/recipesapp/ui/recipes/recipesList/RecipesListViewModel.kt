@@ -6,6 +6,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import retrofit2.Call
+import retrofit2.Response
 import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Category
 import ru.nurguru.recipesapp.model.Constants
@@ -25,28 +27,33 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     private val recipesRepository = RecipesRepository()
 
     fun loadRecipesList(category: Category) {
-        _recipeListUiState.value =
-            _recipeListUiState.value?.copy(
-                category = category,
-                recipesList = recipesRepository.getRecipesByCategoryId(category.id)
-            )
 
-        try {
-            val inputStream = application.assets?.open(
-                _recipeListUiState.value?.category?.imageUrl ?: Constants.DEFAULT_IMAGE
-            )
-            _recipeListUiState.value = _recipeListUiState.value?.copy(
-                recipeListImage = Drawable.createFromStream(
-                    inputStream,
-                    null
+        recipesRepository.getRecipesByCategoryId(category.id) { recipesList ->
+            _recipeListUiState.postValue(
+                _recipeListUiState.value?.copy(
+                    category = category,
+                    recipesList = recipesList
                 )
             )
-        } catch (e: Exception) {
-            Log.e(
-                " asset error",
-                "${e.printStackTrace()}"
-            )
-        }
+            try {
+                val inputStream = application.assets?.open(
+                    _recipeListUiState.value?.category?.imageUrl ?: Constants.DEFAULT_IMAGE
+                )
+                _recipeListUiState.postValue(
+                    _recipeListUiState.value?.copy(
+                        recipeListImage = Drawable.createFromStream(
+                            inputStream,
+                            null
+                        )
+                    )
+                )
+            } catch (e: Exception) {
+                Log.e(
+                    " asset error",
+                    "${e.printStackTrace()}"
+                )
+            }
 
+        }
     }
 }

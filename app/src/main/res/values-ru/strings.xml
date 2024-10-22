@@ -13,4 +13,5 @@
     <string name="content_description_favorites_item_image">Изображение значка избраного</string>
     <string name="content_description_favorites_main_image">Главное изображение избранного</string>
     <string name="favorites_stub">Вы еще не добавили ни одного рецепта в избранное</string>
+    <string name="data_loading_toast">Ошибка получения данных</string>
 </resources>

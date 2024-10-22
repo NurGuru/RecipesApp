@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
-import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
-
 
 class RecipeFragment : Fragment() {
 
@@ -51,7 +49,7 @@ class RecipeFragment : Fragment() {
 
         viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
             if (recipeState.recipe == null) {
-                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
             } else {
                 binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
 

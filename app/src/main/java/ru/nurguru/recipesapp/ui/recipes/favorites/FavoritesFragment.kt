@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
-import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
@@ -43,7 +43,7 @@ class FavoritesFragment : Fragment() {
         viewModel.loadFavorites()
         viewModel.favoritesUiState.observe(viewLifecycleOwner) { favoritesState ->
             if (favoritesState.recipeList == null) {
-                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
             } else {
                 if (favoritesState.recipeList.isNotEmpty()) {
                     binding.tvFavoritesStub.visibility = View.GONE

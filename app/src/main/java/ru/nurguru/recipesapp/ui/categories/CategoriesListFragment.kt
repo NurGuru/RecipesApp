@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
 import ru.nurguru.recipesapp.model.Category
-import ru.nurguru.recipesapp.model.Constants.ERROR_OF_DATA_LOADING
+
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private var _binding: FragmentListCategoriesBinding? = null
@@ -38,7 +38,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         viewModel.loadCategories()
         viewModel.categoriesUiState.observe(viewLifecycleOwner) { categoriesState ->
             if (categoriesState.categoriesList == null) {
-                Toast.makeText(requireContext(), ERROR_OF_DATA_LOADING, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
             } else {
                 categoriesListAdapter.dataSet = categoriesState.categoriesList
             }
