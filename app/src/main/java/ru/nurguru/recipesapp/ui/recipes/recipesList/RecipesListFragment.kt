@@ -40,10 +40,10 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
 
     private fun initUI() {
         viewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
-            if (recipeListState.category == null || recipeListState.recipesList == null) {
+            if (recipeListState.recipesList == null) {
                 Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
             } else {
-                binding.tvRecipeTitle.text = recipeListState.category.title
+                binding.tvRecipeTitle.text = recipeListState.category?.title
                 binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
                 recipeListAdapter.dataSet = recipeListState.recipesList
                 recipeListAdapter.notifyDataSetChanged()

@@ -48,38 +48,36 @@ class RecipeFragment : Fragment() {
     private fun initUI() {
 
         viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
-            if (recipeState.recipe == null) {
-                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
-            } else {
-                binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
 
-                with(binding) {
-                    tvRecipeSubTitle.text = recipeState.recipe.title
-                    portionsCount.text = recipeState.numberOfPortions.toString()
-                    seekBar.progress = recipeState.numberOfPortions
-                }
+            binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
 
-                with(binding.ibFavoritesIcon) {
-                    setImageDrawable(
-                        ResourcesCompat.getDrawable(
-                            resources,
-                            if (recipeState.isInFavorites) {
-                                R.drawable.ic_heart
-                            } else R.drawable.ic_heart_empty,
-                            null
-                        )
-                    )
-                }
-
-                ingredientAdapter.dataSet = recipeState.recipe.ingredients
-                ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
-                binding.rvIngredients.adapter = ingredientAdapter
-                ingredientAdapter.notifyDataSetChanged()
-
-                methodAdapter.dataSet = recipeState.recipe.method ?: listOf()
-                binding.rvMethod.adapter = methodAdapter
-                methodAdapter.notifyDataSetChanged()
+            with(binding) {
+                tvRecipeSubTitle.text = recipeState.recipe?.title
+                portionsCount.text = recipeState.numberOfPortions.toString()
+                seekBar.progress = recipeState.numberOfPortions
             }
+
+            with(binding.ibFavoritesIcon) {
+                setImageDrawable(
+                    ResourcesCompat.getDrawable(
+                        resources,
+                        if (recipeState.isInFavorites) {
+                            R.drawable.ic_heart
+                        } else R.drawable.ic_heart_empty,
+                        null
+                    )
+                )
+            }
+
+            ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
+            ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
+            binding.rvIngredients.adapter = ingredientAdapter
+            ingredientAdapter.notifyDataSetChanged()
+
+            methodAdapter.dataSet = recipeState.recipe?.method ?: listOf()
+            binding.rvMethod.adapter = methodAdapter
+            methodAdapter.notifyDataSetChanged()
+
         }
 
 
