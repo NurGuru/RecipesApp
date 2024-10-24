@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import ru.nurguru.recipesapp.model.Category
 import ru.nurguru.recipesapp.model.Constants.BASE_URL
 import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
+import ru.nurguru.recipesapp.model.Constants.IMAGES_URL
 import ru.nurguru.recipesapp.model.Recipe
 import java.util.concurrent.Executors
 
@@ -29,14 +30,16 @@ class RecipesRepository {
     private val threadPool = Executors.newFixedThreadPool(10)
 
     fun getCategories(callback: (List<Category>?) -> Unit) {
-        var categories: List<Category>? = null
+        var categories: List<Category>?
 
         threadPool.execute {
             try {
                 val categoriesCall: Call<List<Category>> = service.getCategories()
                 val categoriesResponse: Response<List<Category>> = categoriesCall.execute()
 
-                categories = categoriesResponse.body()
+                categories = categoriesResponse.body()?.map {
+                    it.copy(imageUrl = "$IMAGES_URL/${it.imageUrl}")
+                }
                 callback(categories)
 
                 Log.i("!!!", "categories: ${categories.toString()}")
@@ -58,7 +61,9 @@ class RecipesRepository {
                 val recipesCall: Call<List<Recipe>> = service.getRecipesByCategoryId(categoryId)
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
 
-                recipes = recipesResponse.body()
+                recipes = recipesResponse.body()?.map {
+                    it.copy(imageUrl = "$IMAGES_URL/${it.imageUrl}")
+                }
                 callback(recipes)
 
                 Log.i("!!!", "recipes: ${recipes.toString()}")
@@ -82,7 +87,9 @@ class RecipesRepository {
                 val recipesCall: Call<List<Recipe>> = service.getRecipesByIds(idsString)
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
 
-                recipes = recipesResponse.body()
+                recipes = recipesResponse.body()?.map {
+                    it.copy(imageUrl = "$IMAGES_URL/${it.imageUrl}")
+                }
                 callback(recipes)
 
                 Log.i("!!!", "favoriteRecipes: ${recipes.toString()}")

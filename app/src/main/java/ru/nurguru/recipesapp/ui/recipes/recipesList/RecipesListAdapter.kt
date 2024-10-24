@@ -1,16 +1,13 @@
 package ru.nurguru.recipesapp.ui.recipes.recipesList
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ItemRecipeBinding
 import ru.nurguru.recipesapp.model.Recipe
-import java.io.IOException
-import java.io.InputStream
 
 class RecipesListAdapter(
      var dataSet: List<Recipe>
@@ -27,10 +24,7 @@ class RecipesListAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = ItemRecipeBinding.bind(view)
-        val cvRecipeItem = binding.cvRecipeItem
-        val tvRecipeName = binding.tvRecipeName
-        val ivRecipeImage = binding.ivRecipeItemImage
+        val binding = ItemRecipeBinding.bind(view)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -40,22 +34,17 @@ class RecipesListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        with(viewHolder) {
+        with(viewHolder.binding) {
             tvRecipeName.text = dataSet[position].title
             cvRecipeItem.setOnClickListener {
                 itemClickListener?.onItemClick(dataSet[position])
-
             }
-            try {
-                val inputStream: InputStream? =
-                    itemView.context.assets?.open(dataSet[position].imageUrl)
-                val drawable = Drawable.createFromStream(inputStream, null)
-                ivRecipeImage.setImageDrawable(drawable)
-            } catch (e: IOException) {
-                Log.e("error", "Ошибка при загрузке изображения", e)
-                ivRecipeImage.contentDescription =
-                    "${R.string.content_description_recipes_cards} ${dataSet[position].title}"
-            }
+        }
+        with(viewHolder.binding.ivRecipeItemImage){Glide.with(context)
+            .load(dataSet[position].imageUrl)
+            .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
+            .into(this)
         }
     }
 

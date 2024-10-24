@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
@@ -47,8 +48,14 @@ class RecipeFragment : Fragment() {
     private fun initUI() {
 
         viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
+            with(binding.ivRecipeItemImage) {
+                Glide.with(context)
+                    .load(recipeState.recipeImageUrl)
+                    .placeholder(R.drawable.img_placeholder)
+                    .error(R.drawable.img_error)
+                    .into(this)
+            }
 
-            binding.ivRecipeItemImage.setImageDrawable(recipeState.recipeImage)
 
             with(binding) {
                 tvRecipeSubTitle.text = recipeState.recipe?.title
@@ -108,4 +115,6 @@ class RecipeFragment : Fragment() {
 
         override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     }
+
+
 }

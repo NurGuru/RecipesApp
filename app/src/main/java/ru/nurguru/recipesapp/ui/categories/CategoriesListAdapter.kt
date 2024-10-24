@@ -1,15 +1,12 @@
 package ru.nurguru.recipesapp.ui.categories
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.ItemCategoryBinding
 import ru.nurguru.recipesapp.model.Category
-import java.io.IOException
-import java.io.InputStream
 
 class CategoriesListAdapter(
     var dataSet: List<Category>,
@@ -41,16 +38,14 @@ class CategoriesListAdapter(
                 itemClickListener?.onItemClick(dataSet[position])
 
             }
-            try {
-                val inputStream: InputStream? =
-                    viewHolder.itemView.context.assets?.open(dataSet[position].imageUrl)
-                val drawable = Drawable.createFromStream(inputStream, null)
-                ivCategoryImage.setImageDrawable(drawable)
-            } catch (e: IOException) {
-                Log.e("error", "Ошибка при загрузке изображения", e)
-                ivCategoryImage.contentDescription =
-                    "${R.string.content_description_categories_cards} ${dataSet[position].title}"
-            }
+
+        }
+        with(viewHolder.binding.ivCategoryImage){
+            Glide.with(context)
+                .load(dataSet[position].imageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(this)
         }
     }
 
