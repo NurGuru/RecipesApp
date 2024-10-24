@@ -2,6 +2,8 @@ package ru.nurguru.recipesapp.data
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -27,12 +29,11 @@ class RecipesRepository {
 
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-    private val threadPool = Executors.newFixedThreadPool(10)
 
-    fun getCategories(callback: (List<Category>?) -> Unit) {
+    suspend fun getCategories(callback: (List<Category>?) -> Unit) {
         var categories: List<Category>?
 
-        threadPool.execute {
+        withContext(Dispatchers.IO) {
             try {
                 val categoriesCall: Call<List<Category>> = service.getCategories()
                 val categoriesResponse: Response<List<Category>> = categoriesCall.execute()
@@ -53,10 +54,14 @@ class RecipesRepository {
 
     }
 
-    fun getRecipesByCategoryId(categoryId: Int, callback: (List<Recipe>?) -> Unit): List<Recipe>? {
+
+    suspend fun getRecipesByCategoryId(
+        categoryId: Int,
+        callback: (List<Recipe>?) -> Unit
+    ): List<Recipe>? {
         var recipes: List<Recipe>? = null
 
-        threadPool.execute {
+        withContext(Dispatchers.IO) {
             try {
                 val recipesCall: Call<List<Recipe>> = service.getRecipesByCategoryId(categoryId)
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
@@ -74,13 +79,17 @@ class RecipesRepository {
             }
         }
 
+
         return recipes
     }
 
-    fun getRecipesByIds(idsSet: Set<Int>, callback: (List<Recipe>?) -> Unit): List<Recipe>? {
+    suspend fun getRecipesByIds(
+        idsSet: Set<Int>,
+        callback: (List<Recipe>?) -> Unit
+    ): List<Recipe>? {
         var recipes: List<Recipe>? = null
 
-        threadPool.execute {
+        withContext(Dispatchers.IO) {
             try {
                 val idsString = idsSet.joinToString(separator = ",")
 
@@ -104,10 +113,10 @@ class RecipesRepository {
     }
 
 
-    fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit): Recipe? {
+    suspend fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit): Recipe? {
         var recipe: Recipe? = null
 
-        threadPool.execute {
+        withContext(Dispatchers.IO) {
             try {
                 val recipeCall: Call<Recipe> = service.getRecipeById(recipeId)
                 val recipeResponse: Response<Recipe> = recipeCall.execute()
@@ -126,9 +135,9 @@ class RecipesRepository {
         return recipe
     }
 
-    fun getCategoryById(categoryId: Int): Category? {
+    suspend fun getCategoryById(categoryId: Int): Category? {
         var category: Category? = null
-        threadPool.execute {
+        withContext(Dispatchers.IO) {
             try {
                 val categoryCall: Call<Category> = service.getCategoryById(categoryId)
                 val categoryResponse: Response<Category> = categoryCall.execute()

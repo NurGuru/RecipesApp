@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Category
 import ru.nurguru.recipesapp.model.Recipe
@@ -23,36 +25,16 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
 
     fun loadRecipesList(category: Category) {
 
-        recipesRepository.getRecipesByCategoryId(category.id) { recipesList ->
-            _recipeListUiState.postValue(
-                _recipeListUiState.value?.copy(
-                    category = category,
-                    recipesList = recipesList,
-                    recipeListImageUrl = category.imageUrl
+        viewModelScope.launch {
+            recipesRepository.getRecipesByCategoryId(category.id) { recipesList ->
+                _recipeListUiState.postValue(
+                    _recipeListUiState.value?.copy(
+                        category = category,
+                        recipesList = recipesList,
+                        recipeListImageUrl = category.imageUrl
+                    )
                 )
-            )
+            }
         }
-//        _recipeListUiState.value = _recipeListUiState.value?.copy(category = category)
-
-//        try {
-//            val inputStream = application.assets?.open(
-//                _recipeListUiState.value?.category?.imageUrl ?: Constants.DEFAULT_IMAGE
-//            )
-//            _recipeListUiState.postValue(
-//                _recipeListUiState.value?.copy(
-//                    recipeListImage = Drawable.createFromStream(
-//                        inputStream,
-//                        null
-//                    )
-//                )
-//            )
-//
-//        } catch (e: Exception) {
-//            Log.e(
-//                " asset error",
-//                "${e.printStackTrace()}"
-//            )
-//        }
-
     }
 }

@@ -3,6 +3,8 @@ package ru.nurguru.recipesapp.ui.categories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.nurguru.recipesapp.data.RecipesRepository
 
 import ru.nurguru.recipesapp.model.Category
@@ -21,12 +23,14 @@ class CategoriesListViewModel() : ViewModel() {
 
     fun loadCategories() {
 
-        recipesRepository.getCategories { categoriesList ->
-            _categoriesUiState.postValue(
-                _categoriesUiState.value?.copy(
-                    categoriesList = categoriesList
+        viewModelScope.launch {
+            recipesRepository.getCategories { categoriesList ->
+                _categoriesUiState.postValue(
+                    _categoriesUiState.value?.copy(
+                        categoriesList = categoriesList
+                    )
                 )
-            )
+            }
         }
     }
 }

@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Constants.SHARED_FAVORITES_IDS_FILE_NAME
 import ru.nurguru.recipesapp.model.Constants.SHARED_FAVORITES_IDS_KEY
@@ -30,12 +32,14 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     private val recipesRepository = RecipesRepository()
 
     fun loadFavorites() {
-        recipesRepository.getRecipesByIds(getFavoritesIds()) { recipeList ->
-            _favoritesUiState.postValue(
-                _favoritesUiState.value?.copy(
-                    recipeList = recipeList
+        viewModelScope.launch {
+            recipesRepository.getRecipesByIds(getFavoritesIds()) { recipeList ->
+                _favoritesUiState.postValue(
+                    _favoritesUiState.value?.copy(
+                        recipeList = recipeList
+                    )
                 )
-            )
+            }
         }
     }
 
