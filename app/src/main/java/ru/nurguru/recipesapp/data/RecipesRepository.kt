@@ -72,7 +72,7 @@ class RecipesRepository {
         return recipes
     }
 
-    fun getRecipesByIds(idsSet: Set<Int>, callback: (List<Recipe>?) -> Unit): List<Recipe>? {
+    fun getRecipesByIds(idsSet: Set<Int>, callback: (List<Recipe>?) -> Unit) {
         var recipes: List<Recipe>? = null
 
         threadPool.execute {
@@ -93,11 +93,11 @@ class RecipesRepository {
             }
         }
 
-        return recipes
+
     }
 
 
-    fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit): Recipe? {
+    fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit) {
         var recipe: Recipe? = null
 
         threadPool.execute {
@@ -116,7 +116,6 @@ class RecipesRepository {
             }
         }
 
-        return recipe
     }
 
     fun getCategoryById(categoryId: Int): Category? {
