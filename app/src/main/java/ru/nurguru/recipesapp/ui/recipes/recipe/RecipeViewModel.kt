@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.nurguru.recipesapp.data.STUB
+import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.model.Recipe
 
@@ -30,19 +30,22 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
     val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
 
-    fun loadRecipe(recipeId: Int?) {
+    fun loadRecipe(recipe: Recipe) {
         // TODO: load from network
-        _recipeUiState.value = _recipeUiState.value?.copy(
-            recipe = recipeId?.let { STUB.getRecipeById(recipeId = it) },
-            isInFavorites = recipeId.toString() in getFavorites()
-        )
+            _recipeUiState.value=
+                _recipeUiState.value?.copy(
+                    recipe = recipe,
+                    isInFavorites = recipe.id.toString() in getFavorites(),
+                )
         try {
             val inputStream =
                 application.assets?.open(_recipeUiState.value?.recipe?.imageUrl ?: "burger.png")
-            _recipeUiState.value = _recipeUiState.value?.copy(
-                recipeImage = Drawable.createFromStream(
-                    inputStream,
-                    null
+            _recipeUiState.postValue(
+                _recipeUiState.value?.copy(
+                    recipeImage = Drawable.createFromStream(
+                        inputStream,
+                        null
+                    )
                 )
             )
         } catch (e: Exception) {
@@ -50,7 +53,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                 "asset_error",
                 "${e.printStackTrace()}"
             )
-            _recipeUiState.value = _recipeUiState.value?.copy(recipeImage = null)
+            _recipeUiState.postValue(_recipeUiState.value?.copy(recipeImage = null))
         }
     }
 

@@ -19,7 +19,7 @@ class RecipesListAdapter(
     private var itemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(recipeId: Int)
+        fun onItemClick(recipe: Recipe)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -43,7 +43,7 @@ class RecipesListAdapter(
         with(viewHolder) {
             tvRecipeName.text = dataSet[position].title
             cvRecipeItem.setOnClickListener {
-                itemClickListener?.onItemClick(dataSet[position].id)
+                itemClickListener?.onItemClick(dataSet[position])
 
             }
             try {

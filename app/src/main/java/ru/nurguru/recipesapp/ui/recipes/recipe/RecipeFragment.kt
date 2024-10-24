@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
-
 class RecipeFragment : Fragment() {
 
     private var _binding: FragmentRecipeBinding? = null
@@ -42,7 +41,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initBundleData() {
-        viewModel.loadRecipe(args.recipeId)
+        viewModel.loadRecipe(args.recipe)
     }
 
     private fun initUI() {
@@ -61,7 +60,7 @@ class RecipeFragment : Fragment() {
                 setImageDrawable(
                     ResourcesCompat.getDrawable(
                         resources,
-                        if (recipeState.recipe != null && recipeState.isInFavorites) {
+                        if (recipeState.isInFavorites) {
                             R.drawable.ic_heart
                         } else R.drawable.ic_heart_empty,
                         null
@@ -72,10 +71,14 @@ class RecipeFragment : Fragment() {
             ingredientAdapter.dataSet = recipeState.recipe?.ingredients ?: listOf()
             ingredientAdapter.updateIngredients(recipeState.numberOfPortions)
             binding.rvIngredients.adapter = ingredientAdapter
+            ingredientAdapter.notifyDataSetChanged()
 
             methodAdapter.dataSet = recipeState.recipe?.method ?: listOf()
             binding.rvMethod.adapter = methodAdapter
+            methodAdapter.notifyDataSetChanged()
+
         }
+
 
         binding.seekBar.setOnSeekBarChangeListener(
             PortionSeekBarListener { progress ->
