@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
+import ru.nurguru.recipesapp.model.Recipe
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
@@ -54,17 +55,17 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
 
     private fun initRecycler() {
         recipeListAdapter.setOnItemClickListener(object : RecipesListAdapter.OnItemClickListener {
-            override fun onItemClick(recipeId: Int) {
-                openRecipeByRecipeId(recipeId)
+            override fun onItemClick(recipe: Recipe) {
+                openRecipeByRecipeId(recipe)
             }
         })
         binding.rvRecipes.adapter = recipeListAdapter
         recipeListAdapter.notifyDataSetChanged()
     }
 
-    private fun openRecipeByRecipeId(recipeId: Int) {
+    private fun openRecipeByRecipeId(recipe: Recipe) {
         findNavController().navigate(
-            RecipesListFragmentDirections.actionRecipesListFragmentToRecipeFragment(recipeId)
+            RecipesListFragmentDirections.actionRecipesListFragmentToRecipeFragment(recipe)
         )
     }
 }

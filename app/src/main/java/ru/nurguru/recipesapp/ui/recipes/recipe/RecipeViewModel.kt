@@ -30,21 +30,13 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
     val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
 
-    private val recipesRepository = RecipesRepository()
-
-    fun loadRecipe(recipeId: Int) {
+    fun loadRecipe(recipe: Recipe) {
         // TODO: load from network
-
-        recipesRepository.getRecipeById(recipeId) { recipe ->
-            _recipeUiState.postValue(
+            _recipeUiState.value=
                 _recipeUiState.value?.copy(
                     recipe = recipe,
-                    isInFavorites = recipeId.toString() in getFavorites(),
+                    isInFavorites = recipe.id.toString() in getFavorites(),
                 )
-            )
-        }
-
-
         try {
             val inputStream =
                 application.assets?.open(_recipeUiState.value?.recipe?.imageUrl ?: "burger.png")

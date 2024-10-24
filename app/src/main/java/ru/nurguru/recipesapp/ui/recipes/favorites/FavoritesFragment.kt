@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
+import ru.nurguru.recipesapp.model.Recipe
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
@@ -61,17 +62,17 @@ class FavoritesFragment : Fragment() {
 
         recipesListAdapter.setOnItemClickListener(
             object : RecipesListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipeId(recipeId)
+                override fun onItemClick(recipe: Recipe) {
+                    openRecipeByRecipeId(recipe)
                 }
             }
         )
         binding.rvFavorites.adapter = recipesListAdapter
     }
 
-    private fun openRecipeByRecipeId(recipeId: Int) {
+    private fun openRecipeByRecipeId(recipe: Recipe) {
         findNavController().navigate(
-            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(recipeId)
+            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(recipe)
         )
     }
 }
