@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_recipe_item_image"
                 android:scaleType="centerCrop"
-                android:src="@drawable/burger_mushrooms" />
+                tools:src="@drawable/burger_mushrooms" />
 
             <TextView
                 android:id="@+id/tvRecipeSubTitle"
