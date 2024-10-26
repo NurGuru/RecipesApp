@@ -53,8 +53,8 @@ class RecipesRepository {
 
     }
 
-    fun getRecipesByCategoryId(categoryId: Int, callback: (List<Recipe>?) -> Unit): List<Recipe>? {
-        var recipes: List<Recipe>? = null
+    fun getRecipesByCategoryId(categoryId: Int, callback: (List<Recipe>?) -> Unit) {
+        var recipes: List<Recipe>?
 
         threadPool.execute {
             try {
@@ -73,12 +73,10 @@ class RecipesRepository {
                 callback(null)
             }
         }
-
-        return recipes
     }
 
-    fun getRecipesByIds(idsSet: Set<Int>, callback: (List<Recipe>?) -> Unit): List<Recipe>? {
-        var recipes: List<Recipe>? = null
+    fun getRecipesByIds(idsSet: Set<Int>, callback: (List<Recipe>?) -> Unit) {
+        var recipes: List<Recipe>?
 
         threadPool.execute {
             try {
@@ -100,12 +98,12 @@ class RecipesRepository {
             }
         }
 
-        return recipes
+
     }
 
 
-    fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit): Recipe? {
-        var recipe: Recipe? = null
+    fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit) {
+        var recipe: Recipe?
 
         threadPool.execute {
             try {
@@ -123,11 +121,10 @@ class RecipesRepository {
             }
         }
 
-        return recipe
     }
 
-    fun getCategoryById(categoryId: Int): Category? {
-        var category: Category? = null
+    fun getCategoryById(categoryId: Int) {
+        var category: Category?
         threadPool.execute {
             try {
                 val categoryCall: Call<Category> = service.getCategoryById(categoryId)
@@ -141,8 +138,6 @@ class RecipesRepository {
                 Log.i("network, getCategoryById()", "${e.printStackTrace()}")
             }
         }
-
-        return category
     }
 }
 
