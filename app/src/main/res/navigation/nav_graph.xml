@@ -58,8 +58,8 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <argument
-            android:name="recipeId"
-            app:argType="integer" />
+            android:name="recipe"
+            app:argType="ru.nurguru.recipesapp.model.Recipe" />
     </fragment>
     <fragment
         android:id="@+id/recipesListFragment"

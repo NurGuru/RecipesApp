@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
+import ru.nurguru.recipesapp.model.Recipe
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
@@ -40,31 +43,36 @@ class FavoritesFragment : Fragment() {
     private fun initUi() {
         viewModel.loadFavorites()
         viewModel.favoritesUiState.observe(viewLifecycleOwner) { favoritesState ->
-            if (favoritesState.recipeList.isNotEmpty()) {
-                binding.tvFavoritesStub.visibility = View.GONE
-                binding.rvFavorites.visibility = View.VISIBLE
-
-                recipesListAdapter.dataSet = favoritesState.recipeList
-
+            if (favoritesState.recipeList == null) {
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
             } else {
-                binding.tvFavoritesStub.visibility = View.VISIBLE
-                binding.rvFavorites.visibility = View.GONE
+                if (favoritesState.recipeList.isNotEmpty()) {
+                    binding.tvFavoritesStub.visibility = View.GONE
+                    binding.rvFavorites.visibility = View.VISIBLE
+
+                    recipesListAdapter.dataSet = favoritesState.recipeList
+                    recipesListAdapter.notifyDataSetChanged()
+                } else {
+                    binding.tvFavoritesStub.visibility = View.VISIBLE
+                    binding.rvFavorites.visibility = View.GONE
+                }
             }
+
         }
 
         recipesListAdapter.setOnItemClickListener(
             object : RecipesListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipeId(recipeId)
+                override fun onItemClick(recipe: Recipe) {
+                    openRecipeByRecipeId(recipe)
                 }
             }
         )
         binding.rvFavorites.adapter = recipesListAdapter
     }
 
-    private fun openRecipeByRecipeId(recipeId: Int) {
+    private fun openRecipeByRecipeId(recipe: Recipe) {
         findNavController().navigate(
-            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(recipeId)
+            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(recipe)
         )
     }
 }
