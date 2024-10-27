@@ -58,7 +58,7 @@ class RecipesRepository {
     suspend fun getRecipesByCategoryId(
         categoryId: Int,
         callback: (List<Recipe>?) -> Unit
-    ): List<Recipe>? {
+    ) {
         var recipes: List<Recipe>? = null
 
         withContext(Dispatchers.IO) {
@@ -78,15 +78,12 @@ class RecipesRepository {
                 callback(null)
             }
         }
-
-
-        return recipes
     }
 
     suspend fun getRecipesByIds(
         idsSet: Set<Int>,
         callback: (List<Recipe>?) -> Unit
-    ): List<Recipe>? {
+    ) {
         var recipes: List<Recipe>? = null
 
         withContext(Dispatchers.IO) {
@@ -109,11 +106,10 @@ class RecipesRepository {
             }
         }
 
-        return recipes
     }
 
 
-    suspend fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit): Recipe? {
+    suspend fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit) {
         var recipe: Recipe? = null
 
         withContext(Dispatchers.IO) {
@@ -131,11 +127,9 @@ class RecipesRepository {
                 callback(null)
             }
         }
-
-        return recipe
     }
 
-    suspend fun getCategoryById(categoryId: Int): Category? {
+    suspend fun getCategoryById(categoryId: Int) {
         var category: Category? = null
         withContext(Dispatchers.IO) {
             try {
@@ -150,8 +144,6 @@ class RecipesRepository {
                 Log.i("network, getCategoryById()", "${e.printStackTrace()}")
             }
         }
-
-        return category
     }
 }
 
