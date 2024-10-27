@@ -2,12 +2,9 @@ package ru.nurguru.recipesapp.ui.recipes.recipe
 
 import android.app.Application
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Constants
 import ru.nurguru.recipesapp.model.Recipe
 
@@ -18,7 +15,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val recipe: Recipe? = null,
         val numberOfPortions: Int = 1,
         val isInFavorites: Boolean = false,
-        val recipeImage: Drawable? = null
+        val recipeImageUrl: String = ""
     )
 
     private val sharedPrefs by lazy {
@@ -36,25 +33,8 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                 _recipeUiState.value?.copy(
                     recipe = recipe,
                     isInFavorites = recipe.id.toString() in getFavorites(),
+                    recipeImageUrl = recipe.imageUrl
                 )
-        try {
-            val inputStream =
-                application.assets?.open(_recipeUiState.value?.recipe?.imageUrl ?: "burger.png")
-            _recipeUiState.postValue(
-                _recipeUiState.value?.copy(
-                    recipeImage = Drawable.createFromStream(
-                        inputStream,
-                        null
-                    )
-                )
-            )
-        } catch (e: Exception) {
-            Log.e(
-                "asset_error",
-                "${e.printStackTrace()}"
-            )
-            _recipeUiState.postValue(_recipeUiState.value?.copy(recipeImage = null))
-        }
     }
 
     fun onFavoritesClicked() {

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
 import ru.nurguru.recipesapp.model.Recipe
@@ -42,10 +43,18 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private fun initUI() {
         viewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
             if (recipeListState.recipesList == null) {
-                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG)
+                    .show()
             } else {
                 binding.tvRecipeTitle.text = recipeListState.category?.title
-                binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
+                with(binding.ivRecipeMainImage) {
+                    Glide.with(context)
+                        .load(recipeListState.recipeListImageUrl)
+                        .placeholder(R.drawable.img_placeholder)
+                        .error(R.drawable.img_error)
+                        .into(this)
+                }
+//                binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
                 recipeListAdapter.dataSet = recipeListState.recipesList
                 recipeListAdapter.notifyDataSetChanged()
             }
