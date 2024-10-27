@@ -13,7 +13,6 @@ import ru.nurguru.recipesapp.model.Recipe
 data class RecipeListUiState(
     val category: Category? = null,
     val recipesList: List<Recipe>? = listOf(),
-    val recipeListImageUrl: String = ""
 )
 
 class RecipesListViewModel(private val application: Application) : AndroidViewModel(application) {
@@ -31,7 +30,6 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                     _recipeListUiState.value?.copy(
                         category = category,
                         recipesList = recipesList,
-                        recipeListImageUrl = category.imageUrl
                     )
                 )
             }

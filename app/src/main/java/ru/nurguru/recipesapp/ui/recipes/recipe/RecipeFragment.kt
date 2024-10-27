@@ -50,7 +50,7 @@ class RecipeFragment : Fragment() {
         viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
             with(binding.ivRecipeItemImage) {
                 Glide.with(context)
-                    .load(recipeState.recipeImageUrl)
+                    .load(recipeState.recipe?.imageUrl)
                     .placeholder(R.drawable.img_placeholder)
                     .error(R.drawable.img_error)
                     .into(this)
