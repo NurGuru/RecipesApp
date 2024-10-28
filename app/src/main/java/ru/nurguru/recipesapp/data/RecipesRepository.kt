@@ -16,7 +16,6 @@ import ru.nurguru.recipesapp.model.Constants.BASE_URL
 import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 import ru.nurguru.recipesapp.model.Constants.IMAGES_URL
 import ru.nurguru.recipesapp.model.Recipe
-import java.util.concurrent.Executors
 
 class RecipesRepository {
     private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -33,7 +32,7 @@ class RecipesRepository {
     suspend fun getCategories(): List<Category>? {
         var categories: List<Category>? = null
 
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             try {
                 val categoriesCall: Call<List<Category>> = service.getCategories()
                 val categoriesResponse: Response<List<Category>> = categoriesCall.execute()
@@ -48,9 +47,7 @@ class RecipesRepository {
             } catch (e: Exception) {
                 Log.i("network, getCategories()", "${e.printStackTrace()}")
             }
-        }
-        return withContext(Dispatchers.IO) {
-            categories
+            return@withContext categories
         }
     }
 
@@ -58,7 +55,7 @@ class RecipesRepository {
     suspend fun getRecipesByCategoryId(categoryId: Int): List<Recipe>? {
         var recipes: List<Recipe>? = null
 
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             try {
                 val recipesCall: Call<List<Recipe>> = service.getRecipesByCategoryId(categoryId)
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
@@ -71,14 +68,14 @@ class RecipesRepository {
             } catch (e: Exception) {
                 Log.i("network, getRecipesByCategoryId()", "${e.printStackTrace()}")
             }
+            return@withContext recipes
         }
-        return withContext(Dispatchers.IO) { recipes }
     }
 
     suspend fun getRecipesByIds(idsSet: Set<Int>): List<Recipe>? {
         var recipes: List<Recipe>? = null
 
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             try {
                 val idsString = idsSet.joinToString(separator = ",")
 
@@ -93,15 +90,15 @@ class RecipesRepository {
             } catch (e: Exception) {
                 Log.i("network, getRecipesByIds()", "${e.printStackTrace()}")
             }
+            return@withContext recipes
         }
-        return withContext(Dispatchers.IO) { recipes }
     }
 
 
     suspend fun getRecipeById(recipeId: Int): Recipe? {
-        var recipe: Recipe? = null
+        var recipe: Recipe?
 
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             try {
                 val recipeCall: Call<Recipe> = service.getRecipeById(recipeId)
                 val recipeResponse: Response<Recipe> = recipeCall.execute()
@@ -109,16 +106,18 @@ class RecipesRepository {
                 recipe = recipeResponse.body()
                 Log.i("!!!", "recipes: ${recipe.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                recipe
             } catch (e: Exception) {
                 Log.i("network, getRecipeById()", "${e.printStackTrace()}")
+                null
             }
         }
-        return withContext(Dispatchers.IO) { recipe }
+
     }
 
     suspend fun getCategoryById(categoryId: Int): Category? {
-        var category: Category? = null
-        withContext(Dispatchers.IO) {
+        var category: Category?
+        return withContext(Dispatchers.IO) {
             try {
                 val categoryCall: Call<Category> = service.getCategoryById(categoryId)
                 val categoryResponse: Response<Category> = categoryCall.execute()
@@ -127,11 +126,12 @@ class RecipesRepository {
 
                 Log.i("!!!", "category: ${category.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                category
             } catch (e: Exception) {
                 Log.i("network, getCategoryById()", "${e.printStackTrace()}")
+                null
             }
         }
-        return withContext(Dispatchers.IO) { category }
     }
 }
 
