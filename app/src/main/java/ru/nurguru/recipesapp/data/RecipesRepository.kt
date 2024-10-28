@@ -49,7 +49,9 @@ class RecipesRepository {
                 Log.i("network, getCategories()", "${e.printStackTrace()}")
             }
         }
-        return categories
+        return withContext(Dispatchers.IO) {
+            categories
+        }
     }
 
 
@@ -70,7 +72,7 @@ class RecipesRepository {
                 Log.i("network, getRecipesByCategoryId()", "${e.printStackTrace()}")
             }
         }
-        return recipes
+        return withContext(Dispatchers.IO) { recipes }
     }
 
     suspend fun getRecipesByIds(idsSet: Set<Int>): List<Recipe>? {
@@ -92,7 +94,7 @@ class RecipesRepository {
                 Log.i("network, getRecipesByIds()", "${e.printStackTrace()}")
             }
         }
-        return recipes
+        return withContext(Dispatchers.IO) { recipes }
     }
 
 
@@ -111,7 +113,7 @@ class RecipesRepository {
                 Log.i("network, getRecipeById()", "${e.printStackTrace()}")
             }
         }
-        return recipe
+        return withContext(Dispatchers.IO) { recipe }
     }
 
     suspend fun getCategoryById(categoryId: Int): Category? {
@@ -129,7 +131,7 @@ class RecipesRepository {
                 Log.i("network, getCategoryById()", "${e.printStackTrace()}")
             }
         }
-        return category
+        return withContext(Dispatchers.IO) { category }
     }
 }
 
