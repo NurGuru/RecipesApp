@@ -33,13 +33,10 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
 
     fun loadFavorites() {
         viewModelScope.launch {
-            recipesRepository.getRecipesByIds(getFavoritesIds()) { recipeList ->
-                _favoritesUiState.postValue(
-                    _favoritesUiState.value?.copy(
-                        recipeList = recipeList
-                    )
+            _favoritesUiState.value =
+                _favoritesUiState.value?.copy(
+                    recipeList = recipesRepository.getRecipesByIds(getFavoritesIds())
                 )
-            }
         }
     }
 

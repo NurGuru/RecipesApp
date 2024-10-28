@@ -25,14 +25,13 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     fun loadRecipesList(category: Category) {
 
         viewModelScope.launch {
-            recipesRepository.getRecipesByCategoryId(category.id) { recipesList ->
-                _recipeListUiState.postValue(
-                    _recipeListUiState.value?.copy(
-                        category = category,
-                        recipesList = recipesList,
-                    )
+
+
+            _recipeListUiState.value =
+                _recipeListUiState.value?.copy(
+                    category = category,
+                    recipesList = recipesRepository.getRecipesByCategoryId(category.id)
                 )
-            }
         }
     }
 }

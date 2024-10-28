@@ -24,13 +24,8 @@ class CategoriesListViewModel() : ViewModel() {
     fun loadCategories() {
 
         viewModelScope.launch {
-            recipesRepository.getCategories { categoriesList ->
-                _categoriesUiState.postValue(
-                    _categoriesUiState.value?.copy(
-                        categoriesList = categoriesList
-                    )
-                )
-            }
+            _categoriesUiState.value =
+                _categoriesUiState.value?.copy(categoriesList = recipesRepository.getCategories())
         }
     }
 }
