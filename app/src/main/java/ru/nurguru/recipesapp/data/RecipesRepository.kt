@@ -2,6 +2,8 @@ package ru.nurguru.recipesapp.data
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -14,7 +16,6 @@ import ru.nurguru.recipesapp.model.Constants.BASE_URL
 import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 import ru.nurguru.recipesapp.model.Constants.IMAGES_URL
 import ru.nurguru.recipesapp.model.Recipe
-import java.util.concurrent.Executors
 
 class RecipesRepository {
     private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -27,12 +28,11 @@ class RecipesRepository {
 
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-    private val threadPool = Executors.newFixedThreadPool(10)
 
-    fun getCategories(callback: (List<Category>?) -> Unit) {
-        var categories: List<Category>?
+    suspend fun getCategories(): List<Category>? {
+        var categories: List<Category>? = null
 
-        threadPool.execute {
+        return withContext(Dispatchers.IO) {
             try {
                 val categoriesCall: Call<List<Category>> = service.getCategories()
                 val categoriesResponse: Response<List<Category>> = categoriesCall.execute()
@@ -40,23 +40,22 @@ class RecipesRepository {
                 categories = categoriesResponse.body()?.map {
                     it.copy(imageUrl = "$IMAGES_URL/${it.imageUrl}")
                 }
-                callback(categories)
 
                 Log.i("!!!", "categories: ${categories.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
 
             } catch (e: Exception) {
                 Log.i("network, getCategories()", "${e.printStackTrace()}")
-                callback(null)
             }
+            return@withContext categories
         }
-
     }
 
-    fun getRecipesByCategoryId(categoryId: Int, callback: (List<Recipe>?) -> Unit) {
-        var recipes: List<Recipe>?
 
-        threadPool.execute {
+    suspend fun getRecipesByCategoryId(categoryId: Int): List<Recipe>? {
+        var recipes: List<Recipe>? = null
+
+        return withContext(Dispatchers.IO) {
             try {
                 val recipesCall: Call<List<Recipe>> = service.getRecipesByCategoryId(categoryId)
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
@@ -64,21 +63,19 @@ class RecipesRepository {
                 recipes = recipesResponse.body()?.map {
                     it.copy(imageUrl = "$IMAGES_URL/${it.imageUrl}")
                 }
-                callback(recipes)
-
                 Log.i("!!!", "recipes: ${recipes.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
             } catch (e: Exception) {
                 Log.i("network, getRecipesByCategoryId()", "${e.printStackTrace()}")
-                callback(null)
             }
+            return@withContext recipes
         }
     }
 
-    fun getRecipesByIds(idsSet: Set<Int>, callback: (List<Recipe>?) -> Unit) {
-        var recipes: List<Recipe>?
+    suspend fun getRecipesByIds(idsSet: Set<Int>): List<Recipe>? {
+        var recipes: List<Recipe>? = null
 
-        threadPool.execute {
+        return withContext(Dispatchers.IO) {
             try {
                 val idsString = idsSet.joinToString(separator = ",")
 
@@ -88,44 +85,39 @@ class RecipesRepository {
                 recipes = recipesResponse.body()?.map {
                     it.copy(imageUrl = "$IMAGES_URL/${it.imageUrl}")
                 }
-                callback(recipes)
-
                 Log.i("!!!", "favoriteRecipes: ${recipes.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
             } catch (e: Exception) {
                 Log.i("network, getRecipesByIds()", "${e.printStackTrace()}")
-                callback(null)
             }
+            return@withContext recipes
         }
-
-
     }
 
 
-    fun getRecipeById(recipeId: Int, callback: (Recipe?) -> Unit) {
+    suspend fun getRecipeById(recipeId: Int): Recipe? {
         var recipe: Recipe?
 
-        threadPool.execute {
+        return withContext(Dispatchers.IO) {
             try {
                 val recipeCall: Call<Recipe> = service.getRecipeById(recipeId)
                 val recipeResponse: Response<Recipe> = recipeCall.execute()
 
                 recipe = recipeResponse.body()
-                callback(recipe)
                 Log.i("!!!", "recipes: ${recipe.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-
+                recipe
             } catch (e: Exception) {
                 Log.i("network, getRecipeById()", "${e.printStackTrace()}")
-                callback(null)
+                null
             }
         }
 
     }
 
-    fun getCategoryById(categoryId: Int) {
+    suspend fun getCategoryById(categoryId: Int): Category? {
         var category: Category?
-        threadPool.execute {
+        return withContext(Dispatchers.IO) {
             try {
                 val categoryCall: Call<Category> = service.getCategoryById(categoryId)
                 val categoryResponse: Response<Category> = categoryCall.execute()
@@ -134,8 +126,10 @@ class RecipesRepository {
 
                 Log.i("!!!", "category: ${category.toString()}")
                 Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                category
             } catch (e: Exception) {
                 Log.i("network, getCategoryById()", "${e.printStackTrace()}")
+                null
             }
         }
     }

@@ -49,7 +49,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
                 binding.tvRecipeTitle.text = recipeListState.category?.title
                 with(binding.ivRecipeMainImage) {
                     Glide.with(context)
-                        .load(recipeListState.recipeListImageUrl)
+                        .load(recipeListState.category?.imageUrl)
                         .placeholder(R.drawable.img_placeholder)
                         .error(R.drawable.img_error)
                         .into(this)

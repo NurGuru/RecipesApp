@@ -15,7 +15,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val recipe: Recipe? = null,
         val numberOfPortions: Int = 1,
         val isInFavorites: Boolean = false,
-        val recipeImageUrl: String = ""
     )
 
     private val sharedPrefs by lazy {
@@ -33,7 +32,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                 _recipeUiState.value?.copy(
                     recipe = recipe,
                     isInFavorites = recipe.id.toString() in getFavorites(),
-                    recipeImageUrl = recipe.imageUrl
                 )
     }
 
