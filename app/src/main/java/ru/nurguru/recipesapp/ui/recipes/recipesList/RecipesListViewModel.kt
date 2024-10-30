@@ -15,12 +15,12 @@ data class RecipeListUiState(
     val recipesList: List<Recipe>? = listOf(),
 )
 
-class RecipesListViewModel(private val application: Application) : AndroidViewModel(application) {
+class RecipesListViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _recipeListUiState: MutableLiveData<RecipeListUiState> =
         MutableLiveData(RecipeListUiState())
     var recipeListUiState: LiveData<RecipeListUiState> = _recipeListUiState
-    private val recipesRepository = RecipesRepository()
+    private val recipesRepository = RecipesRepository(application)
 
     fun loadRecipesList(category: Category) {
 
