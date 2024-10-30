@@ -4,6 +4,7 @@ plugins {
     alias libs.plugins.kotlinx.serialization
     alias libs.plugins.navigation.safe.args
     alias libs.plugins.kotlin.parcelize
+    alias libs.plugins.ksp
 }
 
 android {
@@ -39,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation libs.androidx.room.runtime
+    annotationProcessor libs.room.compiler
     implementation libs.glide
     implementation libs.retrofit2.kotlinx.serialization.converter
     implementation libs.retrofit
