@@ -44,7 +44,7 @@ class RecipesRepository(application: Application) {
             categoriesDao.getCategories()
         }
 
-    suspend fun addCategories(categories:List<Category>?){
+    suspend fun addCategories(categories:List<Category>){
         withContext(Dispatchers.IO) {
             categoriesDao.addCategories(categories)
         }

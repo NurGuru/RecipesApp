@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 @Entity
 data class Category(
     @PrimaryKey val id: Int,
-    @ColumnInfo val title: String,
-    @ColumnInfo val description: String,
-    @ColumnInfo var imageUrl: String,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "imageUrl") var imageUrl: String,
 ) : Parcelable

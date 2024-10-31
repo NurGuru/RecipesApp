@@ -20,7 +20,7 @@ interface CategoriesDao {
 //    fun findByName(first: String, last: String): User
 //
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCategories(categories: List<Category>?)
+    fun addCategories(categories: List<Category>)
 //
 //    @Delete
 //    fun delete(user: User)
