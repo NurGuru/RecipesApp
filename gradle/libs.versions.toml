@@ -21,7 +21,7 @@ kotlinAndroid = "2.0.10"
 libraryAndroid = "8.5.2"
 kotlin = "2.0.20"
 roomCompiler = "2.6.1"
-ksp = "2.0.21-1.0.25"
+ksp = "2.0.20-1.0.25"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
