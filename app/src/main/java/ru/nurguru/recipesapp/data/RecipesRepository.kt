@@ -1,6 +1,8 @@
 package ru.nurguru.recipesapp.data
 
+import android.app.Application
 import android.util.Log
+import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +19,7 @@ import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 import ru.nurguru.recipesapp.model.Constants.IMAGES_URL
 import ru.nurguru.recipesapp.model.Recipe
 
-class RecipesRepository {
+class RecipesRepository(application: Application) {
     private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val client = OkHttpClient.Builder().addInterceptor(logging).build()
     private val contentType = CONTENT_TYPE.toMediaType()
@@ -27,6 +29,26 @@ class RecipesRepository {
         .build()
 
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+
+    private val database =  Room.databaseBuilder(
+        application
+            .applicationContext,
+        RecipesDatabase::class.java,
+        "recipeDatabase"
+    ).build()
+
+    private val categoriesDao: CategoriesDao = database.categoriesDao()
+
+    suspend fun getCategoriesFromCashe(): List<Category> =
+        withContext(Dispatchers.IO) {
+            categoriesDao.getCategories()
+        }
+
+    suspend fun addCategories(categories:List<Category>){
+        withContext(Dispatchers.IO) {
+            categoriesDao.addCategories(categories)
+        }
+    }
 
 
     suspend fun getCategories(): List<Category>? {

@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    ksp libs.room.compiler
     implementation libs.androidx.room.runtime
     annotationProcessor libs.room.compiler
     implementation libs.glide

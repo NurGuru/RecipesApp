@@ -29,7 +29,7 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
         )
     }
 
-    private val recipesRepository = RecipesRepository()
+    private val recipesRepository = RecipesRepository(application)
 
     fun loadFavorites() {
         viewModelScope.launch {

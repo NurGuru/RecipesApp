@@ -38,7 +38,8 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         viewModel.loadCategories()
         viewModel.categoriesUiState.observe(viewLifecycleOwner) { categoriesState ->
             if (categoriesState.categoriesList == null) {
-                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG)
+                    .show()
             } else {
                 categoriesListAdapter.dataSet = categoriesState.categoriesList
                 categoriesListAdapter.notifyDataSetChanged()
