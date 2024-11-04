@@ -30,25 +30,35 @@ class RecipesRepository(application: Application) {
 
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-    private val database =  Room.databaseBuilder(
+    private val database = Room.databaseBuilder(
         application
             .applicationContext,
         RecipesDatabase::class.java,
-        "recipeDatabase"
+        "Database1"
     ).build()
 
     private val categoriesDao: CategoriesDao = database.categoriesDao()
+    private val recipesDao: RecipesDao = database.recipesDao()
 
-    suspend fun getCategoriesFromCashe(): List<Category> =
+    suspend fun getCategoriesFromCache(): List<Category> =
         withContext(Dispatchers.IO) {
             categoriesDao.getCategories()
         }
 
-    suspend fun addCategories(categories:List<Category>){
+    suspend fun addCategoriesToCache(categories: List<Category>) {
         withContext(Dispatchers.IO) {
             categoriesDao.addCategories(categories)
         }
     }
+
+    suspend fun getRecipeListFromCache() = withContext(Dispatchers.IO) { recipesDao.getRecipes() }
+
+    suspend fun getRecipesByCategoryIdFromCache(categoryId: Int) = withContext(Dispatchers.IO) {
+        recipesDao.getRecipesByCategoryId(categoryId)
+    }
+
+    suspend fun addRecipeListToCache(recipeList: List<Recipe>) =
+        withContext(Dispatchers.IO) { recipesDao.addRecipes(recipeList) }
 
 
     suspend fun getCategories(): List<Category>? {

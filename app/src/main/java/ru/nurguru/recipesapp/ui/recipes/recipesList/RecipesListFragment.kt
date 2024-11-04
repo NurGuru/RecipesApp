@@ -54,7 +54,6 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
                         .error(R.drawable.img_error)
                         .into(this)
                 }
-//                binding.ivRecipeMainImage.setImageDrawable(recipeListState.recipeListImage)
                 recipeListAdapter.dataSet = recipeListState.recipesList
                 recipeListAdapter.notifyDataSetChanged()
             }
