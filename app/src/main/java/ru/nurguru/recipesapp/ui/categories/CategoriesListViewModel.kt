@@ -12,7 +12,6 @@ import ru.nurguru.recipesapp.model.Category
 
 data class CategoriesUiState(
     val categoriesList: List<Category>? = listOf(),
-    val isLoading: Boolean = true
 )
 
 class CategoriesListViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,25 +25,16 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
     fun loadCategories() {
 
         viewModelScope.launch {
-            val cache = recipesRepository.getCategoriesFromCashe()
-            _categoriesUiState.value = _categoriesUiState.value?.copy(
-                categoriesList = cache,
-                isLoading = cache.isEmpty()
-            )
+            val cache = recipesRepository.getCategoriesFromCache()
             if (cache.isEmpty()) {
                 val remote = recipesRepository.getCategories()
-                    ?.apply { recipesRepository.addCategories(this) }
-
+                remote?.let { recipesRepository.addCategoriesToCache(it) }
                 _categoriesUiState.value = _categoriesUiState.value?.copy(
-                    categoriesList = remote,
-                    isLoading = false
-                )
+                    categoriesList = remote)
             } else {
                 _categoriesUiState.value = _categoriesUiState.value?.copy(
-                    isLoading = false
-                )
+                    categoriesList = cache)
             }
-
         }
     }
 }

@@ -26,12 +26,20 @@ class RecipesListViewModel(application: Application) : AndroidViewModel(applicat
 
         viewModelScope.launch {
 
-
-            _recipeListUiState.value =
-                _recipeListUiState.value?.copy(
+            val cache = recipesRepository.getRecipeListFromCache()
+            val remote = recipesRepository.getRecipesByCategoryId(category.id)
+            remote?.let { recipesRepository.addRecipeListToCache(it) }
+            if (cache.isEmpty()) {
+                _recipeListUiState.value = _recipeListUiState.value?.copy(
                     category = category,
-                    recipesList = recipesRepository.getRecipesByCategoryId(category.id)
+                    recipesList = remote
                 )
+            } else {
+                _recipeListUiState.value = _recipeListUiState.value?.copy(
+                    category = category,
+                    recipesList = cache
+                )
+            }
         }
     }
 }
