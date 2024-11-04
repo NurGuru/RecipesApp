@@ -24,9 +24,6 @@ interface RecipesDao {
     @Query("SELECT*FROM $RECIPE WHERE categoryId = :categoryId")
     fun getRecipesByCategoryId(categoryId: Int): List<Recipe>?
 
-    @Query("UPDATE $RECIPE SET categoryId = :categoryId")
-    fun updateRecipesCategoryId(categoryId: Int)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addRecipes(recipeList: List<Recipe>)
 //

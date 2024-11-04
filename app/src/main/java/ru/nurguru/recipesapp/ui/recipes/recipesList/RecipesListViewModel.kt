@@ -13,7 +13,6 @@ import ru.nurguru.recipesapp.model.Recipe
 data class RecipeListUiState(
     val category: Category? = null,
     val recipesList: List<Recipe>? = listOf(),
-    val categoryId: Int = -1
 )
 
 class RecipesListViewModel(application: Application) : AndroidViewModel(application) {
@@ -27,10 +26,15 @@ class RecipesListViewModel(application: Application) : AndroidViewModel(applicat
 
         viewModelScope.launch {
 
-//
-            val cache = recipesRepository.getRecipeListFromCache()
+            val cache = recipesRepository.getRecipesByCategoryIdFromCache(category.id)
             val remote = recipesRepository.getRecipesByCategoryId(category.id)
-            remote?.let { recipesRepository.addRecipeListToCache(it) }
+
+            remote?.let {
+                recipesRepository.addRecipeListToCache(it.map { recipe ->
+                    recipe.copy(categoryId = category.id)
+                })
+            }
+            if (cache != null) {
                 if (cache.isEmpty()) {
                     _recipeListUiState.value = _recipeListUiState.value?.copy(
                         category = category,
@@ -45,4 +49,5 @@ class RecipesListViewModel(application: Application) : AndroidViewModel(applicat
             }
         }
     }
+}
 

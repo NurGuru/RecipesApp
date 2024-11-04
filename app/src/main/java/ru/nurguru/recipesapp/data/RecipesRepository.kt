@@ -53,16 +53,11 @@ class RecipesRepository(application: Application) {
 
     suspend fun getRecipeListFromCache() = withContext(Dispatchers.IO) { recipesDao.getRecipes() }
 
-    suspend fun getRecipesByCategoryIdFromCache(categoryId: Int) = withContext(Dispatchers.IO){
+    suspend fun getRecipesByCategoryIdFromCache(categoryId: Int) = withContext(Dispatchers.IO) {
         recipesDao.getRecipesByCategoryId(categoryId)
     }
 
-    fun updateRecipesCategoryId(categoryId: Int) {
-        recipesDao.updateRecipesCategoryId(categoryId)
-    }
-
-
-        suspend fun addRecipeListToCache(recipeList: List<Recipe>) =
+    suspend fun addRecipeListToCache(recipeList: List<Recipe>) =
         withContext(Dispatchers.IO) { recipesDao.addRecipes(recipeList) }
 
 
