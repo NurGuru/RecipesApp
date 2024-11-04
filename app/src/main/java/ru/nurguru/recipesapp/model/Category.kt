@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Entity
 data class Category(
-    @PrimaryKey var id: Int,
+    @PrimaryKey val id: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "imageUrl") var imageUrl: String,
