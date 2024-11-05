@@ -33,10 +33,26 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
 
     fun loadFavorites() {
         viewModelScope.launch {
-            _favoritesUiState.value =
-                _favoritesUiState.value?.copy(
-                    recipeList = recipesRepository.getRecipesByIds(getFavoritesIds())
+            val cache = recipesRepository.getFavoriteRecipesFromCache()
+            val remote = recipesRepository.getRecipesByIds(getFavoritesIds())
+
+            remote?.let {
+                recipesRepository.addFavoritesRecipesListToCache(it.map { recipe ->
+                    recipe.copy(isFavorite = true)
+                }
                 )
+            }
+            if (cache.isEmpty()) {
+                _favoritesUiState.value =
+                    _favoritesUiState.value?.copy(
+                        recipeList = remote
+                    )
+            } else {
+                _favoritesUiState.value =
+                    _favoritesUiState.value?.copy(
+                        recipeList = cache
+                    )
+            }
         }
     }
 

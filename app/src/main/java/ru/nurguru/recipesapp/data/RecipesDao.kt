@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import ru.nurguru.recipesapp.model.Constants.RECIPE
 import ru.nurguru.recipesapp.model.Recipe
 
@@ -26,6 +27,15 @@ interface RecipesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addRecipes(recipeList: List<Recipe>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addRecipeToFavoritesList(favoriteRecipeList: List<Recipe>)
+
+    @Query("SELECT * FROM $RECIPE WHERE isFavorite = 1")
+    fun getFavoriteRecipes(): List<Recipe>
+
+//    @Update
+//    fun updateFavoritesRecipeList(favoriteRecipeList:List<Recipe>)
 //
 //    @Delete
 //    fun delete(user: User)
