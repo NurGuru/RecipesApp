@@ -15,13 +15,6 @@ interface RecipesDao {
     @Query("SELECT * FROM $RECIPE")
     fun getRecipes(): List<Recipe>
 
-    //    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-//    fun loadAllByIds(userIds: IntArray): List<User>
-//
-//    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-//            "last_name LIKE :last LIMIT 1")
-//    fun findByName(first: String, last: String): User
-//
     @Query("SELECT*FROM $RECIPE WHERE categoryId = :categoryId")
     fun getRecipesByCategoryId(categoryId: Int): List<Recipe>?
 
@@ -34,9 +27,9 @@ interface RecipesDao {
     @Query("SELECT * FROM $RECIPE WHERE isFavorite = 1")
     fun getFavoriteRecipes(): List<Recipe>
 
-//    @Update
-//    fun updateFavoritesRecipeList(favoriteRecipeList:List<Recipe>)
-//
-//    @Delete
-//    fun delete(user: User)
+    @Query("SELECT * FROM recipe WHERE id = :recipeId")
+    fun getRecipeById(recipeId: Int): Recipe
+
+    @Update
+    fun updateRecipe(recipe: Recipe)
 }

@@ -51,8 +51,6 @@ class RecipesRepository(application: Application) {
         }
     }
 
-    suspend fun getRecipeListFromCache() = withContext(Dispatchers.IO) { recipesDao.getRecipes() }
-
     suspend fun getRecipesByCategoryIdFromCache(categoryId: Int) = withContext(Dispatchers.IO) {
         recipesDao.getRecipesByCategoryId(categoryId)
     }
@@ -63,15 +61,12 @@ class RecipesRepository(application: Application) {
     suspend fun getFavoriteRecipesFromCache() =
         withContext(Dispatchers.IO) { recipesDao.getFavoriteRecipes() }
 
-    suspend fun addFavoritesRecipesListToCache(favoritesRecipeList: List<Recipe>)=
-        withContext(Dispatchers.IO){recipesDao.addRecipeToFavoritesList(favoritesRecipeList)}
+    suspend fun getRecipeByRecipeIdFromCache(recipeId: Int) =
+        withContext(Dispatchers.IO) { recipesDao.getRecipeById(recipeId) }
 
-//    suspend fun updateFavoritesRecipeListInCache(favoriteRecipesList: List<Recipe>) = withContext(Dispatchers.IO) {
-//        recipesDao.updateFavoritesRecipeList(favoriteRecipesList)
-//    }
-
-
-
+    suspend fun updateRecipeInCache(recipe: Recipe) = withContext(Dispatchers.IO) {
+        recipesDao.updateRecipe(recipe)
+    }
 
     suspend fun getCategories(): List<Category>? {
         var categories: List<Category>? = null
@@ -94,7 +89,6 @@ class RecipesRepository(application: Application) {
             return@withContext categories
         }
     }
-
 
     suspend fun getRecipesByCategoryId(categoryId: Int): List<Recipe>? {
         var recipes: List<Recipe>? = null
