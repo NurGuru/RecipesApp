@@ -29,16 +29,25 @@ class IngredientsAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val count = BigDecimal(dataSet[position].quantity)
-        val result = count.multiply(BigDecimal(quantity))
-        if (result.remainder(BigDecimal.ONE) != BigDecimal.ZERO) {
-            viewHolder.tvIngredientsQuantity.text = "$result "
-        } else {
-            viewHolder.tvIngredientsQuantity.text = "${result.toInt()} "
+        val count = try {
+            BigDecimal(dataSet[position].quantity)
+        } catch (e: NumberFormatException) {
+            null
         }
-
+        if (count == null) {
+            viewHolder.tvIngredientsQuantity.text = dataSet[position].quantity
+        } else {
+            val result = count.multiply(BigDecimal(quantity))
+            if (result != null) {
+                if (result.remainder(BigDecimal.ONE) != BigDecimal.ZERO) {
+                    viewHolder.tvIngredientsQuantity.text = "$result "
+                } else {
+                    viewHolder.tvIngredientsQuantity.text = "${result.toInt()} "
+                }
+            }
+            viewHolder.tvIngredientsUnitOfMeasure.text = dataSet[position].unitOfMeasure
+        }
         viewHolder.tvIngredientsDescription.text = dataSet[position].description
-        viewHolder.tvIngredientsUnitOfMeasure.text = dataSet[position].unitOfMeasure
 
     }
 
