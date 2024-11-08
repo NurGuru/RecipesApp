@@ -1,11 +1,12 @@
 package ru.nurguru.recipesapp.ui.recipes.recipe
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.nurguru.recipesapp.model.Constants
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Recipe
 
 
@@ -17,50 +18,36 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val isInFavorites: Boolean = false,
     )
 
-    private val sharedPrefs by lazy {
-        application.getSharedPreferences(
-            Constants.SHARED_FAVORITES_IDS_FILE_NAME, Context.MODE_PRIVATE
-        )
-    }
 
     private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
     val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
 
+    private val recipesRepository = RecipesRepository(application)
+
     fun loadRecipe(recipe: Recipe) {
-        // TODO: load from network
-            _recipeUiState.value=
-                _recipeUiState.value?.copy(
-                    recipe = recipe,
-                    isInFavorites = recipe.id.toString() in getFavorites(),
-                )
+
+        viewModelScope.launch {
+            val cache = recipesRepository.getRecipeByRecipeIdFromCache(recipe.id)
+
+            _recipeUiState.value = _recipeUiState.value?.copy(
+                recipe = cache,
+                isInFavorites = cache.isFavorite
+            )
+        }
     }
 
     fun onFavoritesClicked() {
 
-        _recipeUiState.value?.let {
-            val favoritesIdStringSet = getFavorites()
-            if (it.recipe != null && it.isInFavorites) {
-                favoritesIdStringSet.remove(it.recipe.id.toString())
-                _recipeUiState.value = it.copy(isInFavorites = false)
-            } else {
-                favoritesIdStringSet.add(it.recipe?.id.toString())
-                _recipeUiState.value = it.copy(isInFavorites = true)
+        viewModelScope.launch {
+            val recipeId = _recipeUiState.value?.recipe?.id
+            val recipe = recipeId?.let { recipesRepository.getRecipeByRecipeIdFromCache(it) }
+            if (recipe != null) {
+                val isFavorite =
+                    recipesRepository.getRecipeByRecipeIdFromCache(recipeId).isFavorite
+                _recipeUiState.value = _recipeUiState.value?.copy(isInFavorites = !isFavorite)
+                recipesRepository.updateRecipeInCache(recipe.copy(isFavorite = !isFavorite))
             }
-            saveFavorites(favoritesIdStringSet)
         }
-    }
-
-    private fun getFavorites(): MutableSet<String> {
-        val setOfFavoritesId =
-            sharedPrefs?.getStringSet(Constants.SHARED_FAVORITES_IDS_KEY, setOf()) ?: setOf()
-
-        return HashSet(setOfFavoritesId)
-    }
-
-    private fun saveFavorites(recipeIds: Set<String>) {
-        sharedPrefs?.edit()
-            ?.putStringSet(Constants.SHARED_FAVORITES_IDS_KEY, recipeIds)
-            ?.apply()
     }
 
     fun changePortionsCount(progress: Int) {
