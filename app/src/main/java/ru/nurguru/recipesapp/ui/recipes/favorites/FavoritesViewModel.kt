@@ -4,13 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Recipe
 
 
-class FavoritesViewModel(private val application: Application) : AndroidViewModel(application) {
+class FavoritesViewModel(private val recipesRepository: RecipesRepository) : ViewModel() {
 
     data class FavoritesUiState(
         val recipeList: List<Recipe>? = listOf()
@@ -20,14 +21,10 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
         MutableLiveData(FavoritesUiState())
     val favoritesUiState: LiveData<FavoritesUiState> = _favoritesUiState
 
-    private val recipesRepository = RecipesRepository(application)
-
     fun loadFavorites() {
+
         viewModelScope.launch {
-
             val cache = recipesRepository.getFavoriteRecipesFromCache()
-
-
             if (cache.isNotEmpty()) {
                 _favoritesUiState.value =
                     _favoritesUiState.value?.copy(

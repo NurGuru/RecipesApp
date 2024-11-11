@@ -11,12 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import ru.nurguru.recipesapp.R
+import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
 import ru.nurguru.recipesapp.model.Recipe
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
-    private val viewModel: RecipesListViewModel by viewModels()
+    private lateinit var viewModel: RecipesListViewModel
     private val recipeListAdapter = RecipesListAdapter(listOf())
     private val arg: RecipesListFragmentArgs by navArgs()
     private val binding
@@ -28,6 +29,13 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     ): View {
         _binding = FragmentListRecipesBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipesApplication).appContainer
+        viewModel = appContainer.RecipesListViewModelFactory.create()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

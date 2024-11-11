@@ -4,13 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Recipe
 
 
-class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
+class RecipeViewModel(private val recipesRepository: RecipesRepository) : ViewModel() {
 
     data class RecipeUiState(
         val recipe: Recipe? = null,
@@ -18,11 +19,8 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val isInFavorites: Boolean = false,
     )
 
-
     private var _recipeUiState: MutableLiveData<RecipeUiState> = MutableLiveData(RecipeUiState())
     val recipeUiState: LiveData<RecipeUiState> = _recipeUiState
-
-    private val recipesRepository = RecipesRepository(application)
 
     fun loadRecipe(recipe: Recipe) {
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.nurguru.recipesapp.R
+import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 class RecipeFragment : Fragment() {
@@ -22,7 +23,7 @@ class RecipeFragment : Fragment() {
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
 
-    private val viewModel: RecipeViewModel by activityViewModels()
+    private lateinit var  viewModel: RecipeViewModel
     private val args: RecipeFragmentArgs by navArgs()
 
     private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf())
@@ -33,6 +34,13 @@ class RecipeFragment : Fragment() {
     ): View {
         _binding = FragmentRecipeBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipesApplication).appContainer
+        viewModel = appContainer.RecipeViewModelFactory.create()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

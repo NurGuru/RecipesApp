@@ -9,13 +9,14 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.nurguru.recipesapp.R
+import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
 import ru.nurguru.recipesapp.model.Recipe
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
-    private val viewModel: FavoritesViewModel by viewModels()
+    private lateinit var viewModel: FavoritesViewModel
     private val recipesListAdapter = RecipesListAdapter(listOf())
     private val binding
         get() = _binding ?: throw IllegalArgumentException("FragmentFavoritesBinding is null!")
@@ -27,6 +28,13 @@ class FavoritesFragment : Fragment() {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipesApplication).appContainer
+        viewModel = appContainer.FavoritesViewModelFactory.create()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +52,8 @@ class FavoritesFragment : Fragment() {
         viewModel.loadFavorites()
         viewModel.favoritesUiState.observe(viewLifecycleOwner) { favoritesState ->
             if (favoritesState.recipeList == null) {
-                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG)
+                    .show()
             } else {
                 if (favoritesState.recipeList.isNotEmpty()) {
                     binding.tvFavoritesStub.visibility = View.GONE
