@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
 @AndroidEntryPoint

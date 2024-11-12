@@ -1,22 +1,11 @@
 package ru.nurguru.recipesapp.data
 
-import android.app.Application
 import android.util.Log
-import androidx.room.Room
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.Retrofit
 import ru.nurguru.recipesapp.model.Category
-import ru.nurguru.recipesapp.model.Constants.BASE_URL
-import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 import ru.nurguru.recipesapp.model.Constants.IMAGES_URL
 import ru.nurguru.recipesapp.model.Recipe
 import javax.inject.Inject

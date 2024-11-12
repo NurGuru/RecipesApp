@@ -8,8 +8,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -19,7 +17,6 @@ import ru.nurguru.recipesapp.data.CategoriesDao
 import ru.nurguru.recipesapp.data.RecipeApiService
 import ru.nurguru.recipesapp.data.RecipesDao
 import ru.nurguru.recipesapp.data.RecipesDatabase
-import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.model.Constants.BASE_URL
 import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 

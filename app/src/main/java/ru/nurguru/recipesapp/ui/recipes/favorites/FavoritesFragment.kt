@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
 import ru.nurguru.recipesapp.model.Recipe
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
@@ -32,7 +31,6 @@ class FavoritesFragment : Fragment() {
 
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

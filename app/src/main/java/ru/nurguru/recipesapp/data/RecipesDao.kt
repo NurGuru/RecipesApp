@@ -1,14 +1,12 @@
 package ru.nurguru.recipesapp.data
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ru.nurguru.recipesapp.model.Constants.RECIPE
 import ru.nurguru.recipesapp.model.Recipe
-
 
 @Dao
 interface RecipesDao {

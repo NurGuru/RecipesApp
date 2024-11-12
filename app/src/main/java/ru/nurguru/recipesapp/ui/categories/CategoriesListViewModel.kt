@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.nurguru.recipesapp.data.RecipesRepository
-
 import ru.nurguru.recipesapp.model.Category
 import javax.inject.Inject
 
