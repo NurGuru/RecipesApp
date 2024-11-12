@@ -6,11 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.room.Room
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
 import ru.nurguru.recipesapp.R
+import ru.nurguru.recipesapp.RecipesApplication
+import ru.nurguru.recipesapp.data.CategoriesDao
+import ru.nurguru.recipesapp.data.RecipeApiService
+import ru.nurguru.recipesapp.data.RecipesDao
+import ru.nurguru.recipesapp.data.RecipesDatabase
+import ru.nurguru.recipesapp.data.RecipesRepository
 import ru.nurguru.recipesapp.databinding.FragmentListCategoriesBinding
+import ru.nurguru.recipesapp.di.AppContainer
 import ru.nurguru.recipesapp.model.Category
+import ru.nurguru.recipesapp.model.Constants.BASE_URL
+import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
@@ -18,8 +35,15 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
-    private val viewModel: CategoriesListViewModel by viewModels()
+    private lateinit var viewModel: CategoriesListViewModel
     private val categoriesListAdapter = CategoriesListAdapter(listOf())
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipesApplication).appContainer
+        viewModel = appContainer.categoriesListViewModelFactory.create()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
