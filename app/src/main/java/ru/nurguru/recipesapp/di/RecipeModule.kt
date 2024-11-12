@@ -59,6 +59,7 @@ class RecipeModule {
     }
 
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val contentType = CONTENT_TYPE.toMediaType()
         val retrofit = Retrofit.Builder()
@@ -70,6 +71,7 @@ class RecipeModule {
     }
 
     @Provides
+    @Singleton
     fun provideRecipeApiService(retrofit: Retrofit): RecipeApiService =
         retrofit.create(RecipeApiService::class.java)
 
