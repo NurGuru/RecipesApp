@@ -1,23 +1,24 @@
 package ru.nurguru.recipesapp.data
 
 import android.util.Log
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
+import ru.nurguru.recipesapp.di.IoDispatcher
 import ru.nurguru.recipesapp.model.Category
 import ru.nurguru.recipesapp.model.Constants.IMAGES_URL
 import ru.nurguru.recipesapp.model.Recipe
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class RecipesRepository  @Inject constructor(
+class RecipesRepository @Inject constructor(
     private val recipesDao: RecipesDao,
     private val categoriesDao: CategoriesDao,
     private val recipeApiService: RecipeApiService,
+    @IoDispatcher private val ioDispatcher: CoroutineContext
 ) {
-
-    private val ioDispatcher: CoroutineContext=Dispatchers.IO
 
     suspend fun getCategoriesFromCache(): List<Category> =
         withContext(Dispatchers.IO) {
@@ -74,7 +75,8 @@ class RecipesRepository  @Inject constructor(
 
         return withContext(ioDispatcher) {
             try {
-                val recipesCall: Call<List<Recipe>> = recipeApiService.getRecipesByCategoryId(categoryId)
+                val recipesCall: Call<List<Recipe>> =
+                    recipeApiService.getRecipesByCategoryId(categoryId)
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
 
                 recipes = recipesResponse.body()?.map {
