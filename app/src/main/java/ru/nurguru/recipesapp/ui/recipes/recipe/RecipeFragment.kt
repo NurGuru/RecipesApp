@@ -8,14 +8,17 @@ import android.widget.SeekBar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentRecipeBinding
 
+@AndroidEntryPoint
 class RecipeFragment : Fragment() {
 
     private var _binding: FragmentRecipeBinding? = null
@@ -23,7 +26,7 @@ class RecipeFragment : Fragment() {
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentRecipeBinding must not be null")
 
-    private lateinit var  viewModel: RecipeViewModel
+    private val recipeViewModel: RecipeViewModel by viewModels()
     private val args: RecipeFragmentArgs by navArgs()
 
     private val ingredientAdapter: IngredientsAdapter = IngredientsAdapter(listOf())
@@ -36,13 +39,6 @@ class RecipeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val appContainer = (requireActivity().application as RecipesApplication).appContainer
-        viewModel = appContainer.RecipeViewModelFactory.create()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBundleData()
@@ -50,12 +46,12 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initBundleData() {
-        viewModel.loadRecipe(args.recipe)
+        recipeViewModel.loadRecipe(args.recipe)
     }
 
     private fun initUI() {
 
-        viewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
+        recipeViewModel.recipeUiState.observe(viewLifecycleOwner) { recipeState ->
             with(binding.ivRecipeItemImage) {
                 Glide.with(context)
                     .load(recipeState.recipe?.imageUrl)
@@ -97,11 +93,11 @@ class RecipeFragment : Fragment() {
 
         binding.seekBar.setOnSeekBarChangeListener(
             PortionSeekBarListener { progress ->
-                viewModel.changePortionsCount(progress)
+                recipeViewModel.changePortionsCount(progress)
             }
         )
         binding.ibFavoritesIcon.setOnClickListener {
-            viewModel.onFavoritesClicked()
+            recipeViewModel.onFavoritesClicked()
         }
 
         val dividerItemDecoration =

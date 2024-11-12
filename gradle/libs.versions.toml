@@ -5,6 +5,7 @@ coreKtx = "1.13.1"
 coreKtxVersion = "1.13.1"
 espressoCore = "3.6.1"
 glide = "4.16.0"
+hiltCompiler = "2.51.1"
 jetbrainsKotlinxSerializationJson = "1.7.3"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -34,6 +35,8 @@ androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragme
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationFragmentKtx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltCompiler" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -53,6 +56,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAnd
 library-android = { id = "com.android.library", version.ref = "libraryAndroid" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltCompiler" }
 
 
 

@@ -8,18 +8,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.nurguru.recipesapp.R
 import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentFavoritesBinding
 import ru.nurguru.recipesapp.model.Recipe
 import ru.nurguru.recipesapp.ui.recipes.recipesList.RecipesListAdapter
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
-    private lateinit var viewModel: FavoritesViewModel
-    private val recipesListAdapter = RecipesListAdapter(listOf())
     private val binding
         get() = _binding ?: throw IllegalArgumentException("FragmentFavoritesBinding is null!")
+
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private val recipesListAdapter = RecipesListAdapter(listOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,12 +33,6 @@ class FavoritesFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val appContainer = (requireActivity().application as RecipesApplication).appContainer
-        viewModel = appContainer.FavoritesViewModelFactory.create()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,8 +46,8 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initUi() {
-        viewModel.loadFavorites()
-        viewModel.favoritesUiState.observe(viewLifecycleOwner) { favoritesState ->
+        favoritesViewModel.loadFavorites()
+        favoritesViewModel.favoritesUiState.observe(viewLifecycleOwner) { favoritesState ->
             if (favoritesState.recipeList == null) {
                 Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG)
                     .show()

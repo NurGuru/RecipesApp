@@ -19,14 +19,16 @@ import ru.nurguru.recipesapp.model.Constants.BASE_URL
 import ru.nurguru.recipesapp.model.Constants.CONTENT_TYPE
 import ru.nurguru.recipesapp.model.Constants.IMAGES_URL
 import ru.nurguru.recipesapp.model.Recipe
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class RecipesRepository(
+class RecipesRepository  @Inject constructor(
     private val recipesDao: RecipesDao,
     private val categoriesDao: CategoriesDao,
     private val recipeApiService: RecipeApiService,
-    private val ioDispatcher: CoroutineContext
 ) {
+
+    private val ioDispatcher: CoroutineContext=Dispatchers.IO
 
     suspend fun getCategoriesFromCache(): List<Category> =
         withContext(Dispatchers.IO) {
