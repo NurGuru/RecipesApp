@@ -1,8 +1,5 @@
 package ru.nurguru.recipesapp.data
 
-
-
-
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,7 +9,6 @@ import ru.nurguru.recipesapp.model.Constants.CATEGORY
 import ru.nurguru.recipesapp.model.Constants.RECIPE
 import ru.nurguru.recipesapp.model.Constants.RECIPES
 import ru.nurguru.recipesapp.model.Recipe
-
 
 interface RecipeApiService {
     @GET("$RECIPE/{id}")

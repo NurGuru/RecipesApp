@@ -1,21 +1,21 @@
 package ru.nurguru.recipesapp.ui.categories
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.nurguru.recipesapp.data.RecipesRepository
-
 import ru.nurguru.recipesapp.model.Category
+import javax.inject.Inject
 
 data class CategoriesUiState(
     val categoriesList: List<Category>? = listOf(),
 )
 
-class CategoriesListViewModel(private val recipesRepository: RecipesRepository) :
+@HiltViewModel
+class CategoriesListViewModel @Inject constructor(private val recipesRepository: RecipesRepository) :
     ViewModel() {
     private var _categoriesUiState: MutableLiveData<CategoriesUiState> = MutableLiveData(
         CategoriesUiState()

@@ -10,14 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import ru.nurguru.recipesapp.R
-import ru.nurguru.recipesapp.RecipesApplication
 import ru.nurguru.recipesapp.databinding.FragmentListRecipesBinding
 import ru.nurguru.recipesapp.model.Recipe
-
+@AndroidEntryPoint
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var _binding: FragmentListRecipesBinding? = null
-    private lateinit var viewModel: RecipesListViewModel
+    private val recipeListViewModel: RecipesListViewModel by viewModels()
     private val recipeListAdapter = RecipesListAdapter(listOf())
     private val arg: RecipesListFragmentArgs by navArgs()
     private val binding
@@ -31,13 +31,6 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val appContainer = (requireActivity().application as RecipesApplication).appContainer
-        viewModel = appContainer.RecipesListViewModelFactory.create()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBundleData()
@@ -45,11 +38,11 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun initBundleData() {
-        viewModel.loadRecipesList(arg.category)
+        recipeListViewModel.loadRecipesList(arg.category)
     }
 
     private fun initUI() {
-        viewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
+        recipeListViewModel.recipeListUiState.observe(viewLifecycleOwner) { recipeListState ->
             if (recipeListState.recipesList == null) {
                 Toast.makeText(requireContext(), R.string.data_loading_toast, Toast.LENGTH_LONG)
                     .show()
